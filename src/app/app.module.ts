@@ -4,8 +4,15 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AgmCoreModule } from '@agm/core';
 import { AgmSnazzyInfoWindowModule } from '@agm/snazzy-info-window';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { environment } from '../environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
+
+import { FirestoreDaoService } from './services/dao/firestore-dao.service';
 
 import { AppComponent } from './app.component';
 import { NavbarHeadingComponent } from './components/navbar-heading/navbar-heading.component';
@@ -17,6 +24,9 @@ import { ContactComponent } from './components/contact/contact.component';
 import { CustomCircleDirective } from './directives/custom-circle.directive';
 import { JobFormComponent } from './components/job-form/job-form.component';
 import { CooperationFormComponent } from './components/cooperation-form/cooperation-form.component';
+import { CountryJobOffersComponent } from './components/country-job-offers/country-job-offers.component';
+import { OtherJobOffersComponent } from './components/other-job-offers/other-job-offers.component';
+import { GoogleChartDirective } from './directives/google-chart.directive';
 
 
 @NgModule({
@@ -30,7 +40,10 @@ import { CooperationFormComponent } from './components/cooperation-form/cooperat
     ContactComponent,
     CustomCircleDirective,
     JobFormComponent,
-    CooperationFormComponent
+    CooperationFormComponent,
+    CountryJobOffersComponent,
+    OtherJobOffersComponent,
+    GoogleChartDirective
   ],
   imports: [
     BrowserModule,
@@ -38,12 +51,17 @@ import { CooperationFormComponent } from './components/cooperation-form/cooperat
     AppRoutingModule,
     MDBBootstrapModule.forRoot(),
     AgmCoreModule.forRoot({
-      // apiKey: 'AIzaSyB7EalOJGDq8V8A-AkmmO_rs4C3oRTEmng'
+      apiKey: environment.googleApiKey
     }),
-    AgmSnazzyInfoWindowModule
+    AgmSnazzyInfoWindowModule,
+    AngularFireModule.initializeApp(environment.firebase, 'Medumagency'),
+    AngularFireModule,
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    AngularFireDatabaseModule
   ],
   schemas: [NO_ERRORS_SCHEMA],
-  providers: [],
+  providers: [FirestoreDaoService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
