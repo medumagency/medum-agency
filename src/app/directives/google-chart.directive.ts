@@ -21,8 +21,8 @@ export class GoogleChartDirective implements OnInit {
         google.charts.load('current', { packages: ['corechart'], mapsApiKey: environment.googleApiKey });
         setTimeout(() => {
           this.drawGraph(this.chartOptions, this.chartType, this.chartData, this._element);
-        }, 1000);
-      }, 1000
+        }, 150);
+      }, 150
     );
   }
 

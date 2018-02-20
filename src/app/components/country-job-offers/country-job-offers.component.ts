@@ -8,56 +8,61 @@ import { Component, OnInit } from '@angular/core';
 export class CountryJobOffersComponent implements OnInit {
 
   public chartData = [
-    ['State', 'Population'],
-    ['Malopolska', 199581477],
-    ['Maharashtra', 112372972],
-    ['Bihar', 103804637],
-    ['West Bengal', 91347736],
-    ['Madhya Pradesh', 72597565],
-    ['Tamil Nadu', 72138958],
-    ['Rajasthan', 68621012],
-    ['Karnataka', 61130704],
-    ['Gujarat', 60383628],
-    ['Andhra Pradesh', 49386799],
-    ['Odisha', 41947358],
-    ['Telangana', 35286757],
-    ['Kerala', 33387677],
-    ['Jharkhand', 32966238],
-    ['Assam', 31169272],
-    ['Punjab', 27704236],
-    ['Chhattisgarh', 25540196],
-    ['Haryana', 25353081],
-    ['Jammu and Kashmir', 12548926],
-    ['Uttarakhand', 10116752],
-    ['Himachal Pradesh', 6856509],
-    ['Tripura', 3671032],
-    ['Meghalaya', 2964007],
-    ['Manipur', 2721756],
-    ['Nagaland', 1980602],
-    ['Goa', 1457723],
-    ['Arunachal Pradesh', 1382611],
-    ['Mizoram', 1091014],
-    ['Sikkim', 607688],
-    ['Delhi', 16753235],
-    ['Puducherry', 1244464],
-    ['Chandigarh', 1054686],
-    ['Andaman and Nicobar Islands', 379944],
-    ['Dadra and Nagar Haveli', 342853],
-    ['Daman and Diu', 242911],
-    ['Lakshadweep', 64429]
+    ['Województwo', 'Ofert Pracy'],
+    ['Dolnośląskie', 1],
+    ['Lubelskie', 1],
+    ['Łódzkie', 2],
+    ['Małopolskie', 0],
+    ['Opolskie', 23],
+    ['Podkarpackie', 11],
+    ['Mazowieckie', 6],
+    ['Podlaskie', 9],
+    ['Pomorskie', 11],
+    ['Śląskie', 15],
+    ['Świętokrzyskie', 8],
+    ['Warmińsko-mazurskie', 50],
+    ['Wielkopolskie', 0],
+    ['Zachodniopomorskie', 2],
+    ['Kujawsko-pomorskie', 0],
+    ['Lubuskie', 0],
   ];
-  public chartOptions = {
-    region: 'PL',
-    displayMode: 'regions',
-    resolution: 'provinces',
-    width: 640,
-    height: 480
-  };
+  public optionsXSSmall = CountryJobOffersComponent.setOptions(200);
+  public optionsSmall = CountryJobOffersComponent.setOptions(325);
+  public optionsMedium = CountryJobOffersComponent.setOptions(380);
+  public optionsBig = CountryJobOffersComponent.setOptions();
+
+  static setOptions(height = 480) {
+    return {
+      region: 'PL',
+      displayMode: 'regions',
+      resolution: 'provinces',
+      // width: 640,
+      height,
+      datalessRegionColor: '#9b9b9b',
+      colorAxis: {
+        colors: ['#666666', '#25e051', '#d9ff5e', '#ff7525', '#cc151d']
+      },
+      tooltip: { textStyle: { color: '#FF0000' }, showColorCode: true },
+    };
+  }
 
   constructor() {
   }
 
   ngOnInit() {
   }
-
 }
+
+// PL-LB	Lubuskie	Lubusz
+// PL-LD	Łódzkie	Łódź
+// PL-MA	Małopolskie	Lesser Poland
+// PL-MZ	Mazowieckie	Mazovia
+// PL-OP	Opolskie	Opole (Upper Silesia)
+// PL-PK	Podkarpackie	Subcarpathia
+// PL-PD	Podlaskie	Podlaskie
+// PL-PM	Pomorskie	Pomerania
+// PL-SL	Śląskie	Silesia
+// PL-SK	Świętokrzyskie	Holy Cross
+// PL-WN	Warmińsko-mazurskie	Warmia-Masuria
+// PL-WP	Wielkopolskie	Greater Poland
+// PL-ZP	Zachodniopomorskie	West Pomerania

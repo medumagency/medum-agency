@@ -1,0 +1,76 @@
+.center-middle {
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 4000px) {
+  #chartBig {
+    display: inline;
+  }
+
+  #chartMedium {
+    display: none;
+  }
+
+  #chartSmall {
+    display: none;
+  }
+
+  #chartXSSmall {
+    display: none;
+  }
+}
+
+
+@media screen and (max-width: 920px) {
+  #chartBig {
+    display: none;
+  }
+
+  #chartMedium {
+    display: inline;
+  }
+
+  #chartSmall {
+    display: none;
+  }
+
+  #chartXSSmall {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 769px) {
+  #chartBig {
+    display: none;
+  }
+
+  #chartMedium {
+    display: none;
+  }
+
+  #chartSmall {
+    display: inline;
+  }
+
+  #chartXSSmall {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 530px) {
+  #chartBig {
+    display: none;
+  }
+
+  #chartMedium {
+    display: none;
+  }
+
+  #chartSmall {
+    display: none;
+  }
+
+  #chartXSSmall {
+    display: inline;
+  }
+}

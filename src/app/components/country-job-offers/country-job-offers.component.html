@@ -1,5 +1,33 @@
 <div class="container">
-  <div class="row mt-20">
-    <div id="pie_chart" [chartData]="chartData" [chartOptions] = "chartOptions" chartType="GeoChart" appGoogleChart></div>
+  <div class="row mt-15">
+
+    <h1 class="center-middle mb-5">Oferty Pracy</h1>
+
+    <div class="col-12">
+
+    </div>
+    <div class="center-middle">
+      <div id="chartBig" [chartData]="chartData" [chartOptions] = "optionsBig" chartType="GeoChart" appGoogleChart></div>
+      <div id="chartMedium" [chartData]="chartData" [chartOptions] = "optionsMedium" chartType="GeoChart" appGoogleChart></div>
+      <div id="chartSmall" [chartData]="chartData" [chartOptions] = "optionsSmall" chartType="GeoChart" appGoogleChart></div>
+      <div id="chartXSSmall" [chartData]="chartData" [chartOptions] = "optionsXSSmall" chartType="GeoChart" appGoogleChart></div>
+    </div>
+  </div>
+
+  <div class="center-middle md-form mt-5 mb-5" style="width: 50%">
+    <i class="fa fa-search prefix"></i>
+    <input mdbActive type="text" id="form1" class="form-control">
+    <label for="form1" class="">Szukaj ofert</label>
+  </div>
+
+  <div class="center-middle mt-2" *ngFor="let i of [1,2,3,4,5]">
+    <a href="#!" class="list-group-item list-group-item-action flex-column align-items-start purple-rainbow text-white">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">List group item heading</h5>
+        <small>3 days ago</small>
+      </div>
+      <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+      <small>Donec id elit non mi porta.</small>
+    </a>
   </div>
 </div>
