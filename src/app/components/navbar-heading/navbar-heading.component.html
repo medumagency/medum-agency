@@ -24,6 +24,11 @@
                 <img src="../../../assets/flag-germany.png" alt="Niemiecki">
               </a>
             </li>
+            <li class="nav-item waves-light" mdbRippleRadius>
+              <a class="nav-link mr-2" (click)="form.show()">
+                <i class="fa fa-sign-in"></i>
+              </a>
+            </li>
           </ul>
           <ul class="navbar-nav">
             <li class="nav-item waves-light" mdbRippleRadius>
@@ -52,3 +57,42 @@
     </links>
   </mdb-navbar>
 </header>
+
+<!--Modal: Login Form-->
+<div mdbModal #form="mdb-modal" class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog cascading-modal" role="document">
+    <!--Content-->
+    <div class="modal-content">
+
+      <!--Header-->
+      <div class="modal-header purple-rainbow darken-3 white-text">
+        <h4 class="title"><i class="fa fa-user"></i>Zaloguj się</h4>
+        <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close" (click)="form.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <!--Body-->
+      <div class="modal-body">
+        <div class="md-form form-sm">
+          <i class="fa fa-at prefix"></i>
+          <input mdbActive type="text" id="form30" class="form-control">
+          <label for="form30">Email</label>
+        </div>
+
+        <div class="md-form form-sm">
+          <i class="fa fa-lock prefix"></i>
+          <input mdbActive type="password" id="form31" class="form-control">
+          <label for="form31">Hasło</label>
+        </div>
+
+      </div>
+      <!--Footer-->
+      <div class="modal-footer">
+        <button class="btn global-color waves-light" mdbRippleRadius>Zaloguj<i class="fa fa-sign-in ml-1"></i></button>
+        <button type="button" class="btn btn-outline-purple ml-auto" data-dismiss="modal" (click)="form.hide()" mdbRippleRadius>Zamknij</button>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+<!--Modal: Login Form-->

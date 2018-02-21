@@ -7,27 +7,40 @@
 
     </div>
     <div class="center-middle">
-      <div id="chartBig" [chartData]="chartData" [chartOptions] = "optionsBig" chartType="GeoChart" appGoogleChart></div>
-      <div id="chartMedium" [chartData]="chartData" [chartOptions] = "optionsMedium" chartType="GeoChart" appGoogleChart></div>
-      <div id="chartSmall" [chartData]="chartData" [chartOptions] = "optionsSmall" chartType="GeoChart" appGoogleChart></div>
-      <div id="chartXSSmall" [chartData]="chartData" [chartOptions] = "optionsXSSmall" chartType="GeoChart" appGoogleChart></div>
+      <div id="chartBig" [chartData]="chartData" [chartOptions]="optionsBig" chartType="GeoChart" appGoogleChart></div>
+      <div id="chartMedium" [chartData]="chartData" [chartOptions]="optionsMedium" chartType="GeoChart"
+           appGoogleChart></div>
+      <div id="chartSmall" [chartData]="chartData" [chartOptions]="optionsSmall" chartType="GeoChart"
+           appGoogleChart></div>
+      <div id="chartXSSmall" [chartData]="chartData" [chartOptions]="optionsXSSmall" chartType="GeoChart"
+           appGoogleChart></div>
     </div>
   </div>
 
-  <div class="center-middle md-form mt-5 mb-5" style="width: 50%">
+  <div class="center-middle md-form mt-5 mb-5 pb-5" style="width: 70%">
     <i class="fa fa-search prefix"></i>
     <input mdbActive type="text" id="form1" class="form-control">
     <label for="form1" class="">Szukaj ofert</label>
   </div>
 
-  <div class="center-middle mt-2" *ngFor="let i of [1,2,3,4,5]">
-    <a href="#!" class="list-group-item list-group-item-action flex-column align-items-start purple-rainbow text-white">
-      <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1">List group item heading</h5>
-        <small>3 days ago</small>
+  <div class="center-middle z-depth-1 hoverable" *ngFor="let i of [1,2,3,4,5]">
+    <div class="card mt-4">
+      <div class="card-header purple-rainbow white-text d-flex justify-content-start">
+        <h3 class="p-2">Featured</h3>
+        <div class="ml-auto p-2">
+          <span class="badge badge-elegant">POLSKA</span>
+          <span class="badge badge-brown">MAŁOPOLSKA</span>
+          <span class="badge badge-deep-purple">TARNÓW</span>
+        </div>
+        <h6 class="ml-auto p-2">20 Luty 2018</h6>
       </div>
-      <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-      <small>Donec id elit non mi porta.</small>
-    </a>
+      <div class="card-body">
+        <h4 class="card-title">Special title treatment</h4>
+        <div class="card-text">
+          {{ turnCate(text, 450) }}
+        </div>
+        <a class="btn btn-outline-unique btn-sm waves-light mt-3" mdbRippleRadius>Zobacz ofertę</a>
+      </div>
+    </div>
   </div>
 </div>

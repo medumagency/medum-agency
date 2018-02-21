@@ -1,6 +1,7 @@
 <div class="container">
   <div class="row mt-20">
-    <div class="col-12">
+    <div class="col-lg-2 hidden-sm"></div>
+    <div class="col-sm-12 col-lg-8">
       <div class="card">
         <div class="card-body">
           <div class="form-header purple-rainbow">
@@ -53,13 +54,18 @@
             <label for="form7">Dodatkowe informacje</label>
           </div>
 
-            <label for="file" class="btn btn-secondary">Dodaj załączniki</label>
+          <div>
+            <label for="file" class="btn btn-sm global-color mb-5">
+              <i class="fa fa-file grey-text pr-2"></i>
+              Dodaj załączniki
+            </label>
             <input type="file"
                    id="file"
                    multiple
                    style="display: none"
                    (change)="handleFileInput($event.target.files)">
-          <p *ngFor="let file of fileToUpload">{{file.name}}</p>
+            <p *ngFor="let file of fileToUpload">{{file.name}}</p>
+          </div>
 
 
           <div class="text-center">
