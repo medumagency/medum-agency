@@ -1,12 +1,20 @@
 .dropdown-menu {
-  background-color: #6932b5;
+  background-color: #2e2e2e;
 
   a {
     color: #fefefe !important;
   }
 
   a:hover {
-    background-color: #6932b5;
+    background-color: rgba(214, 214, 214, 0.46);
     color: #000 !important;
   }
+}
+
+.helper-overlay {
+  position: fixed;
+  height: 122px;
+  top: -20px;
+  width: 100%;
+  z-index: -1
 }
