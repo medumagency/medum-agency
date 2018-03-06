@@ -94,3 +94,18 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+#visualization svg path[fill^='none'] {
+   stroke-width:0px;
+}
+
+#chartBig svg path[fill^='none'] {
+  stroke-width:0px;
+
+}
+
+#chartBig  {
+  stroke-width:0px;
+
+  background: red;
+}

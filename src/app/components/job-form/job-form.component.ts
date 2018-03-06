@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-job-form',
@@ -9,10 +10,13 @@ export class JobFormComponent implements OnInit {
 
   fileToUpload: File = null;
 
-  constructor() {
+  constructor(private route: ActivatedRoute) {
   }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      console.log(params);
+    });
   }
 
   handleFileInput(files: File) {

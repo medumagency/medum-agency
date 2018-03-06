@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {NavigationExtras, Router} from '@angular/router';
 
 @Component({
   selector: 'app-country-job-offers',
@@ -59,22 +60,44 @@ export class CountryJobOffersComponent implements OnInit {
       resolution: 'provinces',
       // width: 640,
       height,
-      datalessRegionColor: '#9b9b9b',
+      datalessRegionColor: 'transparent',
       colorAxis: {
-        colors: ['#666666', '#25e051', '#d9ff5e', '#ff7525', '#cc151d']
+        colors: ['#24c250', '#bbdc51', '#ff7525', '#cc464f']
       },
-      tooltip: { textStyle: { color: '#FF0000' }, showColorCode: true },
+      // tooltip: {textStyle: {color: '#FF0000'}, showColorCode: true},
     };
   }
 
-  constructor() {
+  constructor(private router: Router) {
   }
 
   ngOnInit() {
+    this.clearBorders();
   }
 
   turnCate(str, length) {
     return str.length > length ? `${str.slice(0, length)}...` : str;
+  }
+
+  clearBorders() {
+    setTimeout(() => {
+      const list = document.getElementsByTagName('path');
+      for (let i = 0; i < list.length; i++) {
+        if (list[i].getAttribute('fill') === 'none') {
+          list[i].setAttribute('stroke-width', '0');
+        }
+      }
+    }, 650);
+  }
+
+  navigateToForm() {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        'firstname': 'Nic',
+        'lastname': 'Raboy'
+      }
+    };
+    this.router.navigate(['formularz'], navigationExtras);
   }
 
 }

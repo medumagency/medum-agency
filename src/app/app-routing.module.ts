@@ -24,7 +24,13 @@ const routes: Routes = [
   },
   {
     path: 'formularz',
-    component: JobFormComponent
+    component: JobFormComponent,
+    children: [
+      {
+        path: ':data',
+        component: JobFormComponent,
+      }
+    ]
   },
   {
     path: 'wspolpraca',
