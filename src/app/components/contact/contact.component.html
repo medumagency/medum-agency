@@ -11,7 +11,7 @@
     <div class="container">
       <div class="row mb-5">
         <div class="col-lg-5 col-sm-12 mb-4">
-          <div class="card">
+          <form class="card" name="contact" method="POST" netlify>
             <div class="card-body">
               <div class="md-form">
                 <input mdbActive type="text" id="form3" class="form-control">
@@ -34,10 +34,10 @@
               </div>
 
               <div class="text-center">
-                <button class="btn btn-elegant waves-light" mdbRippleRadius>Wyślij</button>
+                <button class="btn btn-elegant waves-light" mdbRippleRadius type="submit">Wyślij</button>
               </div>
             </div>
-          </div>
+          </form>
         </div>
         <div class="col-lg-7 col-sm-12">
           <agm-map class="z-depth-1-half map-container" style="height: 420px; width: auto" [zoom]="16"

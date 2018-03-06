@@ -74,38 +74,3 @@
     display: inline;
   }
 }
-
-.multiline-ellipsis {
-  display: block;
-  display: -webkit-box;
-  height: 3 * 1rem * 1.4;
-  width: 90%;
-  font-size: 0.9rem;
-  line-height: 1.4rem;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.test {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-#visualization svg path[fill^='none'] {
-   stroke-width:0px;
-}
-
-#chartBig svg path[fill^='none'] {
-  stroke-width:0px;
-
-}
-
-#chartBig  {
-  stroke-width:0px;
-
-  background: red;
-}

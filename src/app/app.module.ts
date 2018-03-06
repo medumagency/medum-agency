@@ -27,6 +27,7 @@ import { CooperationFormComponent } from './components/cooperation-form/cooperat
 import { CountryJobOffersComponent } from './components/country-job-offers/country-job-offers.component';
 import { OtherJobOffersComponent } from './components/other-job-offers/other-job-offers.component';
 import { GoogleChartDirective } from './directives/google-chart.directive';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { GoogleChartDirective } from './directives/google-chart.directive';
     CooperationFormComponent,
     CountryJobOffersComponent,
     OtherJobOffersComponent,
-    GoogleChartDirective
+    GoogleChartDirective,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,

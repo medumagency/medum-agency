@@ -8,6 +8,7 @@ import {NavigationExtras, Router} from '@angular/router';
 })
 export class CountryJobOffersComponent implements OnInit {
 
+  private theInterval: any;
   public chartData = [
     ['Województwo', 'Ofert Pracy'],
     ['Dolnośląskie', 1],
@@ -52,6 +53,7 @@ export class CountryJobOffersComponent implements OnInit {
           consequuntur culpa cum, cupiditate dicta dolor dolore expedita facere fuga id illum impedit inventore ipsum
           maiores minus modi natus nulla possimus praesentium, quae quam quibusdam quidem quis quo ratione similique
           sint temporibus tenetur ut vitae voluptatibus! Aspernatur, ea, iusto!`;
+  public isLoading = true;
 
   static setOptions(height = 480) {
     return {
@@ -73,6 +75,11 @@ export class CountryJobOffersComponent implements OnInit {
 
   ngOnInit() {
     this.clearBorders();
+    this.theInterval = setInterval(this.clearBorders, 250);
+    setTimeout(() => {
+      this.isLoading = false;
+
+    }, 1000);
   }
 
   turnCate(str, length) {
@@ -80,14 +87,15 @@ export class CountryJobOffersComponent implements OnInit {
   }
 
   clearBorders() {
-    setTimeout(() => {
-      const list = document.getElementsByTagName('path');
+    const list = document.getElementsByTagName('path');
+    if (list.length) {
       for (let i = 0; i < list.length; i++) {
         if (list[i].getAttribute('fill') === 'none') {
           list[i].setAttribute('stroke-width', '0');
         }
       }
-    }, 650);
+      clearInterval(this.theInterval);
+    }
   }
 
   navigateToForm() {
