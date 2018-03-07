@@ -28,6 +28,7 @@ import { CountryJobOffersComponent } from './components/country-job-offers/count
 import { OtherJobOffersComponent } from './components/other-job-offers/other-job-offers.component';
 import { GoogleChartDirective } from './directives/google-chart.directive';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { AdminManagerComponent } from './components/admin-manager/admin-manager.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     CountryJobOffersComponent,
     OtherJobOffersComponent,
     GoogleChartDirective,
-    SpinnerComponent
+    SpinnerComponent,
+    AdminManagerComponent
   ],
   imports: [
     BrowserModule,

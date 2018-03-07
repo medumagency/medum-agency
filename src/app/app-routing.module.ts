@@ -8,6 +8,7 @@ import { CooperationFormComponent } from './components/cooperation-form/cooperat
 import { JobFormComponent } from './components/job-form/job-form.component';
 import { CountryJobOffersComponent } from './components/country-job-offers/country-job-offers.component';
 import { OtherJobOffersComponent } from './components/other-job-offers/other-job-offers.component';
+import { AdminManagerComponent } from './components/admin-manager/admin-manager.component';
 
 const routes: Routes = [
   {
@@ -43,6 +44,10 @@ const routes: Routes = [
   {
     path: 'za-granica',
     component: OtherJobOffersComponent
+  },
+  {
+    path: 'admin',
+    component: AdminManagerComponent
   },
 ];
 
