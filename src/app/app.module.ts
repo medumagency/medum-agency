@@ -9,6 +9,7 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { environment } from '../environments/environment';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -29,6 +30,8 @@ import { OtherJobOffersComponent } from './components/other-job-offers/other-job
 import { GoogleChartDirective } from './directives/google-chart.directive';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { AdminManagerComponent } from './components/admin-manager/admin-manager.component';
+import { HoverImageDirective } from './directives/hover-image.directive';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -47,13 +50,16 @@ import { AdminManagerComponent } from './components/admin-manager/admin-manager.
     OtherJobOffersComponent,
     GoogleChartDirective,
     SpinnerComponent,
-    AdminManagerComponent
+    AdminManagerComponent,
+    HoverImageDirective
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    FormsModule,
     MDBBootstrapModule.forRoot(),
+    NgbModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: environment.googleApiKey
     }),
