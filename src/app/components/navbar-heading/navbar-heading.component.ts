@@ -1,5 +1,7 @@
-import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-navbar-heading',
@@ -8,11 +10,14 @@ import { Router } from '@angular/router';
 })
 export class NavbarHeadingComponent implements OnInit {
 
-  constructor(private el: ElementRef, private renderer: Renderer2, private router: Router) {
+  constructor(private el: ElementRef,
+              private renderer: Renderer2,
+              private router: Router,
+              public authService: AuthService) {
   }
 
   ngOnInit() {
-    document.addEventListener('click', this.offClickHandler); // bind on doc
+    document.addEventListener('click', this.offClickHandler);
   }
 
   offClickHandler = (event: any) => {
@@ -23,5 +28,19 @@ export class NavbarHeadingComponent implements OnInit {
         this.el.nativeElement.querySelector('.navbar-toggler').click();
       }
     }
+  };
+
+  login(f: NgForm, form: any) {
+    this.authService.login(f.value.email, f.value.password).then((isLogged) => {
+        if (isLogged) {
+          form.hide();
+          f.resetForm();
+          this.router.navigate(['admin']);
+        }
+    });
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

@@ -32,6 +32,8 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 import { AdminManagerComponent } from './components/admin-manager/admin-manager.component';
 import { HoverImageDirective } from './directives/hover-image.directive';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from './services/auth.service';
+import { AdminGuardGuard } from './guards/admin-guard.guard';
 
 
 @NgModule({
@@ -71,7 +73,7 @@ import { FormsModule } from '@angular/forms';
     AngularFireDatabaseModule
   ],
   schemas: [NO_ERRORS_SCHEMA],
-  providers: [FirestoreDaoService],
+  providers: [FirestoreDaoService, AuthService, AdminGuardGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {

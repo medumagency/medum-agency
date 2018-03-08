@@ -62,37 +62,54 @@
 <!--Modal: Login Form-->
 <div mdbModal #form="mdb-modal" class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog cascading-modal" role="document">
-    <!--Content-->
     <div class="modal-content">
-
-      <!--Header-->
-      <div class="modal-header btn-elegant darken-3 white-text">
-        <h4 class="title"><i class="fa fa-user"></i>Zaloguj się</h4>
-        <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close" (click)="form.hide()">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <!--Body-->
-      <div class="modal-body">
-        <div class="md-form form-sm">
-          <i class="fa fa-at prefix"></i>
-          <input mdbActive type="text" id="form30" class="form-control">
-          <label for="form30">Email</label>
-        </div>
-
-        <div class="md-form form-sm">
-          <i class="fa fa-lock prefix"></i>
-          <input mdbActive type="password" id="form31" class="form-control">
-          <label for="form31">Hasło</label>
-        </div>
-
-      </div>
-      <!--Footer-->
-      <div class="modal-footer">
-        <button class="btn global-color waves-light" mdbRippleRadius routerLink="admin">Zaloguj<i class="fa fa-sign-in ml-1"></i></button>
-      </div>
+      <div *ngIf="authService.user | async; then authenticated else guest"></div>
     </div>
-    <!--/.Content-->
   </div>
 </div>
 <!--Modal: Login Form-->
+
+<ng-template #authenticated>
+  <form #f="ngForm" (ngSubmit)="logout(); form.hide()" class="mb-5">
+    <div class="modal-header btn-elegant darken-3 white-text">
+      <h4 class="title"><i class="fa fa-user"></i>Wyloguj się</h4>
+      <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close" (click)="form.hide()">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body mt-5">
+      <div class="text-center">
+        <button class="btn btn-danger waves-light align-center" mdbRippleRadius routerLink="admin">Panel Admina <i class="fa fa-user-secret" aria-hidden="true"></i></button>
+      </div>
+      <div class="text-center">
+        <button class="btn btn-elegant btn-sm waves-light" mdbRippleRadius>Wyloguj<i class="fa fa-sign-in ml-1"></i></button>
+      </div>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #guest>
+  <form #f="ngForm" (ngSubmit)="login(f, form)">
+    <div class="modal-header btn-elegant darken-3 white-text">
+      <h4 class="title"><i class="fa fa-user"></i>Zaloguj się</h4>
+      <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close" (click)="form.hide()">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="md-form form-sm">
+        <i class="fa fa-at prefix"></i>
+        <input mdbActive type="text" id="form30" class="form-control" name="email" ngModel>
+        <label for="form30">Email</label>
+      </div>
+      <div class="md-form form-sm">
+        <i class="fa fa-lock prefix"></i>
+        <input mdbActive type="password" id="form31" class="form-control" name="password" ngModel>
+        <label for="form31">Hasło</label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn global-color waves-light" mdbRippleRadius>Zaloguj<i class="fa fa-sign-in ml-1"></i></button>
+    </div>
+  </form>
+</ng-template>

@@ -9,6 +9,7 @@ import { JobFormComponent } from './components/job-form/job-form.component';
 import { CountryJobOffersComponent } from './components/country-job-offers/country-job-offers.component';
 import { OtherJobOffersComponent } from './components/other-job-offers/other-job-offers.component';
 import { AdminManagerComponent } from './components/admin-manager/admin-manager.component';
+import { AdminGuardGuard } from './guards/admin-guard.guard';
 
 const routes: Routes = [
   {
@@ -47,7 +48,8 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    component: AdminManagerComponent
+    component: AdminManagerComponent,
+    canActivate: [AdminGuardGuard]
   },
 ];
 
