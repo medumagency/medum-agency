@@ -1,5 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {NavigationExtras, Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { NavigationExtras, Router } from '@angular/router';
+import { FirestoreDaoService } from '../../services/dao/firestore-dao.service';
+
+import { IJobOffer } from '../../interfaces/jobOffer.interface';
+
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/map';
+import { forEach } from 'lodash';
 
 @Component({
   selector: 'app-country-job-offers',
@@ -11,49 +19,30 @@ export class CountryJobOffersComponent implements OnInit {
   private theInterval: any;
   public chartData = [
     ['Województwo', 'Ofert Pracy'],
-    ['Dolnośląskie', 1],
-    ['Lubelskie', 1],
-    ['Łódzkie', 2],
+    ['Dolnośląskie', 0],
+    ['Lubelskie', 0],
+    ['Łódzkie', 0],
     ['Małopolskie', 0],
-    ['Opolskie', 23],
-    ['Podkarpackie', 11],
-    ['Mazowieckie', 6],
-    ['Podlaskie', 9],
-    ['Pomorskie', 11],
-    ['Śląskie', 15],
-    ['Świętokrzyskie', 8],
-    ['Warmińsko-mazurskie', 50],
+    ['Opolskie', 0],
+    ['Podkarpackie', 0],
+    ['Mazowieckie', 0],
+    ['Podlaskie', 0],
+    ['Pomorskie', 0],
+    ['Śląskie', 0],
+    ['Świętokrzyskie', 0],
+    ['Warmińsko-mazurskie', 0],
     ['Wielkopolskie', 0],
-    ['Zachodniopomorskie', 2],
+    ['Zachodniopomorskie', 0],
     ['Kujawsko-pomorskie', 0],
-    ['Lubuskie', 0],
+    ['Lubuskie', 0]
   ];
   public optionsXSSmall = CountryJobOffersComponent.setOptions(200);
   public optionsSmall = CountryJobOffersComponent.setOptions(325);
   public optionsMedium = CountryJobOffersComponent.setOptions(380);
   public optionsBig = CountryJobOffersComponent.setOptions();
-  public text = `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque possimus, quidem! Ad at corporis dolore
-          facere laborum libero magnam optio quas quidem quod repellat, sapiente sed vero vitae voluptatem. Culpa cum
-          delectus dolor ea expedita, explicabo, id mollitia neque nesciunt obcaecati officiis perferendis porro
-          reprehenderit suscipit temporibus ut voluptatem. Dolore, dolorem eveniet inventore laborum modi nam quis
-          reprehenderit sequi! Aspernatur id natus tempora veniam veritatis! Cum dolore et expedita fugit, ipsa iure
-          neque non perferendis placeat, sequi tenetur ut voluptate? A consequuntur dolore eius enim et harum hic,
-          itaque minima mollitia nesciunt obcaecati qui repellat sapiente sunt tempore ut voluptatem. Assumenda beatae,
-          commodi cumque cupiditate deserunt dolor ea earum eius enim eum facere hic illum inventore ipsum labore,
-          laborum magnam maiores modi natus nihil numquam obcaecati praesentium quae quaerat quam quis reiciendis rem
-          repellat reprehenderit sequi tempore vel voluptate voluptatem. Aut delectus fuga quis repudiandae tempora.
-          Eaque error esse exercitationem expedita odit quam vitae voluptatibus. Ab aliquid assumenda cum odit quasi,
-          quidem repellat vel veniam. Alias aliquam, culpa iure iusto, minus molestias neque nesciunt optio quaerat
-          quibusdam recusandae, repudiandae. Amet assumenda autem, consequatur error nam natus quo. Adipisci asperiores
-          atque eius illum rem. Amet asperiores beatae delectus deleniti deserunt dolor dolore doloremque dolores eius
-          fugiat incidunt iste magnam nemo odio officiis pariatur quas quasi, quis reiciendis repellat rerum saepe
-          sapiente similique sit temporibus totam vel veniam. Aliquam exercitationem nobis recusandae sit suscipit,
-          voluptas. At beatae dolore eius fugiat molestiae officia, repudiandae velit. Accusantium aliquam, cum dolores
-          et eum explicabo fugiat maiores nihil odit quidem quisquam sapiente sit! A amet asperiores assumenda
-          consequuntur culpa cum, cupiditate dicta dolor dolore expedita facere fuga id illum impedit inventore ipsum
-          maiores minus modi natus nulla possimus praesentium, quae quam quibusdam quidem quis quo ratione similique
-          sint temporibus tenetur ut vitae voluptatibus! Aspernatur, ea, iusto!`;
   public isLoading = true;
+  public jobOffers: IJobOffer[] = [];
+  public modalData: IJobOffer;
 
   static setOptions(height = 480) {
     return {
@@ -64,22 +53,20 @@ export class CountryJobOffersComponent implements OnInit {
       height,
       datalessRegionColor: 'transparent',
       colorAxis: {
-        colors: ['#24c250', '#bbdc51', '#ff7525', '#cc464f']
+        colors: ['#bbdc51', '#24c250', '#cc464f']
       },
       // tooltip: {textStyle: {color: '#FF0000'}, showColorCode: true},
     };
   }
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private firesotreDAO: FirestoreDaoService) {
   }
 
   ngOnInit() {
+    this.setRegionCounters();
     this.clearBorders();
     this.theInterval = setInterval(this.clearBorders, 250);
-    setTimeout(() => {
-      this.isLoading = false;
-
-    }, 1000);
+    this.fetchJobOffers();
   }
 
   turnCate(str, length) {
@@ -108,6 +95,27 @@ export class CountryJobOffersComponent implements OnInit {
     this.router.navigate(['formularz'], navigationExtras);
   }
 
+  fetchJobOffers() {
+    this.firesotreDAO.getJobOffers().subscribe((jobs) => {
+      this.jobOffers = jobs;
+      this.isLoading = false;
+    });
+  }
+
+  setModalData(data: IJobOffer): void {
+    this.modalData = data;
+  }
+
+  setRegionCounters(): void {
+    const temp = [['Województwo', 'Ofert Pracy']];
+    this.firesotreDAO.getCounters().subscribe(({payload}) => {
+      console.log(payload);
+      forEach(payload.data(), (val, key) => {
+        temp.push([key, val]);
+      });
+      this.chartData = temp;
+    });
+  }
 }
 
 // PL-LB	Lubuskie	Lubusz

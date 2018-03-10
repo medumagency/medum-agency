@@ -23,21 +23,26 @@
 
     <div class="center-middle md-form mt-5 mb-5 pb-5" style="width: 70%">
       <i class="fa fa-search prefix"></i>
-      <input mdbActive type="text" id="form1" class="form-control">
+      <input mdbActive type="text" id="form1" class="form-control" [disabled]="!jobOffers.length">
       <label for="form1" class="">Szukaj ofert</label>
     </div>
 
-    <div class="center-middle z-depth-1 hoverable" *ngFor="let i of [1,2,3,4,5]">
-      <div class="card mb-4">
-        <div class="card-body">
-          <h4 class="card-title">Special title treatment</h4>
-          <div class="card-text">
-            {{ turnCate(text, 450) }}
+    <div class="text-center mt-10 mb-20" *ngIf="!jobOffers.length">
+      <h1>Brak ofert na tę chwilę</h1>
+    </div>
+    <div *ngIf="jobOffers.length">
+      <div class="center-middle z-depth-1 hoverable" *ngFor="let offer of jobOffers">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h4 class="card-title">{{offer.title}}</h4>
+            <div class="card-text">
+              {{ turnCate(offer.polish, 450) }}
+            </div>
+            <button type="button" class="btn btn-outline-elegant btn-sm waves-light" data-toggle="modal"
+                    data-target="#basicExample" (click)="demoBasic.show(); setModalData(offer)" mdbRippleRadius>
+              Zobacz ofertę
+            </button>
           </div>
-          <button type="button" class="btn btn-outline-elegant btn-sm waves-light" data-toggle="modal"
-                  data-target="#basicExample" (click)="demoBasic.show()" mdbRippleRadius>
-            Zobacz ofertę
-          </button>
         </div>
       </div>
     </div>
@@ -47,15 +52,18 @@
 <div mdbModal #demoBasic="mdb-modal" class="modal fade" id="basicExample" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
+    <div class="modal-content" *ngIf="modalData">
       <div class="modal-header">
-        <h4 class="modal-title w-100" id="myModalLabel">Modal title</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="demoBasic.hide()">
-          <span aria-hidden="true">×</span>
-        </button>
+        <h4 class="modal-title w-100" id="myModalLabel">{{modalData.title}}</h4>
+        <div class="text-uppercase" style="position: absolute; top: 45px">
+          <span class="badge badge-default">{{modalData.country}}</span>
+          <span class="badge badge-info">{{modalData.region}}</span>
+          <span class="badge badge-primary">{{modalData.city}}</span>
+        </div>
+        <h6 class="text-right">{{modalData.date | amDateFormat:'YYYY-MM-DD HH:mm'}}</h6>
       </div>
       <div class="modal-body">
-        {{text}}
+        {{modalData.polish}}
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-brown btn-sm waves-light" data-dismiss="modal"

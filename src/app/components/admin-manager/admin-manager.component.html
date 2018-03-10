@@ -1,40 +1,36 @@
 <div class="container">
-  <div class="row mt-15" style="margin-bottom: 40%">
+  <div class="row mt-15" style="margin-bottom: 50%">
     <ngb-tabset #t="ngbTabset" style="min-width: 100%;" (tabChange)="setData()">
       <ngb-tab id="tab-1" title="Lista ofert">
         <ng-template ngbTabContent>
-          <ngb-accordion [closeOthers]="true" activeIds="0">
-            <ngb-panel id="{{idx}}" *ngFor="let offer of [{ title: 'asd', polish: 'asdasda', city: 'asd123' },2,3,4,5,6]; index as idx">
-              <ng-template ngbPanelTitle >
+          <app-spinner *ngIf="isLoading"></app-spinner>
+          <h1 class="text-center mt-20 pt-5 mb-20" *ngIf="!jobOffers.length && !isLoading">
+            Brak ofert
+          </h1>
+          <ngb-accordion [closeOthers]="true" activeIds="0" *ngIf="jobOffers.length && !isLoading">
+            <ngb-panel id="{{idx}}" *ngFor="let offer of jobOffers; index as idx">
+              <ng-template ngbPanelTitle>
                 <div class="d-flex justify-content-between">
-                  <div><b>PRACA {{idx}}</b></div>
-                  <div>10/20/2018</div>
+                  <div><b>{{offer.title}}</b></div>
+                  <div>{{offer.date | amDateFormat:'YYYY-MM-DD HH:mm'}}</div>
                 </div>
               </ng-template>
               <ng-template ngbPanelContent>
                 <div class="d-flex justify-content-between text-uppercase">
                   <div>
-                    <span class="badge badge-default">Polska</span>
-                    <span class="badge badge-info">Małoposlka</span>
-                    <span class="badge badge-primary">Tarnów</span>
+                    <span class="badge badge-default">{{offer.country}}</span>
+                    <span class="badge badge-info">{{offer.region}}</span>
+                    <span class="badge badge-primary">{{offer.city}}</span>
                   </div>
                   <div class="d-flex justify-content-end">
-                    <div class="p-2" appHoverImage color="#ff8800" mdbTooltip="Edytuj" placement="top" (click)="t.select('tab-2'); setData(offer)"><i class="fa fa-edit"></i></div>
-                    <div class="p-2" appHoverImage color="red" mdbTooltip="Usuń" placement="top"><i class="fa fa-trash"></i></div>
+                    <div class="p-2" appHoverImage color="#ff8800" mdbTooltip="Edytuj" placement="top"
+                         (click)="t.select('tab-2'); setData(offer)"><i class="fa fa-edit"></i></div>
+                    <div class="p-2" appHoverImage color="red" mdbTooltip="Usuń" placement="top"
+                         (click)="deleteJobOffer(offer)"><i
+                      class="fa fa-trash"></i></div>
                   </div>
                 </div>
-
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf
-                moon officia
-                aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf
-                moon tempor,
-                sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim
-                keffiyeh helvetica,
-                craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo.
-                Leggings
-                occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them
-                accusamus
-                labore sustainable VHS.
+                {{offer.polish}}
               </ng-template>
             </ngb-panel>
           </ngb-accordion>
@@ -47,7 +43,8 @@
               <div class="row mt-5">
                 <div class="col-md-6">
                   <div class="md-form">
-                    <input mdbActive type="text" class="form-control" id="form9" mdbInputValidate name="title" [ngModel]="offer.title">
+                    <input mdbActive type="text" class="form-control" id="form9" mdbInputValidate name="title"
+                           [ngModel]="offer.title">
                     <label for="form9">Tytuł</label>
                   </div>
                 </div>
@@ -57,7 +54,8 @@
               <div class="row mt-5">
                 <div class="col-md-12">
                   <div class="md-form">
-                    <textarea mdbActive type="text" id="areaPolish" class="md-textarea" name="polish" [ngModel]="offer.polish"></textarea>
+                    <textarea mdbActive type="text" id="areaPolish" class="md-textarea" name="polish"
+                              [ngModel]="offer.polish"></textarea>
                     <label for="areaPolish">Polski Opis</label>
                   </div>
 
@@ -66,7 +64,8 @@
               <div class="row mt-5">
                 <div class="col-md-12">
                   <div class="md-form">
-                    <textarea mdbActive type="text" id="areaEnglish" class="md-textarea" name="english" [ngModel]="offer.english"></textarea>
+                    <textarea mdbActive type="text" id="areaEnglish" class="md-textarea" name="english"
+                              [ngModel]="offer.english"></textarea>
                     <label for="areaEnglish">Angielski Opis</label>
                   </div>
 
@@ -75,7 +74,8 @@
               <div class="row mt-5">
                 <div class="col-md-12">
                   <div class="md-form">
-                    <textarea mdbActive type="text" id="areaGerman" class="md-textarea" name="germany" [ngModel]="offer.germany"></textarea>
+                    <textarea mdbActive type="text" id="areaGerman" class="md-textarea" name="germany"
+                              [ngModel]="offer.germany"></textarea>
                     <label for="areaGerman">Niemiecki Opis</label>
                   </div>
 
@@ -85,14 +85,16 @@
               <div class="row mt-5">
                 <div class="col-md-4">
                   <div class="md-form">
-                    <input mdbActive type="text" id="form41" class="form-control" name="country" [ngModel]="offer.country">
+                    <input mdbActive type="text" id="form41" class="form-control" name="country"
+                           [ngModel]="offer.country">
                     <label for="form41" class="">Kraj</label>
                   </div>
                 </div>
 
                 <div class="col-md-4">
                   <div class="md-form">
-                    <input mdbActive type="text" id="form51" class="form-control" name="region" [ngModel]="offer.region">
+                    <input mdbActive type="text" id="form51" class="form-control" name="region"
+                           [ngModel]="offer.region">
                     <label for="form51" class="">Województwo</label>
                   </div>
                 </div>

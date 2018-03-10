@@ -28,7 +28,7 @@ export class NavbarHeadingComponent implements OnInit {
         this.el.nativeElement.querySelector('.navbar-toggler').click();
       }
     }
-  };
+  }
 
   login(f: NgForm, form: any) {
     this.authService.login(f.value.email, f.value.password).then((isLogged) => {

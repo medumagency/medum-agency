@@ -34,8 +34,9 @@
             <li class="nav-item waves-light" mdbRippleRadius (mouseenter)="dropdown.hide()">
               <a class="nav-link" routerLink="o-nas">O NAS</a>
             </li>
-            <li class="nav-item dropdown" dropdown #dropdown="bs-dropdown"   >
-              <a dropdownToggle class="nav-link dropdown-toggle waves-light" mdbRippleRadius (mouseenter)="dropdown.show()">
+            <li class="nav-item dropdown" dropdown #dropdown="bs-dropdown">
+              <a dropdownToggle class="nav-link dropdown-toggle waves-light" mdbRippleRadius
+                 (mouseenter)="dropdown.show()">
                 OFERTY PRACY<span class="caret"></span></a>
               <div class="dropdown-menu dropdown color-primary" (mouseleave)="dropdown.hide()">
                 <div class="helper-overlay"></div>
@@ -60,7 +61,8 @@
 </header>
 
 <!--Modal: Login Form-->
-<div mdbModal #form="mdb-modal" class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div mdbModal #form="mdb-modal" class="modal fade" id="modalLogin" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog cascading-modal" role="document">
     <div class="modal-content">
       <div *ngIf="authService.user | async; then authenticated else guest"></div>
@@ -70,29 +72,33 @@
 <!--Modal: Login Form-->
 
 <ng-template #authenticated>
-  <form #f="ngForm" (ngSubmit)="logout(); form.hide()" class="mb-5">
+  <div class="mb-5">
     <div class="modal-header btn-elegant darken-3 white-text">
-      <h4 class="title"><i class="fa fa-user"></i>Wyloguj się</h4>
-      <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close" (click)="form.hide()">
+      <h4 class="title"><i class="fa fa-user"></i>Zalogowany</h4>
+      <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close"
+              (click)="form.hide()">
         <span aria-hidden="true">×</span>
       </button>
     </div>
     <div class="modal-body mt-5">
       <div class="text-center">
-        <button class="btn btn-danger waves-light align-center" mdbRippleRadius routerLink="admin">Panel Admina <i class="fa fa-user-secret" aria-hidden="true"></i></button>
+        <button class="btn btn-danger waves-light align-center" mdbRippleRadius routerLink="admin" (click)="form.hide()">Panel Admina <i
+          class="fa fa-user-secret" aria-hidden="true"></i></button>
       </div>
       <div class="text-center">
-        <button class="btn btn-elegant btn-sm waves-light" mdbRippleRadius>Wyloguj<i class="fa fa-sign-in ml-1"></i></button>
+        <button class="btn btn-elegant btn-sm waves-light" mdbRippleRadius (click)="logout(); form.hide()">Wyloguj<i
+          class="fa fa-sign-in ml-1"></i></button>
       </div>
     </div>
-  </form>
+  </div>
 </ng-template>
 
 <ng-template #guest>
   <form #f="ngForm" (ngSubmit)="login(f, form)">
     <div class="modal-header btn-elegant darken-3 white-text">
       <h4 class="title"><i class="fa fa-user"></i>Zaloguj się</h4>
-      <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close" (click)="form.hide()">
+      <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close"
+              (click)="form.hide()">
         <span aria-hidden="true">×</span>
       </button>
     </div>

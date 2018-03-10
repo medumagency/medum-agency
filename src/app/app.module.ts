@@ -10,6 +10,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { environment } from '../environments/environment';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MomentModule } from 'angular2-moment';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -70,7 +71,8 @@ import { AdminGuardGuard } from './guards/admin-guard.guard';
     AngularFireModule,
     AngularFireAuthModule,
     AngularFirestoreModule,
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    MomentModule
   ],
   schemas: [NO_ERRORS_SCHEMA],
   providers: [FirestoreDaoService, AuthService, AdminGuardGuard],
