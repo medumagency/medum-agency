@@ -25,7 +25,7 @@ function convertEmailData(data: IEmail): any {
     type: data.type,
     subject: data.subject,
     html,
-    attachments: data.attachments || null
+    attachments: data.attachments || []
   };
 }
 

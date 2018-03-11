@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { FirestoreDaoService } from '../../services/dao/firestore-dao.service';
 import { Observable } from 'rxjs/Observable';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
-import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mergeMap';
+
 
 @Component({
   selector: 'app-job-form',
@@ -13,7 +13,7 @@ import 'rxjs/add/operator/map';
 })
 export class JobFormComponent implements OnInit {
 
-  fileToUpload: FileList = null;
+  fileToUpload: Array<any> = [];
 
   constructor(private route: ActivatedRoute, private firestoreDAO: FirestoreDaoService) {
   }
@@ -25,46 +25,47 @@ export class JobFormComponent implements OnInit {
   }
 
   handleFileInput(files: FileList) {
-    this.fileToUpload = files;
-    console.log(this.fileToUpload);
-
-    // const attachments = [];
-    //
-    // console.log(this.fileToUpload);
-    // if (this.fileToUpload) {
-    //   const data = Array.from(this.fileToUpload);
-    //
-    //   data.map((file) => {
-    //     this.convertFile(file).subscribe((result) => {
-    //       console.log(result);
-    //       attachments.push({ path: result });
-    //     });
-    //   });
-    //
-    // }
+    this.fileToUpload = [];
+    this.base64Encode(files).subscribe((item) => {
+      this.fileToUpload.push(item);
+    });
   }
 
-  convertFile(fileToRead: File): Observable<MSBaseReader> {
-    const base64Observable = new ReplaySubject<MSBaseReader>(10);
+  base64Encode(files: FileList) {
+    const observables = [];
 
-    const fileReader = new FileReader();
-    fileReader.onload = event => {
-      base64Observable.next(fileReader.result);
-    };
-    fileReader.readAsDataURL(fileToRead);
+    function encodeFile(file: File) {
+      return new Observable((observer) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          observer.next({
+            filename: file.name,
+            filetype: file.type,
+            fileSize: file.size,
+            path: reader.result
+          });
+        };
+      });
+    }
 
-    return base64Observable;
+    Array.from(files).forEach((file) => {
+      observables.push(encodeFile(file));
+    });
+
+    return Observable.merge(observables).mergeMap(flat => flat);
   }
 
   submitForm(f: NgForm) {
     const { value } = f;
-    const data = Object.assign(value, { type: 'JOB' });
+    const data = Object.assign(value, { type: 'JOB', attachments: this.fileToUpload });
 
+    console.log(this.fileToUpload);
 
-    // this.firestoreDAO.sendEmail(Object.assign(value, { type: 'JOB' })).then((result) => {
-    //   console.log(result);
-    // }).catch((err) => {
-    //   console.log(err);
-    // });
+    this.firestoreDAO.sendEmail(data).then((result) => {
+      console.log(result);
+    }).catch((err) => {
+      console.error(err);
+    });
   }
 }

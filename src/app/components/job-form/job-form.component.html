@@ -51,7 +51,7 @@
                    style="display: none"
                    (change)="handleFileInput($event.target.files)"
                    name="attachments">
-            <p *ngFor="let file of fileToUpload">{{file.name}}</p>
+            <p *ngFor="let file of fileToUpload">{{file.filename}} ({{file.fileSize}})</p>
           </div>
 
           <div class="text-center">
