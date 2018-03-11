@@ -42,16 +42,25 @@
           </div>
 
           <div>
-            <label for="file" class="btn btn-sm btn-outline-elegant mb-5">
+            <label for="file" class="btn btn-sm btn-outline-elegant d-inline">
               Dodaj załączniki
             </label>
+            <div class="d-inline">
+              <span class="red-text"> *</span>
+              <p class="d-inline" style="font-size: 13px">
+                <span class="mr-2">Dozwolone pliki: .jpg, .png, .xls</span>
+                (maxymalny rozmiar 2MB na plik)
+              </p>
+            </div>
             <input type="file"
                    id="file"
                    multiple
                    style="display: none"
                    (change)="handleFileInput($event.target.files)"
                    name="attachments">
-            <p *ngFor="let file of fileToUpload">{{file.filename}} ({{file.fileSize}})</p>
+          </div>
+          <div class="files-uploaded">
+            <p *ngFor="let file of fileToUpload">{{file.filename}} <strong class="ml-2">({{file.fileSize | byteFmt: 2}})</strong></p>
           </div>
 
           <div class="text-center">

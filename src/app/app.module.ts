@@ -36,7 +36,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from './services/auth.service';
 import { AdminGuardGuard } from './guards/admin-guard.guard';
 import { HttpClientModule } from '@angular/common/http';
-
+import { NgPipesModule } from 'ng-pipes';
 
 @NgModule({
   declarations: [
@@ -74,7 +74,8 @@ import { HttpClientModule } from '@angular/common/http';
     AngularFirestoreModule,
     AngularFireDatabaseModule,
     MomentModule,
-    HttpClientModule
+    HttpClientModule,
+    NgPipesModule
   ],
   schemas: [NO_ERRORS_SCHEMA],
   providers: [FirestoreDaoService, AuthService, AdminGuardGuard],
