@@ -69,7 +69,7 @@ export class AdminManagerComponent implements OnInit {
     });
   }
 
-  setData(data: IJobOffer): void {
+  setData(data?: IJobOffer): void {
     this.offer = this.createOffer(data);
   }
 
