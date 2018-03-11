@@ -35,6 +35,7 @@ import { HoverImageDirective } from './directives/hover-image.directive';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from './services/auth.service';
 import { AdminGuardGuard } from './guards/admin-guard.guard';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -72,7 +73,8 @@ import { AdminGuardGuard } from './guards/admin-guard.guard';
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireDatabaseModule,
-    MomentModule
+    MomentModule,
+    HttpClientModule
   ],
   schemas: [NO_ERRORS_SCHEMA],
   providers: [FirestoreDaoService, AuthService, AdminGuardGuard],

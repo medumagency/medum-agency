@@ -11,25 +11,25 @@
     <div class="container">
       <div class="row mb-5">
         <div class="col-lg-5 col-sm-12 mb-4">
-          <form class="card" name="contact" method="POST" netlify>
+          <form class="card" #f="ngForm" (ngSubmit)="sendEmail(f)" novalidate>
             <div class="card-body">
               <div class="md-form">
-                <input mdbActive type="text" id="form3" class="form-control">
+                <input mdbActive type="text" id="form3" class="form-control" name="name" ngModel>
                 <label for="form3">Imię i Nazwisko</label>
               </div>
 
               <div class="md-form">
-                <input mdbActive type="text" id="form2" class="form-control">
+                <input mdbActive type="email" id="form2" class="form-control" name="email" ngModel>
                 <label for="form2">Email</label>
               </div>
 
               <div class="md-form">
-                <input mdbActive type="text" id="form32" class="form-control">
+                <input mdbActive type="text" id="form32" class="form-control" name="subject" ngModel>
                 <label for="form32">Temat</label>
               </div>
 
               <div class="md-form">
-                <textarea mdbActive type="text" id="form8" class="md-textarea"></textarea>
+                <textarea mdbActive type="text" id="form8" class="md-textarea" name="text" ngModel></textarea>
                 <label for="form8">Wiadomość</label>
               </div>
 

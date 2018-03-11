@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-contact',
@@ -15,4 +16,17 @@ export class ContactComponent implements OnInit {
   ngOnInit() {
   }
 
+  sendEmail(f: NgForm) {
+    const { value } = f;
+    const data = {
+        subject: value.subject,
+        text: `${value.name}
+      ${value.email}
+      ${value.text}`
+      }
+    ;
+    console.log(value);
+
+    console.log(console.log(btoa('password')));
+  }
 }

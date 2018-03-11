@@ -6,11 +6,34 @@ import 'rxjs/add/operator/take';
 import { IJobOffer } from '../../interfaces/jobOffer.interface';
 import * as firebase from 'firebase/app';
 import DocumentReference = firebase.firestore.DocumentReference;
+import { IEmail } from '../../interfaces/email.interface';
+
+function convertEmailData(data: IEmail): any {
+  const fullName = `${data.firstName} ${data.lastName || ''}`;
+  let html: string;
+
+  if (data.type === 'JOB') {
+    data.subject = 'FORMULARZ ZGŁOSZENIA';
+    html = `<h3>Od: ${fullName}</h3>
+            <div>Email: ${data.email}</div>
+            <div>Adres: ${data.address}</div>
+            <dvi>Telefon: ${data.phone}</dvi>
+            <div>Stanowisko: ${data.position}</div>
+            <div>${data.message}</div>`;
+  }
+  return {
+    type: data.type,
+    subject: data.subject,
+    html,
+    attachments: data.attachments || null
+  };
+}
 
 @Injectable()
 export class FirestoreDaoService {
 
   private jobOffersCollection: AngularFirestoreCollection<IJobOffer>;
+  private emailsCollection: AngularFirestoreCollection<IEmail>;
   private jobOffers: Observable<IJobOffer[]>;
   private jobOfferDoc: AngularFirestoreDocument<IJobOffer>;
   private counterDoc: AngularFirestoreDocument<any>;
@@ -22,7 +45,7 @@ export class FirestoreDaoService {
 
   getJobOffers(): Observable<IJobOffer[]> {
     this.jobOffersCollection = this.afs.collection('jobOffers', (ref) => {
-        return ref.orderBy('date', 'desc');
+      return ref.orderBy('date', 'desc');
     });
     // this.jobOffers = this.jobOffersCollection.valueChanges();
     this.snapShot = this.jobOffersCollection.snapshotChanges();
@@ -61,5 +84,11 @@ export class FirestoreDaoService {
   updateCounter(data: any): Promise<void> {
     this.counterDoc = this.afs.doc('offersCounter/Y78hdYlYSpypxyrQV7rX');
     return this.counterDoc.update(data);
+  }
+
+  sendEmail(data: IEmail): Promise<DocumentReference> {
+    this.emailsCollection = this.afs.collection('emails');
+
+    return this.emailsCollection.add(convertEmailData(data));
   }
 }
