@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnInit } from '@angular/core';
+import { Directive, ElementRef, Input, OnChanges, OnInit } from '@angular/core';
 import { environment } from '../../environments/environment';
 
 declare const google: any;
@@ -6,7 +6,7 @@ declare const google: any;
 @Directive({
   selector: '[appGoogleChart]'
 })
-export class GoogleChartDirective implements OnInit {
+export class GoogleChartDirective implements OnInit, OnChanges {
   public _element: any;
   @Input('chartType') public chartType: string;
   @Input('chartOptions') public chartOptions: Object;
@@ -17,13 +17,35 @@ export class GoogleChartDirective implements OnInit {
   }
 
   ngOnInit() {
-    setTimeout(() => {
-        google.charts.load('current', { packages: ['corechart'], mapsApiKey: environment.googleApiKey });
-        setTimeout(() => {
-          this.drawGraph(this.chartOptions, this.chartType, this.chartData, this._element);
-        }, 150);
-      }, 150
-    );
+    // this.refreshGraph();
+  }
+
+  ngOnChanges() {
+    this.refreshGraph();
+  }
+
+  refreshGraph() {
+    const baseData = [
+      ['Województwo', 'Ofert Pracy'],
+      ['Dolnośląskie', 0],
+      ['Lubelskie', 0],
+      ['Łódzkie', 0],
+      ['Małopolskie', 0],
+      ['Opolskie', 0],
+      ['Podkarpackie', 0],
+      ['Mazowieckie', 0],
+      ['Podlaskie', 0],
+      ['Pomorskie', 0],
+      ['Śląskie', 0],
+      ['Świętokrzyskie', 0],
+      ['Warmińsko-mazurskie', 0],
+      ['Wielkopolskie', 0],
+      ['Zachodniopomorskie', 0],
+      ['Kujawsko-pomorskie', 0],
+      ['Lubuskie', 0]
+    ];
+    google.charts.load('current', { packages: ['corechart'], mapsApiKey: environment.googleApiKey });
+    this.drawGraph(this.chartOptions, this.chartType, Object.assign(baseData, this.chartData), this._element);
   }
 
   drawGraph(chartOptions, chartType, chartData, ele) {

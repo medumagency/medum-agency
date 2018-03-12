@@ -127,3 +127,9 @@ body.modal-open {
 .tab-content {
   margin-top: 15px;
 }
+
+#regions-chart {
+  svg path[fill^='none'] {
+    stroke-width:0px;
+  }
+}

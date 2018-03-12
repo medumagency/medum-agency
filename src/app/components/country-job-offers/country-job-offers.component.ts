@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { FirestoreDaoService } from '../../services/dao/firestore-dao.service';
 
@@ -7,7 +7,7 @@ import { IJobOffer } from '../../interfaces/jobOffer.interface';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/map';
-import { forEach } from 'lodash';
+import { forEach, defer } from 'lodash';
 
 @Component({
   selector: 'app-country-job-offers',
@@ -16,26 +16,7 @@ import { forEach } from 'lodash';
 })
 export class CountryJobOffersComponent implements OnInit {
 
-  private theInterval: any;
-  public chartData = [
-    ['Województwo', 'Ofert Pracy'],
-    ['Dolnośląskie', 0],
-    ['Lubelskie', 0],
-    ['Łódzkie', 0],
-    ['Małopolskie', 0],
-    ['Opolskie', 0],
-    ['Podkarpackie', 0],
-    ['Mazowieckie', 0],
-    ['Podlaskie', 0],
-    ['Pomorskie', 0],
-    ['Śląskie', 0],
-    ['Świętokrzyskie', 0],
-    ['Warmińsko-mazurskie', 0],
-    ['Wielkopolskie', 0],
-    ['Zachodniopomorskie', 0],
-    ['Kujawsko-pomorskie', 0],
-    ['Lubuskie', 0]
-  ];
+  public chartData: Array<Array<string>>;
   public optionsXSSmall = CountryJobOffersComponent.setOptions(200);
   public optionsSmall = CountryJobOffersComponent.setOptions(325);
   public optionsMedium = CountryJobOffersComponent.setOptions(380);
@@ -64,25 +45,11 @@ export class CountryJobOffersComponent implements OnInit {
 
   ngOnInit() {
     this.setRegionCounters();
-    this.clearBorders();
-    this.theInterval = setInterval(this.clearBorders, 250);
     this.fetchJobOffers();
   }
 
   turnCate(str, length) {
     return str.length > length ? `${str.slice(0, length)}...` : str;
-  }
-
-  clearBorders() {
-    const list = document.getElementsByTagName('path');
-    if (list.length) {
-      for (let i = 0; i < list.length; i++) {
-        if (list[i].getAttribute('fill') === 'none') {
-          list[i].setAttribute('stroke-width', '0');
-        }
-      }
-      clearInterval(this.theInterval);
-    }
   }
 
   navigateToForm() {
@@ -98,7 +65,6 @@ export class CountryJobOffersComponent implements OnInit {
   fetchJobOffers() {
     this.firesotreDAO.getJobOffers().subscribe((jobs) => {
       this.jobOffers = jobs;
-      this.isLoading = false;
     });
   }
 
@@ -109,11 +75,11 @@ export class CountryJobOffersComponent implements OnInit {
   setRegionCounters(): void {
     const temp = [['Województwo', 'Ofert Pracy']];
     this.firesotreDAO.getCounters().subscribe(({payload}) => {
-      console.log(payload);
       forEach(payload.data(), (val, key) => {
         temp.push([key, val]);
       });
       this.chartData = temp;
+      this.isLoading = false;
     });
   }
 }
