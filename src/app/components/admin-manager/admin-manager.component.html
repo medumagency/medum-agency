@@ -110,7 +110,7 @@
               <div class="row mt-5">
                 <div class="col-12">
                   <button class="btn btn-success float-right">Zapisz</button>
-                  <button class="btn btn-outline-danger float-right" (click)="setData()">Resetuj</button>
+                  <button class="btn btn-outline-danger float-right" (click)="setData(); false">Resetuj</button>
                 </div>
               </div>
             </form>
@@ -120,3 +120,10 @@
     </ngb-tabset>
   </div>
 </div>
+<swal
+  title
+  text
+  type
+  showCancelButton
+  #dialog>
+</swal>

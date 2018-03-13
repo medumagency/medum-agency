@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { FirestoreDaoService } from '../../services/dao/firestore-dao.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/mergeMap';
+import { SwalComponent } from '@toverux/ngx-sweetalert2';
+import { SwalObjService } from '../../services/swal-obj.service';
+import { forEach } from 'lodash';
 
 
 @Component({
@@ -12,10 +15,11 @@ import 'rxjs/add/operator/mergeMap';
   styleUrls: ['./job-form.component.scss']
 })
 export class JobFormComponent implements OnInit {
+  @ViewChild('dialog') private dialogSwal: SwalComponent;
 
   fileToUpload: Array<any> = [];
 
-  constructor(private route: ActivatedRoute, private firestoreDAO: FirestoreDaoService) {
+  constructor(private route: ActivatedRoute, private firestoreDAO: FirestoreDaoService, private swalObj: SwalObjService) {
   }
 
   ngOnInit() {
@@ -24,11 +28,33 @@ export class JobFormComponent implements OnInit {
     });
   }
 
-  handleFileInput(files: FileList) {
+  async handleFileInput(files: FileList) {
+    const wrongFiles = await this.checkFiles(files);
     this.fileToUpload = [];
-    this.base64Encode(files).subscribe((item) => {
-      this.fileToUpload.push(item);
-    });
+
+    if (wrongFiles) {
+      this.swalObj.composeDialog(wrongFiles, '', 'error', this.dialogSwal);
+    } else {
+      this.base64Encode(files).subscribe((item) => {
+        this.fileToUpload.push(item);
+      });
+    }
+  }
+
+  checkFiles(files: FileList) {
+    const filesArr = Array.from(files);
+    let result = null;
+
+    if (filesArr.length > 4) {
+      result = 'Można dodać maksymalnie 4 pliki';
+    } else {
+      forEach(filesArr, (file) => {
+        if (file.size > 2 * 1024 * 1024) {
+          result = 'Pojedynczy plik nie może mieć więcej niż 2 MB!!!';
+        }
+      });
+    }
+    return Promise.resolve(result);
   }
 
   base64Encode(files: FileList) {
@@ -63,8 +89,16 @@ export class JobFormComponent implements OnInit {
     console.log(this.fileToUpload);
 
     this.firestoreDAO.sendEmail(data).then((result) => {
-      console.log(result);
+      const inputs = document.getElementsByTagName('input');
+      this.fileToUpload = [];
+      f.resetForm();
+      forEach(inputs, (input) => {
+        input.focus();
+        input.blur();
+      });
+      this.swalObj.composeDialog('', 'Wiadomość została wysłana', 'success', this.dialogSwal);
     }).catch((err) => {
+      this.swalObj.composeDialog('Przykro nam', 'Nie można wysłać wiadomości', 'error', this.dialogSwal);
       console.error(err);
     });
   }

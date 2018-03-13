@@ -20,6 +20,18 @@ function convertEmailData(data: IEmail): any {
             <dvi>Telefon: ${data.phone}</dvi>
             <div>Stanowisko: ${data.position}</div>
             <div>${data.message}</div>`;
+  } else if (data.type === 'COOPERATION') {
+    data.subject = 'FORMULARZ WSPÓŁPRACY';
+    html = `<h3>Firma: ${data.companyName}</h3>
+            <div>Email: ${data.email}</div>
+            <div>Adres: ${data.address}</div>
+            <dvi>Telefon: ${data.phone}</dvi>`;
+  } else if (data.type === 'CONTACT') {
+    data.subject = 'KONTAKT';
+    html = `<h3>Od: ${fullName}</h3>
+            <div>Email: ${data.email}</div>
+            <div>Temat: ${data.subject}</div>
+            <dvi>${data.message}</dvi>`;
   }
   return {
     type: data.type,

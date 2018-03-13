@@ -38,7 +38,7 @@
               <a dropdownToggle class="nav-link dropdown-toggle waves-light" mdbRippleRadius
                  (mouseenter)="dropdown.show()">
                 OFERTY PRACY<span class="caret"></span></a>
-              <div class="dropdown-menu dropdown color-primary" (mouseleave)="dropdown.hide()">
+              <div class="dropdown-menu dropdown color-primary" (click)="dropdown.toggle()" (mouseleave)="dropdown.hide()">
                 <div class="helper-overlay"></div>
                 <a class="dropdown-item waves-light" routerLink="w-kraju">W KRAJU</a>
                 <a class="dropdown-item waves-light" routerLink="za-granica">ZA GRANICĄ</a>

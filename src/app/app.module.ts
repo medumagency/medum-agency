@@ -37,6 +37,8 @@ import { AuthService } from './services/auth.service';
 import { AdminGuardGuard } from './guards/admin-guard.guard';
 import { HttpClientModule } from '@angular/common/http';
 import { NgPipesModule } from 'ng-pipes';
+import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
+import { SwalObjService } from './services/swal-obj.service';
 
 @NgModule({
   declarations: [
@@ -75,10 +77,11 @@ import { NgPipesModule } from 'ng-pipes';
     AngularFireDatabaseModule,
     MomentModule,
     HttpClientModule,
-    NgPipesModule
+    NgPipesModule,
+    SweetAlert2Module.forRoot()
   ],
   schemas: [NO_ERRORS_SCHEMA],
-  providers: [FirestoreDaoService, AuthService, AdminGuardGuard],
+  providers: [FirestoreDaoService, AuthService, AdminGuardGuard, SwalObjService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

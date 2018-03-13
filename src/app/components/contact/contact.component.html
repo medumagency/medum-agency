@@ -11,30 +11,35 @@
     <div class="container">
       <div class="row mb-5">
         <div class="col-lg-5 col-sm-12 mb-4">
-          <form class="card" #f="ngForm" (ngSubmit)="sendEmail(f)" novalidate>
+          <form class="card" #f="ngForm" (ngSubmit)="submitForm(f)" novalidate>
             <div class="card-body">
               <div class="md-form">
-                <input mdbActive type="text" id="form3" class="form-control" name="name" ngModel>
-                <label for="form3">Imię i Nazwisko</label>
+                <input mdbActive type="text" id="form1" class="form-control" name="firstName" ngModel>
+                <label for="form1">Imię</label>
               </div>
 
               <div class="md-form">
-                <input mdbActive type="email" id="form2" class="form-control" name="email" ngModel>
-                <label for="form2">Email</label>
+                <input mdbActive type="text" id="form2" class="form-control" name="lastName" ngModel>
+                <label for="form2">Nazwisko</label>
               </div>
 
               <div class="md-form">
-                <input mdbActive type="text" id="form32" class="form-control" name="subject" ngModel>
-                <label for="form32">Temat</label>
+                <input mdbActive type="email" id="form3" class="form-control" name="email" ngModel>
+                <label for="form3">Email</label>
               </div>
 
               <div class="md-form">
-                <textarea mdbActive type="text" id="form8" class="md-textarea" name="text" ngModel></textarea>
-                <label for="form8">Wiadomość</label>
+                <input mdbActive type="text" id="form4" class="form-control" name="subject" ngModel>
+                <label for="form4">Temat</label>
+              </div>
+
+              <div class="md-form">
+                <textarea mdbActive type="text" id="form5" class="md-textarea" name="message" ngModel></textarea>
+                <label for="form5">Wiadomość</label>
               </div>
 
               <div class="text-center">
-                <button class="btn btn-elegant waves-light" mdbRippleRadius type="submit">Wyślij</button>
+                <button class="btn btn-elegant waves-light" mdbRippleRadius>Wyślij</button>
               </div>
             </div>
           </form>
@@ -79,3 +84,9 @@
     </div>
   </section>
 </div>
+<swal
+  title
+  text
+  type
+  #dialog>
+</swal>

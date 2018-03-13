@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { IJobOffer } from '../../interfaces/jobOffer.interface';
 import { NgForm } from '@angular/forms';
 import { FirestoreDaoService } from '../../services/dao/firestore-dao.service';
-import { pick } from 'lodash';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/map';
-import {isNan} from 'lodash';
+import { isNaN, pick } from 'lodash';
+import { SwalComponent } from '@toverux/ngx-sweetalert2';
+import { SwalObjService } from '../../services/swal-obj.service';
 
 @Component({
   selector: 'app-admin-manager',
@@ -13,12 +14,13 @@ import {isNan} from 'lodash';
   styleUrls: ['./admin-manager.component.scss']
 })
 export class AdminManagerComponent implements OnInit {
+  @ViewChild('dialog') private dialogSwal: SwalComponent;
 
   public offer: IJobOffer;
   public jobOffers: IJobOffer[] = [];
   public isLoading = true;
 
-  constructor(private firestoreDAO: FirestoreDaoService) {
+  constructor(private firestoreDAO: FirestoreDaoService, private swalO: SwalObjService) {
   }
 
   ngOnInit() {
@@ -42,30 +44,43 @@ export class AdminManagerComponent implements OnInit {
   saveOffer(f: NgForm): void {
     const id: string = this.offer.id;
     const dataToSave: IJobOffer = this.createOffer(f.value);
+    const title = dataToSave.title.length ? dataToSave.title.toUpperCase() : 'Brak Nazwy';
+
     if (id) {
       this.firestoreDAO.updateJobOffer(id, dataToSave).then(() => {
         f.resetForm();
+        this.swalO.composeDialog(title, 'Oferta została zaktualizowana pomyślnie', 'success', this.dialogSwal);
       }).catch((error) => {
-        console.log(error);
+        this.swalO.composeDialog('Błąd', 'Nie można utworzyć oferty', 'error', this.dialogSwal);
+        console.error(error);
       });
     } else {
       this.firestoreDAO.createJobOffer(dataToSave).then(() => {
         return this.updateCounter(dataToSave, true).then(() => {
           f.resetForm();
+          this.swalO.composeDialog(title, 'Utworzono nową ofertę', 'success', this.dialogSwal);
         });
       }).catch((error) => {
+        this.swalO.composeDialog('Błąd', 'Nie można utworzyć oferty', 'error', this.dialogSwal);
         console.log(error);
       });
     }
   }
 
   deleteJobOffer(data: IJobOffer): void {
-    this.firestoreDAO.deleteJobOffer(data.id).then(() => {
-      return this.updateCounter(data, false);
-    }).then(() => {
-        console.log('DELETED');
-    }).catch((error) => {
-      console.log('unable to delete! ', error);
+    const text = 'Czy na pewno chcesz usunąć tę ofertę?';
+    const title = data.title.length ? data.title.toUpperCase() : 'Brak nazwy';
+
+    this.swalO.composeDialog(title, text, 'warning', this.dialogSwal, true).then((result) => {
+      if (result.value) {
+        this.firestoreDAO.deleteJobOffer(data.id).then(() => {
+          return this.updateCounter(data, false);
+        }).then(() => {
+          this.swalO.composeDialog(title, 'Usnięto pomyślnie', 'success', this.dialogSwal);
+        }).catch((error) => {
+          this.swalO.composeDialog(title, 'Nie można usunąc!!!', 'error', this.dialogSwal);
+        });
+      }
     });
   }
 
@@ -83,17 +98,17 @@ export class AdminManagerComponent implements OnInit {
   updateCounter(data: any, add: boolean): Promise<void> {
     if (data.country.toLowerCase() === 'polska') {
       return new Promise((resolve, reject) => {
-        this.firestoreDAO.getCounters().subscribe(({payload}) => {
+        this.firestoreDAO.getCounters().subscribe(({ payload }) => {
           const dataToSave = pick(payload.data(), [data.region, 'total']);
           if (add) {
             dataToSave[data.region] += 1;
-            dataToSave.total += 1;
+            dataToSave['total'] += 1;
           } else {
             dataToSave[data.region] -= 1;
-            dataToSave.total -= 1;
+            dataToSave['total'] -= 1;
           }
-          if (isNaN(dataToSave[data.region]) || isNaN(dataToSave.total)) {
-            return reject({wrongRegion: 'Zła nazwa województwa'});
+          if (isNaN(dataToSave[data.region]) || isNaN(dataToSave['total'])) {
+            return reject({ wrongRegion: 'Zła nazwa województwa' });
           }
           this.firestoreDAO.updateCounter(dataToSave).then(resolve).catch(reject);
         });

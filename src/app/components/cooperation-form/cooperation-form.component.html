@@ -17,25 +17,25 @@
   <div class="row">
     <div class="col-lg-2 hidden-sm"></div>
     <div class="col-sm-12 col-lg-8 mt-5 mb-10">
-      <div class="card" style="margin-bottom: 3px">
+      <form class="card" style="margin-bottom: 3px" #f="ngForm" (ngSubmit)="submitForm(f)">
         <div class="card-body">
           <div class="md-form">
-            <input mdbActive type="text" id="form1" class="form-control">
+            <input mdbActive type="text" id="form1" class="form-control" name="companyName" ngModel>
             <label for="form1">Nazwa firmy</label>
           </div>
 
           <div class="md-form">
-            <input mdbActive type="text" id="form3" class="form-control">
+            <input mdbActive type="text" id="form3" class="form-control" name="address" ngModel>
             <label for="form3">Adres</label>
           </div>
 
           <div class="md-form">
-            <input mdbActive type="text" id="form4" class="form-control">
+            <input mdbActive type="text" id="form4" class="form-control" name="phone" ngModel>
             <label for="form4">Telefon</label>
           </div>
 
           <div class="md-form">
-            <input mdbActive type="text" id="form5" class="form-control">
+            <input mdbActive type="text" id="form5" class="form-control" name="email" ngModel>
             <label for="form5">Email</label>
           </div>
 
@@ -43,7 +43,13 @@
             <button class="btn btn-elegant waves-light" mdbRippleRadius>Wyślij</button>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </div>
+<swal
+  title
+  text
+  type
+  #dialog>
+</swal>
