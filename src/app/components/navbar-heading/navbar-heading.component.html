@@ -38,7 +38,8 @@
               <a dropdownToggle class="nav-link dropdown-toggle waves-light" mdbRippleRadius
                  (mouseenter)="dropdown.show()">
                 OFERTY PRACY<span class="caret"></span></a>
-              <div class="dropdown-menu dropdown color-primary" (click)="dropdown.toggle()" (mouseleave)="dropdown.hide()">
+              <div class="dropdown-menu dropdown color-primary" (click)="dropdown.toggle()"
+                   (mouseleave)="dropdown.hide()">
                 <div class="helper-overlay"></div>
                 <a class="dropdown-item waves-light" routerLink="w-kraju">W KRAJU</a>
                 <a class="dropdown-item waves-light" routerLink="za-granica">ZA GRANICĄ</a>
@@ -82,12 +83,14 @@
     </div>
     <div class="modal-body mt-5">
       <div class="text-center">
-        <button class="btn btn-danger waves-light align-center" mdbRippleRadius routerLink="admin" (click)="form.hide()">Panel Admina <i
-          class="fa fa-user-secret" aria-hidden="true"></i></button>
+        <button class="btn btn-danger waves-light align-center" mdbRippleRadius routerLink="admin"
+                (click)="form.hide()">Panel Admina
+          <i class="fa fa-user-secret" aria-hidden="true"></i></button>
       </div>
       <div class="text-center">
-        <button class="btn btn-elegant btn-sm waves-light" mdbRippleRadius (click)="logout(); form.hide()">Wyloguj<i
-          class="fa fa-sign-in ml-1"></i></button>
+        <button class="btn btn-elegant btn-sm waves-light" mdbRippleRadius routerLink=""
+                (click)="logout(); form.hide()">Wyloguj
+          <i class="fa fa-sign-in ml-1"></i></button>
       </div>
     </div>
   </div>
