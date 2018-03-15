@@ -17,7 +17,8 @@ import { forEach } from 'lodash';
 export class JobFormComponent implements OnInit {
   @ViewChild('dialog') private dialogSwal: SwalComponent;
 
-  fileToUpload: Array<any> = [];
+  public fileToUpload: Array<any> = [];
+  public sizeSum = null;
 
   constructor(private route: ActivatedRoute, private firestoreDAO: FirestoreDaoService, private swalObj: SwalObjService) {
   }
@@ -42,18 +43,28 @@ export class JobFormComponent implements OnInit {
   }
 
   checkFiles(files: FileList) {
-    const filesArr = Array.from(files);
+    this.sizeSum = null;
     let result = null;
+    const filesArr = Array.from(files);
 
     if (filesArr.length > 4) {
       result = 'Można dodać maksymalnie 4 pliki';
     } else {
+      let countSize = 0;
+
       forEach(filesArr, (file) => {
-        if (file.size > 2 * 1024 * 1024) {
-          result = 'Pojedynczy plik nie może mieć więcej niż 2 MB!!!';
+        countSize += file.size + (file.size * 0.33);
+
+        if (file.size > 1024 * 1024) {
+          result = 'Plik nie może przekraczać 1 MB !!!';
         }
       });
+
+      if (countSize / 1000000 > 1) {
+        this.sizeSum = countSize;
+      }
     }
+
     return Promise.resolve(result);
   }
 
@@ -91,14 +102,19 @@ export class JobFormComponent implements OnInit {
     this.firestoreDAO.sendEmail(data).then((result) => {
       const inputs = document.getElementsByTagName('input');
       this.fileToUpload = [];
+
       f.resetForm();
+
       forEach(inputs, (input) => {
         input.focus();
         input.blur();
       });
+
       this.swalObj.composeDialog('', 'Wiadomość została wysłana', 'success', this.dialogSwal);
     }).catch((err) => {
-      this.swalObj.composeDialog('Przykro nam', 'Nie można wysłać wiadomości', 'error', this.dialogSwal);
+      const message = 'Nie można wysłać wiadomości. Proszę sprawdzić poprawność plików i danych.';
+
+      this.swalObj.composeDialog('Przykro nam', message, 'error', this.dialogSwal);
       console.error(err);
     });
   }

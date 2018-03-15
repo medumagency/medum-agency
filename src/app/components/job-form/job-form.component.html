@@ -48,8 +48,7 @@
             <div class="d-inline">
               <span class="red-text"> *</span>
               <p class="d-inline" style="font-size: 13px">
-                <span class="mr-2">Dozwolone pliki: .jpg, .png, .xls</span>
-                (maxymalny rozmiar 2MB na plik)
+                <span class="mr-2">Dozwolone pliki: .jpg, .png, .xls, .pdf, .doc</span>
               </p>
             </div>
             <input type="file"
@@ -57,10 +56,15 @@
                    multiple
                    style="display: none"
                    (change)="handleFileInput($event.target.files)"
-                   name="attachments">
+                   accept=".jpg, .png, .xls, .doc, .pdf, .jpeg,image/jpg,image/png, application/pdf,application/msword,image/jpeg, application/vnd.ms-excel">
           </div>
           <div class="files-uploaded">
-            <p *ngFor="let file of fileToUpload">{{file.filename}} <strong class="ml-2">({{file.fileSize | byteFmt: 2}})</strong></p>
+            <p *ngFor="let file of fileToUpload">{{file.filename}}
+              <strong class="ml-2">({{file.fileSize | byteFmt: 2}})</strong>
+            </p>
+          </div>
+          <div *ngIf="sizeSum" style="color: red">
+            Łączny rozmiar plików przekroczył dozwoloną wartość: 1 MB <b>| {{sizeSum | byteFmt: 2}} |</b>
           </div>
 
           <div class="text-center">
