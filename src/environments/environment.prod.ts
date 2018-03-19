@@ -1,12 +1,13 @@
 export const environment = {
   production: true,
-  googleApiKey: 'AIzaSyB7EalOJGDq8V8A-AkmmO_rs4C3oRTEmng',
+  googleApiKey: process.env.GOOGLE_API_KEY,
   firebase: {
-    apiKey: 'AIzaSyDDG6etKym_EutoGzQoV54TeO8WeoihOJQ',
-    authDomain: 'medumagency-1518969360074.firebaseapp.com',
-    databaseURL: 'https://medumagency-1518969360074.firebaseio.com',
-    projectId: 'medumagency-1518969360074',
-    storageBucket: 'medumagency-1518969360074.appspot.com',
-    messagingSenderId: '910379131024'
-  }
+    apiKey: process.env.FIREBASE_APP_KEY,
+    authDomain: process.env.FIREBASE_AUTH,
+    databaseURL: process.env.FIREBASE_DB,
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    storageBucket: process.env.FIREBASE_BUCKET,
+    messagingSenderId: process.env.FIREBASE_SENDER_ID
+  },
+  sendEmail: process.env.SEND_EMAIL_URL
 };

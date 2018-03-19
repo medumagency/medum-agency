@@ -99,6 +99,7 @@ export class AdminManagerComponent implements OnInit {
     if (data.country.toLowerCase() === 'polska') {
       return new Promise((resolve, reject) => {
         this.firestoreDAO.getCounters().subscribe(({ payload }) => {
+          console.log(payload);
           const dataToSave = pick(payload.data(), [data.region, 'total']);
           if (add) {
             dataToSave[data.region] += 1;

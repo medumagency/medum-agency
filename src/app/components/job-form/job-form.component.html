@@ -1,43 +1,62 @@
 <div class="container">
-  <div class="mt-20 pt-2 align-middle">
-    <h2 class="d-flex justify-content-center">Wyślij do nas swoje zgłoszenie</h2>
+  <app-spinner [isWhole]="true" *ngIf="isSending"></app-spinner>
+  <div class="mt-10 pt-4 align-middle">
+    <h2 class="d-flex justify-content-center">Wyślij swoje zgłoszenie</h2>
   </div>
-  <div class="row mt-10 mb-5" style="padding-bottom: 3px">
-    <div class="col-lg-2 hidden-sm"></div>
-    <div class="col-sm-12 col-lg-8">
-      <form class="card" #f="ngForm" (ngSubmit)="submitForm(f)" novalidate>
+  <div class="row mt-2 mb-5" style="padding-bottom: 3px">
+    <div class="col-lg-3 hidden-sm"></div>
+    <div class="col-sm-12 col-lg-6">
+      <form class="card" [formGroup]="jobForm" (ngSubmit)="submitForm()" novalidate>
         <div class="card-body">
-          <div class="md-form">
-            <input mdbActive type="text" id="form1" class="form-control" name="firstName" ngModel>
+          <div class="md-form mt-2 mb-5">
+            <input mdbActive type="text" id="form1" class="form-control" formControlName="firstName">
             <label for="form1">Imię</label>
+            <div class="error-message-input" *ngIf="firstName.errors && (firstName.dirty || firstName.touched)">
+              <p *ngIf="firstName.errors['minlength']">{{errorMsg(firstName)}}</p>
+            </div>
           </div>
-          <div class="md-form">
-            <input mdbActive type="text" id="form2" class="form-control" name="lastName" ngModel>
+          <div class="md-form mt-2 mb-5">
+            <input mdbActive type="text" id="form2" class="form-control" formControlName="lastName">
             <label for="form2">Nazwisko</label>
+            <div class="error-message-input" *ngIf="lastName.errors && (lastName.dirty || lastName.touched)">
+              <p *ngIf="lastName.errors['minlength']">{{errorMsg(lastName)}}</p>
+            </div>
           </div>
 
-          <div class="md-form">
-            <input mdbActive type="text" id="form3" class="form-control" name="address" ngModel>
+          <div class="md-form mt-2 mb-5">
+            <input mdbActive type="text" id="form3" class="form-control" formControlName="address">
             <label for="form3">Adres zamieszkania</label>
+            <div class="error-message-input" *ngIf="address.errors && (address.dirty || address.touched)">
+              <p *ngIf="address.errors['minlength']">{{errorMsg(address)}}</p>
+            </div>
           </div>
 
-          <div class="md-form">
-            <input mdbActive type="text" id="form4" class="form-control" name="phone" ngModel>
+          <div class="md-form mt-2 mb-5">
+            <input mdbActive type="text" id="form4" class="form-control" formControlName="phone">
             <label for="form4">Telefon</label>
+            <div class="error-message-input" *ngIf="phone.errors && (phone.dirty || phone.touched)">
+              <p *ngIf="phone.errors['minlength']">{{errorMsg(phone)}}</p>
+            </div>
           </div>
 
-          <div class="md-form">
-            <input mdbActive type="email" id="form5" class="form-control" name="email" ngModel>
+          <div class="md-form mt-2 mb-5">
+            <input mdbActive type="email" id="form5" class="form-control" formControlName="email">
             <label for="form5">Email</label>
+            <div class="error-message-input" *ngIf="email.errors && (email.dirty || email.touched)">
+              <p *ngIf="email.errors['email'] && email.dirty">Nieprawidłowy Email</p>
+            </div>
           </div>
 
-          <div class="md-form">
-            <input mdbActive type="text" id="form6" class="form-control" name="position" ngModel>
+          <div class="md-form mt-2 mb-5">
+            <input mdbActive type="text" id="form6" class="form-control" formControlName="position">
             <label for="form6">Aplikuję na stanowisko</label>
+            <div class="error-message-input" *ngIf="position.errors && (position.dirty || position.touched)">
+              <p *ngIf="position.errors['minlength']">{{errorMsg(position)}}</p>
+            </div>
           </div>
 
-          <div class="md-form">
-            <textarea mdbActive type="text" id="form7" class="md-textarea" name="message" ngModel></textarea>
+          <div class="md-form mt-2 mb-5">
+            <textarea mdbActive type="text" id="form7" class="md-textarea" formControlName="message"></textarea>
             <label for="form7">Dodatkowe informacje</label>
           </div>
 
@@ -63,12 +82,9 @@
               <strong class="ml-2">({{file.fileSize | byteFmt: 2}})</strong>
             </p>
           </div>
-          <div *ngIf="sizeSum" style="color: red">
-            Łączny rozmiar plików przekroczył dozwoloną wartość: 1 MB <b>| {{sizeSum | byteFmt: 2}} |</b>
-          </div>
 
           <div class="text-center">
-            <button class="btn btn-elegant waves-light" mdbRippleRadius>Wyślij</button>
+            <button class="btn btn-elegant waves-light" mdbRippleRadius [disabled]="!jobForm.valid">Wyślij</button>
           </div>
         </div>
       </form>

@@ -133,3 +133,41 @@ body.modal-open {
     stroke-width:0px;
   }
 }
+
+input.ng-invalid.ng-dirty.ng-touched, input.ng-invalid.ng-dirty.ng-touched:focus,
+input.ng-invalid.ng-dirty.ng-untouched, input.ng-invalid.ng-dirty.ng-untouched:focus {
+  border-bottom: 1px solid red;
+  box-shadow: 0 1px 0 0 red;
+}
+
+input.ng-valid.ng-dirty.ng-touched, input.ng-valid.ng-dirty.ng-untouched {
+  border-bottom: 1px solid #01d36b;
+  box-shadow: 0 1px 0 0 #01d36b;
+}
+
+textarea.ng-invalid.ng-dirty.ng-touched, textarea.ng-invalid.ng-dirty.ng-touched:focus,
+textarea.ng-invalid.ng-dirty.ng-untouched, textarea.ng-invalid.ng-dirty.ng-untouched:focus {
+  border-bottom: 1px solid red;
+  box-shadow: 0 1px 0 0 red;
+}
+
+textarea.ng-valid.ng-dirty.ng-touched, textarea.ng-valid.ng-dirty.ng-untouched {
+  border-bottom: 1px solid #01d36b;
+  box-shadow: 0 1px 0 0 #01d36b;
+}
+
+.error-message-input {
+  position: absolute;
+  color: red;
+  top: 55px;
+}
+
+.error-message-textarea {
+  position: absolute;
+  color: red;
+  top: 100px;
+}
+
+.files-uploaded {
+  margin: 10px 10px 0;
+}

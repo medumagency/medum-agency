@@ -32,13 +32,14 @@ import { GoogleChartDirective } from './directives/google-chart.directive';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { AdminManagerComponent } from './components/admin-manager/admin-manager.component';
 import { HoverImageDirective } from './directives/hover-image.directive';
-import { FormsModule } from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './services/auth.service';
 import { AdminGuardGuard } from './guards/admin-guard.guard';
 import { HttpClientModule } from '@angular/common/http';
 import { NgPipesModule } from 'ng-pipes';
 import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 import { SwalObjService } from './services/swal-obj.service';
+import { CompanyEmailService } from './services/company-email.service';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { SwalObjService } from './services/swal-obj.service';
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     MDBBootstrapModule.forRoot(),
     NgbModule.forRoot(),
     AgmCoreModule.forRoot({
@@ -81,7 +83,7 @@ import { SwalObjService } from './services/swal-obj.service';
     SweetAlert2Module.forRoot()
   ],
   schemas: [NO_ERRORS_SCHEMA],
-  providers: [FirestoreDaoService, AuthService, AdminGuardGuard, SwalObjService],
+  providers: [FirestoreDaoService, AuthService, AdminGuardGuard, SwalObjService, CompanyEmailService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

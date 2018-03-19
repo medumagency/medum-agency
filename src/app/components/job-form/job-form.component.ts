@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FirestoreDaoService } from '../../services/dao/firestore-dao.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/mergeMap';
 import { SwalComponent } from '@toverux/ngx-sweetalert2';
 import { SwalObjService } from '../../services/swal-obj.service';
 import { forEach } from 'lodash';
+import { CompanyEmailService } from '../../services/company-email.service';
 
 
 @Component({
@@ -17,15 +18,53 @@ import { forEach } from 'lodash';
 export class JobFormComponent implements OnInit {
   @ViewChild('dialog') private dialogSwal: SwalComponent;
 
+  public jobForm: FormGroup;
+  public firstName: FormControl;
+  public lastName: FormControl;
+  public address: FormControl;
+  public phone: FormControl;
+  public email: FormControl;
+  public position: FormControl;
+  public message: FormControl;
+
   public fileToUpload: Array<any> = [];
   public sizeSum = null;
+  public isSending = false;
 
-  constructor(private route: ActivatedRoute, private firestoreDAO: FirestoreDaoService, private swalObj: SwalObjService) {
+  constructor(private route: ActivatedRoute,
+              private firestoreDAO: FirestoreDaoService,
+              private swalObj: SwalObjService,
+              private companyEmail: CompanyEmailService) {
   }
 
   ngOnInit() {
+    this.createForm();
     this.route.queryParams.subscribe(params => {
       console.log(params);
+    });
+  }
+
+  createControls() {
+    this.firstName = new FormControl('', [Validators.required, Validators.minLength(3)]);
+    this.lastName = new FormControl('', [Validators.required, Validators.minLength(3)]);
+    this.address = new FormControl('', [Validators.required, Validators.minLength(5)]);
+    this.phone = new FormControl('', [Validators.required, Validators.minLength(9)]);
+    this.email = new FormControl('', [Validators.required, Validators.email]);
+    this.position = new FormControl('', [Validators.required, Validators.minLength(3)]);
+    this.message = new FormControl('');
+  }
+
+  createForm() {
+    this.createControls();
+
+    this.jobForm = new FormGroup({
+      firstName: this.firstName,
+      lastName: this.lastName,
+      address: this.address,
+      phone: this.phone,
+      email: this.email,
+      position: this.position,
+      message: this.message
     });
   }
 
@@ -45,23 +84,17 @@ export class JobFormComponent implements OnInit {
   checkFiles(files: FileList) {
     this.sizeSum = null;
     let result = null;
+    let count = 0;
     const filesArr = Array.from(files);
 
-    if (filesArr.length > 4) {
-      result = 'Można dodać maksymalnie 4 pliki';
+    if (!filesArr.length) {
+      return Promise.resolve(null);
     } else {
-      let countSize = 0;
-
       forEach(filesArr, (file) => {
-        countSize += file.size + (file.size * 0.33);
-
-        if (file.size > 1024 * 1024) {
-          result = 'Plik nie może przekraczać 1 MB !!!';
-        }
+        count += file.size + (file.size * 0.33);
       });
-
-      if (countSize / 1000000 > 1) {
-        this.sizeSum = countSize;
+      if (count > 10 * 1024 * 1024) {
+        result = 'Łączny rozmiar wszystkich plików nie może przekraczać 10 MB !';
       }
     }
 
@@ -93,29 +126,50 @@ export class JobFormComponent implements OnInit {
     return Observable.merge(observables).mergeMap(flat => flat);
   }
 
-  submitForm(f: NgForm) {
-    const { value } = f;
-    const data = Object.assign(value, { type: 'JOB', attachments: this.fileToUpload });
+  clearInputs() {
+    const inputs = document.getElementsByTagName('input');
+    const textAreas = document.getElementsByTagName('textarea');
+    const clearBoxes = input => {
+      input.focus();
+      input.blur();
+    };
 
-    console.log(this.fileToUpload);
+    forEach(textAreas, clearBoxes);
+    forEach(inputs, clearBoxes);
+  }
 
-    this.firestoreDAO.sendEmail(data).then((result) => {
-      const inputs = document.getElementsByTagName('input');
-      this.fileToUpload = [];
+  errorMsg(property) {
+    const required = property.errors.minlength.requiredLength;
+    const actual = property.errors.minlength.actualLength;
+    return `Password must be ${required} characters long, we need another
+     ${required - actual} characters `;
+  }
 
-      f.resetForm();
+  submitForm() {
+    console.log(this.jobForm);
+    const { value, valid } = this.jobForm;
 
-      forEach(inputs, (input) => {
-        input.focus();
-        input.blur();
-      });
+    if (valid) {
+      this.isSending = true;
+      const data = Object.assign(value, { type: 'JOB', attachments: this.fileToUpload });
 
-      this.swalObj.composeDialog('', 'Wiadomość została wysłana', 'success', this.dialogSwal);
-    }).catch((err) => {
-      const message = 'Nie można wysłać wiadomości. Proszę sprawdzić poprawność plików i danych.';
+      console.log(this.fileToUpload);
 
-      this.swalObj.composeDialog('Przykro nam', message, 'error', this.dialogSwal);
-      console.error(err);
-    });
+      this.companyEmail.sendEmail(data)
+        .then(() => {
+          this.isSending = false;
+          this.fileToUpload = [];
+          this.jobForm.reset();
+          this.clearInputs();
+          this.swalObj.composeDialog('', 'Wiadomość została wysłana', 'success', this.dialogSwal);
+        })
+        .catch((err) => {
+          this.isSending = false;
+          const message = 'Nie można wysłać wiadomości. Proszę sprawdzić poprawność plików i danych.';
+
+          this.swalObj.composeDialog('Przykro nam', message, 'error', this.dialogSwal);
+          console.error(err);
+        });
+    }
   }
 }

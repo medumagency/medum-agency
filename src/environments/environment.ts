@@ -13,5 +13,6 @@ export const environment = {
     projectId: 'medumagency-1518969360074',
     storageBucket: 'medumagency-1518969360074.appspot.com',
     messagingSenderId: '910379131024'
-  }
+  },
+  sendEmail: ''
 };

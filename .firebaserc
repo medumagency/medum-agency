@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "medumagency-1518969360074"
+    "default": "medumagency-1518969360074",
+    "medumcompany": "medumcompany-9c02c"
   }
 }

@@ -8,44 +8,10 @@ import * as firebase from 'firebase/app';
 import DocumentReference = firebase.firestore.DocumentReference;
 import { IEmail } from '../../interfaces/email.interface';
 
-function convertEmailData(data: IEmail): any {
-  const fullName = `${data.firstName} ${data.lastName || ''}`;
-  let html: string;
-
-  if (data.type === 'JOB') {
-    data.subject = 'FORMULARZ ZGŁOSZENIA';
-    html = `<h3>Od: ${fullName}</h3>
-            <div>Email: ${data.email}</div>
-            <div>Adres: ${data.address}</div>
-            <dvi>Telefon: ${data.phone}</dvi>
-            <div>Stanowisko: ${data.position}</div>
-            <div>${data.message}</div>`;
-  } else if (data.type === 'COOPERATION') {
-    data.subject = 'FORMULARZ WSPÓŁPRACY';
-    html = `<h3>Firma: ${data.companyName}</h3>
-            <div>Email: ${data.email}</div>
-            <div>Adres: ${data.address}</div>
-            <dvi>Telefon: ${data.phone}</dvi>`;
-  } else if (data.type === 'CONTACT') {
-    data.subject = 'KONTAKT';
-    html = `<h3>Od: ${fullName}</h3>
-            <div>Email: ${data.email}</div>
-            <div>Temat: ${data.subject}</div>
-            <dvi>${data.message}</dvi>`;
-  }
-  return {
-    type: data.type,
-    subject: data.subject,
-    html,
-    attachments: data.attachments || []
-  };
-}
-
 @Injectable()
 export class FirestoreDaoService {
 
   private jobOffersCollection: AngularFirestoreCollection<IJobOffer>;
-  private emailsCollection: AngularFirestoreCollection<IEmail>;
   private jobOffers: Observable<IJobOffer[]>;
   private jobOfferDoc: AngularFirestoreDocument<IJobOffer>;
   private counterDoc: AngularFirestoreDocument<any>;
@@ -87,20 +53,14 @@ export class FirestoreDaoService {
   }
 
   getCounters(): Observable<any> {
-    this.counterDoc = this.afs.doc('offersCounter/Y78hdYlYSpypxyrQV7rX');
+    this.counterDoc = this.afs.doc('offersCounter/TasthX1qnrI9Vi3IIJ8o');
     // this.jobOffers = this.jobOffersCollection.valueChanges();
 
     return this.counterDoc.snapshotChanges().take(1);
   }
 
   updateCounter(data: any): Promise<void> {
-    this.counterDoc = this.afs.doc('offersCounter/Y78hdYlYSpypxyrQV7rX');
+    this.counterDoc = this.afs.doc('offersCounter/TasthX1qnrI9Vi3IIJ8o');
     return this.counterDoc.update(data);
-  }
-
-  sendEmail(data: IEmail): Promise<DocumentReference> {
-    this.emailsCollection = this.afs.collection('emails');
-
-    return this.emailsCollection.add(convertEmailData(data));
   }
 }

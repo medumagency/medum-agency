@@ -1,45 +1,53 @@
 <div class="container" style="overflow: hidden">
-  <div class="row mt-5 pt-5 mb-2">
-    <section class="section text-center">
-      <h2 class="section-heading h1 pt-5">Skontaktuj się z nami!</h2>
-      <p class="section-description pb-4 ml-lg-5 mr-lg-5 pt-lg-5 pl-lg-5 mr-3 ml-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, error amet
-        numquam iure provident voluptate esse quasi, veritatis totam voluptas nostrum quisquam eum porro a pariatur
-        accusamus veniam.</p>
-    </section>
+  <app-spinner [isWhole]="true" *ngIf="isSending"></app-spinner>
+  <div class="mt-5 pt-5 mb-3">
+    <h1 class="pt-3 text-center">Skontaktuj się z nami!</h1>
   </div>
   <section>
     <div class="container">
-      <div class="row mb-5">
-        <div class="col-lg-5 col-sm-12 mb-4">
-          <form class="card" #f="ngForm" (ngSubmit)="submitForm(f)" novalidate>
+      <div class="row mb-10">
+        <div class="col-lg-5 col-sm-12 mb-5">
+          <form class="card" [formGroup]="contactForm" (ngSubmit)="submitForm()" novalidate>
             <div class="card-body">
-              <div class="md-form">
-                <input mdbActive type="text" id="form1" class="form-control" name="firstName" ngModel>
+              <div class="md-form mt-2 mb-5">
+                <input mdbActive type="text" id="form1" class="form-control" formControlName="firstName">
                 <label for="form1">Imię</label>
+                <div class="error-message-input" *ngIf="firstName.errors && (firstName.dirty || firstName.touched)">
+                  <p *ngIf="firstName.errors['minlength']">{{errorMsg(firstName)}}</p>
+                </div>
               </div>
 
-              <div class="md-form">
-                <input mdbActive type="text" id="form2" class="form-control" name="lastName" ngModel>
+              <div class="md-form mt-2 mb-5">
+                <input mdbActive type="text" id="form2" class="form-control" formControlName="lastName">
                 <label for="form2">Nazwisko</label>
               </div>
 
-              <div class="md-form">
-                <input mdbActive type="email" id="form3" class="form-control" name="email" ngModel>
+              <div class="md-form mt-2 mb-5">
+                <input mdbActive type="email" id="form3" class="form-control" formControlName="email">
                 <label for="form3">Email</label>
+                <div class="error-message-input" *ngIf="email.errors && (email.dirty || email.touched)">
+                  <p *ngIf="email.errors['email'] && email.dirty">Nieprawidłowy Email</p>
+                </div>
               </div>
 
-              <div class="md-form">
-                <input mdbActive type="text" id="form4" class="form-control" name="subject" ngModel>
+              <div class="md-form mt-2 mb-5">
+                <input mdbActive type="text" id="form4" class="form-control" formControlName="subject">
                 <label for="form4">Temat</label>
+                <div class="error-message-input" *ngIf="subject.errors && (subject.dirty || subject.touched)">
+                  <p *ngIf="subject.errors['minlength']">{{errorMsg(subject)}}</p>
+                </div>
               </div>
 
-              <div class="md-form">
-                <textarea mdbActive type="text" id="form5" class="md-textarea" name="message" ngModel></textarea>
+              <div class="md-form mt-2 mb-5">
+                <textarea mdbActive type="text" id="form5" class="md-textarea" formControlName="message"></textarea>
                 <label for="form5">Wiadomość</label>
+                <div class="error-message-textarea" *ngIf="message.errors && (message.dirty || message.touched)">
+                  <p *ngIf="message.errors['minlength']">{{errorMsg(message)}}</p>
+                </div>
               </div>
 
               <div class="text-center">
-                <button class="btn btn-elegant waves-light" mdbRippleRadius>Wyślij</button>
+                <button class="btn btn-elegant waves-light" mdbRippleRadius [disabled]="contactForm.invalid">Wyślij</button>
               </div>
             </div>
           </form>
