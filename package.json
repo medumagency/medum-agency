@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod",
+    "build": "node ./create-env.js && ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -25,6 +25,7 @@
     "@angular/router": "^5.2.0",
     "@ng-bootstrap/ng-bootstrap": "^1.0.0",
     "@toverux/ngx-sweetalert2": "^3.4.0",
+    "@types/dotenv": "^4.0.2",
     "@types/lodash": "^4.14.104",
     "angular-bootstrap-md": "^5.2.0",
     "angular2-moment": "^1.8.0",
@@ -32,6 +33,7 @@
     "bluebird": "^3.5.1",
     "chart.js": "^2.7.1",
     "core-js": "^2.4.1",
+    "dotenv": "^5.0.1",
     "firebase": "^4.10.0",
     "flag-icon-css": "^2.9.0",
     "font-awesome": "^4.7.0",
