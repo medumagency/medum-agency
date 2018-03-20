@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { FirestoreDaoService } from '../../services/dao/firestore-dao.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/mergeMap';
@@ -126,18 +126,6 @@ export class JobFormComponent implements OnInit {
     return Observable.merge(observables).mergeMap(flat => flat);
   }
 
-  clearInputs() {
-    const inputs = document.getElementsByTagName('input');
-    const textAreas = document.getElementsByTagName('textarea');
-    const clearBoxes = input => {
-      input.focus();
-      input.blur();
-    };
-
-    forEach(textAreas, clearBoxes);
-    forEach(inputs, clearBoxes);
-  }
-
   errorMsg(property) {
     const required = property.errors.minlength.requiredLength;
     const actual = property.errors.minlength.actualLength;
@@ -145,7 +133,7 @@ export class JobFormComponent implements OnInit {
      ${required - actual} characters `;
   }
 
-  submitForm() {
+  submitForm(f: NgForm) {
     console.log(this.jobForm);
     const { value, valid } = this.jobForm;
 
@@ -159,8 +147,7 @@ export class JobFormComponent implements OnInit {
         .then(() => {
           this.isSending = false;
           this.fileToUpload = [];
-          this.jobForm.reset();
-          this.clearInputs();
+          f.resetForm();
           this.swalObj.composeDialog('', 'Wiadomość została wysłana', 'success', this.dialogSwal);
         })
         .catch((err) => {

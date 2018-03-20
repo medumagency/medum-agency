@@ -5,46 +5,53 @@
   </div>
   <section>
     <div class="container">
-      <div class="row mb-10">
+      <div class="row mb-20">
         <div class="col-lg-5 col-sm-12 mb-5">
-          <form class="card" [formGroup]="contactForm" (ngSubmit)="submitForm()" novalidate>
+          <form class="card" [formGroup]="contactForm" (ngSubmit)="submitForm(f)" #f="ngForm" novalidate>
             <div class="card-body">
-              <div class="md-form mt-2 mb-5">
-                <input mdbActive type="text" id="form1" class="form-control" formControlName="firstName">
-                <label for="form1">Imię</label>
-                <div class="error-message-input" *ngIf="firstName.errors && (firstName.dirty || firstName.touched)">
-                  <p *ngIf="firstName.errors['minlength']">{{errorMsg(firstName)}}</p>
-                </div>
-              </div>
+              <mat-form-field class="w-100">
+                <input matInput placeholder="Imię" [formControl]="firstName">
+                <mat-error *ngIf="firstName.hasError('minlength') && !firstName.hasError('required')">
+                  {{errorMsg(firstName)}}
+                </mat-error>
+                <mat-error *ngIf="firstName.hasError('required')">
+                  To pole jest <strong>wymagane</strong>
+                </mat-error>
+              </mat-form-field>
 
-              <div class="md-form mt-2 mb-5">
-                <input mdbActive type="text" id="form2" class="form-control" formControlName="lastName">
-                <label for="form2">Nazwisko</label>
-              </div>
+              <mat-form-field class="w-100">
+                <input matInput placeholder="Nazwisko" [formControl]="lastName">
+              </mat-form-field>
 
-              <div class="md-form mt-2 mb-5">
-                <input mdbActive type="email" id="form3" class="form-control" formControlName="email">
-                <label for="form3">Email</label>
-                <div class="error-message-input" *ngIf="email.errors && (email.dirty || email.touched)">
-                  <p *ngIf="email.errors['email'] && email.dirty">Nieprawidłowy Email</p>
-                </div>
-              </div>
+              <mat-form-field class="w-100">
+                <input matInput placeholder="Email" [formControl]="email">
+                <mat-error *ngIf="email.hasError('email') && !email.hasError('required')">
+                  Nieprawidłowy e-mail
+                </mat-error>
+                <mat-error *ngIf="email.hasError('required')">
+                  To pole jest <strong>wymagane</strong>
+                </mat-error>
+              </mat-form-field>
 
-              <div class="md-form mt-2 mb-5">
-                <input mdbActive type="text" id="form4" class="form-control" formControlName="subject">
-                <label for="form4">Temat</label>
-                <div class="error-message-input" *ngIf="subject.errors && (subject.dirty || subject.touched)">
-                  <p *ngIf="subject.errors['minlength']">{{errorMsg(subject)}}</p>
-                </div>
-              </div>
+              <mat-form-field class="w-100">
+                <input matInput placeholder="Temat" [formControl]="subject">
+                <mat-error *ngIf="subject.hasError('minlength') && !subject.hasError('required')">
+                  {{errorMsg(subject)}}
+                </mat-error>
+                <mat-error *ngIf="subject.hasError('required')">
+                  To pole jest <strong>wymagane</strong>
+                </mat-error>
+              </mat-form-field>
 
-              <div class="md-form mt-2 mb-5">
-                <textarea mdbActive type="text" id="form5" class="md-textarea" formControlName="message"></textarea>
-                <label for="form5">Wiadomość</label>
-                <div class="error-message-textarea" *ngIf="message.errors && (message.dirty || message.touched)">
-                  <p *ngIf="message.errors['minlength']">{{errorMsg(message)}}</p>
-                </div>
-              </div>
+              <mat-form-field class="w-100">
+                <input matInput placeholder="Wiadomość" [formControl]="message">
+                <mat-error *ngIf="message.hasError('minlength') && !message.hasError('required')">
+                  {{errorMsg(message)}}
+                </mat-error>
+                <mat-error *ngIf="message.hasError('required')">
+                  To pole jest <strong>wymagane</strong>
+                </mat-error>
+              </mat-form-field>
 
               <div class="text-center">
                 <button class="btn btn-elegant waves-light" mdbRippleRadius [disabled]="contactForm.invalid">Wyślij</button>

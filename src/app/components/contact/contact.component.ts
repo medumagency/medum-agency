@@ -53,18 +53,6 @@ export class ContactComponent implements OnInit {
     });
   }
 
-  clearInputs() {
-    const inputs = document.getElementsByTagName('input');
-    const textAreas = document.getElementsByTagName('textarea');
-    const clearBoxes = input => {
-      input.focus();
-      input.blur();
-    };
-
-    forEach(inputs, clearBoxes);
-    forEach(textAreas, clearBoxes);
-  }
-
   errorMsg(property) {
     const required = property.errors.minlength.requiredLength;
     const actual = property.errors.minlength.actualLength;
@@ -72,7 +60,7 @@ export class ContactComponent implements OnInit {
      ${required - actual} characters `;
   }
 
-  submitForm() {
+  submitForm(f: NgForm) {
     const { value, valid } = this.contactForm;
 
     if (valid) {
@@ -82,8 +70,7 @@ export class ContactComponent implements OnInit {
       this.companyEmail.sendEmail(data)
         .then(() => {
           this.isSending = false;
-          this.contactForm.reset();
-          this.clearInputs();
+          f.resetForm();
           this.swalObj.composeDialog('', 'Wiadomość została wysłana', 'success', this.dialogSwal);
         })
         .catch((err) => {

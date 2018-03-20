@@ -40,6 +40,7 @@ import { NgPipesModule } from 'ng-pipes';
 import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 import { SwalObjService } from './services/swal-obj.service';
 import { CompanyEmailService } from './services/company-email.service';
+import { MaterialModule } from './material.module';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,6 @@ import { CompanyEmailService } from './services/company-email.service';
     FormsModule,
     ReactiveFormsModule,
     MDBBootstrapModule.forRoot(),
-    NgbModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: environment.googleApiKey
     }),
@@ -80,7 +80,8 @@ import { CompanyEmailService } from './services/company-email.service';
     MomentModule,
     HttpClientModule,
     NgPipesModule,
-    SweetAlert2Module.forRoot()
+    SweetAlert2Module.forRoot(),
+    MaterialModule
   ],
   schemas: [NO_ERRORS_SCHEMA],
   providers: [FirestoreDaoService, AuthService, AdminGuardGuard, SwalObjService, CompanyEmailService],

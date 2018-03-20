@@ -1,123 +1,279 @@
 <div class="container">
-  <div class="row mt-15" style="margin-bottom: 50%">
-    <ngb-tabset #t="ngbTabset" style="min-width: 100%;" (tabChange)="setData()">
-      <ngb-tab id="tab-1" title="Lista ofert">
-        <ng-template ngbTabContent>
+  <div class="row mt-15" style="margin-bottom: 85%">
+    <mat-tab-group [dynamicHeight]="true" class="demo-tab-group" style="min-width: 100%" [(selectedIndex)]="selectedTab" (selectedIndexChange)="resetForms($event, f)">
+      <mat-tab label="Lista ofert">
+        <div>
           <app-spinner *ngIf="isLoading"></app-spinner>
           <h1 class="text-center mt-20 pt-5 mb-20" *ngIf="!jobOffers.length && !isLoading">
             Brak ofert
           </h1>
-          <ngb-accordion [closeOthers]="true" activeIds="0" *ngIf="jobOffers.length && !isLoading">
-            <ngb-panel id="{{idx}}" *ngFor="let offer of jobOffers; index as idx">
-              <ng-template ngbPanelTitle>
-                <div class="d-flex justify-content-between">
-                  <div><b>{{offer.title}}</b></div>
-                  <div>{{offer.date | amDateFormat:'YYYY-MM-DD HH:mm'}}</div>
-                </div>
-              </ng-template>
-              <ng-template ngbPanelContent>
+          <div class="col-12 pt-2 pb-5">
+            <mat-accordion *ngIf="jobOffers.length && !isLoading">
+              <mat-expansion-panel [expanded]="step === idx" (opened)="setStep(idx)" *ngFor="let offer of jobOffers; index as idx">
+                <mat-expansion-panel-header class="header-color">
+                  <mat-panel-title>
+                    {{offer.polish.polishTitle}}
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    {{offer.date | amDateFormat:'DD-MM-YYYY HH:mm'}}
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+
                 <div class="d-flex justify-content-between text-uppercase">
                   <div>
-                    <span class="badge badge-default">{{offer.country}}</span>
-                    <span class="badge badge-info">{{offer.region}}</span>
-                    <span class="badge badge-primary">{{offer.city}}</span>
+                    <span class="badge badge-default">{{offer.polish.polishCountry}}</span>
+                    <span class="badge badge-info">{{offer.polish.polishRegion}}</span>
+                    <span class="badge badge-primary">{{offer.polish.polishCity}}</span>
                   </div>
                   <div class="d-flex justify-content-end">
                     <div class="p-2" appHoverImage color="#ff8800" mdbTooltip="Edytuj" placement="top"
-                         (click)="t.select('tab-2'); setData(offer)"><i class="fa fa-edit"></i></div>
+                         (click)="setData(offer); selectedTab = 1"><i class="fa fa-edit"></i></div>
                     <div class="p-2" appHoverImage color="red" mdbTooltip="Usuń" placement="top"
                          (click)="deleteJobOffer(offer)"><i
                       class="fa fa-trash"></i></div>
                   </div>
                 </div>
-                {{offer.polish}}
-              </ng-template>
-            </ngb-panel>
-          </ngb-accordion>
-        </ng-template>
-      </ngb-tab>
-      <ngb-tab id="tab-2" title="Oferta">
-        <ng-template ngbTabContent>
+                <p>{{offer.polish.polishText}}</p>
+
+                <mat-action-row class="mt-5">
+                  <button class="btn btn-sm" [ngClass]="{'btn-elegant': step !== 0}" (click)="prevStep()" [disabled]="step === 0">Poprzednia</button>
+                  <button class="btn btn-sm" [ngClass]="{'btn-primary': step !== jobOffers.length - 1}" (click)="nextStep()" [disabled]="step === jobOffers.length - 1">Następna</button>
+                </mat-action-row>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Oferta">
+        <div>
           <div class="container">
-            <form #f="ngForm" (ngSubmit)="saveOffer(f)" novalidate>
-              <div class="row mt-5">
-                <div class="col-md-6">
-                  <div class="md-form">
-                    <input mdbActive type="text" class="form-control" id="form9" mdbInputValidate name="title"
-                           [ngModel]="offer.title">
-                    <label for="form9">Tytuł</label>
+            <form (submit)="saveOffer(f)" [formGroup]="offerForm" novalidate #f="ngForm">
+              <mat-tab-group [dynamicHeight]="true">
+                <mat-tab label="Polski">
+                  <div formGroupName="polish">
+                    <div class="row mt-5">
+                      <div class="col-md-6">
+                        <mat-form-field class="w-100">
+                          <input matInput placeholder="Tytuł" [formControl]="polishTitle">
+                          <mat-error *ngIf="polishTitle.hasError('minlength') && !polishTitle.hasError('required')">
+                            {{errorMsg(polishTitle)}}
+                          </mat-error>
+                          <mat-error *ngIf="polishTitle.hasError('required')">
+                            Tytuł jest <strong>wymagany</strong>
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-md-6"></div>
+                    </div>
+
+                    <div class="row mt-5">
+                      <div class="col-md-12">
+                        <mat-form-field class="w-100">
+                          <textarea matInput placeholder="Opis" [formControl]="polishText"></textarea>
+                          <mat-error *ngIf="polishText.hasError('minlength') && !polishText.hasError('required')">
+                            {{errorMsg(polishText)}}
+                          </mat-error>
+                          <mat-error *ngIf="polishText.hasError('required')">
+                            Opis jest <strong>wymagany</strong>
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+                    <div class="row mt-5">
+                      <div class="col-md-4">
+                        <mat-form-field class="w-100">
+                          <input matInput placeholder="Kraj" [formControl]="polishCountry">
+                          <mat-error *ngIf="polishCountry.hasError('minlength') && !polishCountry.hasError('required')">
+                            {{errorMsg(polishCountry)}}
+                          </mat-error>
+                          <mat-error *ngIf="polishCountry.hasError('required')">
+                            Kraj jest <strong>wymagany</strong>
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+
+                      <div class="col-md-4">
+                        <mat-form-field class="w-100">
+                          <input matInput placeholder="Region" [formControl]="polishRegion">
+                          <mat-error *ngIf="polishRegion.hasError('minlength') && !polishRegion.hasError('required')">
+                            {{errorMsg(polishRegion)}}
+                          </mat-error>
+                          <mat-error *ngIf="polishRegion.hasError('required')">
+                            Region jest <strong>wymagany</strong>
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+
+                      <div class="col-md-4">
+                        <mat-form-field class="w-100">
+                          <input matInput placeholder="Miasto" [formControl]="polishCity">
+                          <mat-error *ngIf="polishCity.hasError('minlength') && !polishCity.hasError('required')">
+                            {{errorMsg(polishCity)}}
+                          </mat-error>
+                          <mat-error *ngIf="polishCity.hasError('required')">
+                            Miasto jest <strong>wymagany</strong>
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+
+                    </div>
                   </div>
-                </div>
-                <div class="col-md-6"></div>
-              </div>
+                </mat-tab>
+                <mat-tab label="Angielski">
+                  <div formGroupName="english">
+                    <div class="row mt-5">
+                      <div class="col-md-6">
+                        <mat-form-field class="w-100">
+                          <input matInput placeholder="Tytuł" [formControl]="englishTitle">
+                          <mat-error *ngIf="englishTitle.hasError('minlength') && !englishTitle.hasError('required')">
+                            {{errorMsg(englishTitle)}}
+                          </mat-error>
+                          <mat-error *ngIf="englishTitle.hasError('required')">
+                            Tytuł jest <strong>wymagany</strong>
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-md-6"></div>
+                    </div>
 
-              <div class="row mt-5">
-                <div class="col-md-12">
-                  <div class="md-form">
-                    <textarea mdbActive type="text" id="areaPolish" class="md-textarea" name="polish"
-                              [ngModel]="offer.polish"></textarea>
-                    <label for="areaPolish">Polski Opis</label>
+                    <div class="row mt-5">
+                      <div class="col-md-12">
+                        <mat-form-field class="w-100">
+                          <textarea matInput placeholder="Opis" [formControl]="englishText"></textarea>
+                          <mat-error *ngIf="englishText.hasError('minlength') && !englishText.hasError('required')">
+                            {{errorMsg(englishText)}}
+                          </mat-error>
+                          <mat-error *ngIf="englishText.hasError('required')">
+                            Opis jest <strong>wymagany</strong>
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+                    <div class="row mt-5">
+                      <div class="col-md-4">
+                        <mat-form-field class="w-100">
+                          <input matInput placeholder="Kraj" [formControl]="englishCountry">
+                          <mat-error *ngIf="englishCountry.hasError('minlength') && !englishCountry.hasError('required')">
+                            {{errorMsg(englishCountry)}}
+                          </mat-error>
+                          <mat-error *ngIf="englishCountry.hasError('required')">
+                            Kraj jest <strong>wymagany</strong>
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+
+                      <div class="col-md-4">
+                        <mat-form-field class="w-100">
+                          <input matInput placeholder="Region" [formControl]="englishRegion">
+                          <mat-error *ngIf="englishRegion.hasError('minlength') && !englishRegion.hasError('required')">
+                            {{errorMsg(englishRegion)}}
+                          </mat-error>
+                          <mat-error *ngIf="englishRegion.hasError('required')">
+                            Region jest <strong>wymagany</strong>
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+
+                      <div class="col-md-4">
+                        <mat-form-field class="w-100">
+                          <input matInput placeholder="Miasto" [formControl]="englishCity">
+                          <mat-error *ngIf="englishCity.hasError('minlength') && !englishCity.hasError('required')">
+                            {{errorMsg(englishCity)}}
+                          </mat-error>
+                          <mat-error *ngIf="englishCity.hasError('required')">
+                            Miasto jest <strong>wymagany</strong>
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+
+                    </div>
                   </div>
+                </mat-tab>
+                <mat-tab label="Niemiecki">
+                  <div formGroupName="german">
+                    <div class="row mt-5">
+                      <div class="col-md-6">
+                        <mat-form-field class="w-100">
+                          <input matInput placeholder="Tytuł" [formControl]="germanTitle">
+                          <mat-error *ngIf="germanTitle.hasError('minlength') && !germanTitle.hasError('required')">
+                            {{errorMsg(germanTitle)}}
+                          </mat-error>
+                          <mat-error *ngIf="germanTitle.hasError('required')">
+                            Tytuł jest <strong>wymagany</strong>
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-md-6"></div>
+                    </div>
 
-                </div>
-              </div>
-              <div class="row mt-5">
-                <div class="col-md-12">
-                  <div class="md-form">
-                    <textarea mdbActive type="text" id="areaEnglish" class="md-textarea" name="english"
-                              [ngModel]="offer.english"></textarea>
-                    <label for="areaEnglish">Angielski Opis</label>
+                    <div class="row mt-5">
+                      <div class="col-md-12">
+                        <mat-form-field class="w-100">
+                          <textarea matInput placeholder="Opis" [formControl]="germanText"></textarea>
+                          <mat-error *ngIf="germanText.hasError('minlength') && !germanText.hasError('required')">
+                            {{errorMsg(germanText)}}
+                          </mat-error>
+                          <mat-error *ngIf="germanText.hasError('required')">
+                            Opis jest <strong>wymagany</strong>
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+                    <div class="row mt-5">
+                      <div class="col-md-4">
+                        <mat-form-field class="w-100">
+                          <input matInput placeholder="Kraj" [formControl]="germanCountry">
+                          <mat-error *ngIf="germanCountry.hasError('minlength') && !germanCountry.hasError('required')">
+                            {{errorMsg(germanCountry)}}
+                          </mat-error>
+                          <mat-error *ngIf="germanCountry.hasError('required')">
+                            Kraj jest <strong>wymagany</strong>
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+
+                      <div class="col-md-4">
+                        <mat-form-field class="w-100">
+                          <input matInput placeholder="Region" [formControl]="germanRegion">
+                          <mat-error *ngIf="germanRegion.hasError('minlength') && !germanRegion.hasError('required')">
+                            {{errorMsg(germanRegion)}}
+                          </mat-error>
+                          <mat-error *ngIf="germanRegion.hasError('required')">
+                            Region jest <strong>wymagany</strong>
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+
+                      <div class="col-md-4">
+                        <mat-form-field class="w-100">
+                          <input matInput placeholder="Miasto" [formControl]="germanCity">
+                          <mat-error *ngIf="germanCity.hasError('minlength') && !germanCity.hasError('required')">
+                            {{errorMsg(germanCity)}}
+                          </mat-error>
+                          <mat-error *ngIf="germanCity.hasError('required')">
+                            Miasto jest <strong>wymagany</strong>
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+
+                    </div>
                   </div>
-
-                </div>
-              </div>
-              <div class="row mt-5">
-                <div class="col-md-12">
-                  <div class="md-form">
-                    <textarea mdbActive type="text" id="areaGerman" class="md-textarea" name="germany"
-                              [ngModel]="offer.germany"></textarea>
-                    <label for="areaGerman">Niemiecki Opis</label>
-                  </div>
-
-                </div>
-              </div>
-
-              <div class="row mt-5">
-                <div class="col-md-4">
-                  <div class="md-form">
-                    <input mdbActive type="text" id="form41" class="form-control" name="country"
-                           [ngModel]="offer.country">
-                    <label for="form41" class="">Kraj</label>
-                  </div>
-                </div>
-
-                <div class="col-md-4">
-                  <div class="md-form">
-                    <input mdbActive type="text" id="form51" class="form-control" name="region"
-                           [ngModel]="offer.region">
-                    <label for="form51" class="">Województwo</label>
-                  </div>
-                </div>
-
-                <div class="col-md-4">
-                  <div class="md-form">
-                    <input mdbActive type="text" id="form61" class="form-control" name="city" [ngModel]="offer.city">
-                    <label for="form61" class="">Miasto</label>
-                  </div>
-                </div>
-
-              </div>
+                </mat-tab>
+              </mat-tab-group>
               <div class="row mt-5">
                 <div class="col-12">
-                  <button class="btn btn-success float-right">Zapisz</button>
-                  <button class="btn btn-outline-danger float-right" (click)="setData(); false">Resetuj</button>
+                  <button class="btn btn-success float-right" [disabled]="offerForm.invalid">Zapisz</button>
+                  <button class="btn btn-outline-danger float-right" (click)="clearOffers(f); false">Resetuj</button>
                 </div>
               </div>
             </form>
           </div>
-        </ng-template>
-      </ngb-tab>
-    </ngb-tabset>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </div>
 <swal

@@ -5,6 +5,7 @@
 //  padding: 0;
 //  font-family: 'Bellefair', sans-serif;
 //}
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 body, html {
   height: 100%;
@@ -66,6 +67,18 @@ body, html {
 
 .ml-20 {
   margin-left: 12rem !important;
+}
+
+.pb-10 {
+  padding-bottom: 6rem !important;
+}
+
+.pb-15 {
+  padding-bottom: 9rem !important;
+}
+
+.pb-20 {
+  padding-bottom: 12rem !important;
 }
 
 .navbar {
@@ -134,39 +147,39 @@ body.modal-open {
   }
 }
 
-input.ng-invalid.ng-dirty.ng-touched, input.ng-invalid.ng-dirty.ng-touched:focus,
-input.ng-invalid.ng-dirty.ng-untouched, input.ng-invalid.ng-dirty.ng-untouched:focus {
-  border-bottom: 1px solid red;
-  box-shadow: 0 1px 0 0 red;
-}
-
-input.ng-valid.ng-dirty.ng-touched, input.ng-valid.ng-dirty.ng-untouched {
-  border-bottom: 1px solid #01d36b;
-  box-shadow: 0 1px 0 0 #01d36b;
-}
-
-textarea.ng-invalid.ng-dirty.ng-touched, textarea.ng-invalid.ng-dirty.ng-touched:focus,
-textarea.ng-invalid.ng-dirty.ng-untouched, textarea.ng-invalid.ng-dirty.ng-untouched:focus {
-  border-bottom: 1px solid red;
-  box-shadow: 0 1px 0 0 red;
-}
-
-textarea.ng-valid.ng-dirty.ng-touched, textarea.ng-valid.ng-dirty.ng-untouched {
-  border-bottom: 1px solid #01d36b;
-  box-shadow: 0 1px 0 0 #01d36b;
-}
-
-.error-message-input {
-  position: absolute;
-  color: red;
-  top: 55px;
-}
-
-.error-message-textarea {
-  position: absolute;
-  color: red;
-  top: 100px;
-}
+//input.ng-invalid.ng-dirty.ng-touched, input.ng-invalid.ng-dirty.ng-touched:focus,
+//input.ng-invalid.ng-dirty.ng-untouched, input.ng-invalid.ng-dirty.ng-untouched:focus {
+//  border-bottom: 1px solid red;
+//  box-shadow: 0 1px 0 0 red;
+//}
+//
+//input.ng-valid.ng-dirty.ng-touched, input.ng-valid.ng-dirty.ng-untouched {
+//  border-bottom: 1px solid #01d36b;
+//  box-shadow: 0 1px 0 0 #01d36b;
+//}
+//
+//textarea.ng-invalid.ng-dirty.ng-touched, textarea.ng-invalid.ng-dirty.ng-touched:focus,
+//textarea.ng-invalid.ng-dirty.ng-untouched, textarea.ng-invalid.ng-dirty.ng-untouched:focus {
+//  border-bottom: 1px solid red;
+//  box-shadow: 0 1px 0 0 red;
+//}
+//
+//textarea.ng-valid.ng-dirty.ng-touched, textarea.ng-valid.ng-dirty.ng-untouched {
+//  border-bottom: 1px solid #01d36b;
+//  box-shadow: 0 1px 0 0 #01d36b;
+//}
+//
+//.error-message-input {
+//  position: absolute;
+//  color: red;
+//  top: 55px;
+//}
+//
+//.error-message-textarea {
+//  position: absolute;
+//  color: red;
+//  top: 100px;
+//}
 
 .files-uploaded {
   margin: 10px 10px 0;

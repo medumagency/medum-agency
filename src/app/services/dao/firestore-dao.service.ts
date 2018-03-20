@@ -21,8 +21,11 @@ export class FirestoreDaoService {
 
   }
 
-  getJobOffers(): Observable<IJobOffer[]> {
+  getJobOffers(isPoland: boolean = false): Observable<IJobOffer[]> {
     this.jobOffersCollection = this.afs.collection('jobOffers', (ref) => {
+      if (isPoland) {
+        return ref.orderBy('date', 'desc').where('polish.polishCountry', '==', 'Polska');
+      }
       return ref.orderBy('date', 'desc');
     });
     // this.jobOffers = this.jobOffersCollection.valueChanges();

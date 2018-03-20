@@ -1,14 +1,13 @@
 .center-middle {
   margin: 0 auto;
 }
+.medium-card {
+  width: 75%;
+}
 
 @media screen and (max-width: 4000px) {
   #chartBig {
     display: inline;
-  }
-
-  #chartMedium {
-    display: none;
   }
 
   #chartSmall {
@@ -23,10 +22,6 @@
 
 @media screen and (max-width: 920px) {
   #chartBig {
-    display: none;
-  }
-
-  #chartMedium {
     display: inline;
   }
 
@@ -44,11 +39,7 @@
     display: none;
   }
 
-  #chartMedium {
-    display: none;
-  }
-
-  #chartSmall {
+   #chartSmall {
     display: inline;
   }
 
@@ -59,10 +50,6 @@
 
 @media screen and (max-width: 530px) {
   #chartBig {
-    display: none;
-  }
-
-  #chartMedium {
     display: none;
   }
 

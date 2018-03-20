@@ -1,19 +1,12 @@
 <div class="container">
-  <app-spinner *ngIf="isLoading"></app-spinner>
+  <app-spinner *ngIf="isLoading" class="mb-20"></app-spinner>
 
   <div *ngIf="!isLoading">
-    <div class="row mt-15">
-
-      <h1 class="center-middle mb-5">Oferty Pracy</h1>
-
-
-      <div class="col-12">
-
-      </div>
+    <div class="row mt-10 pt-3">
+      <h1 class="center-middle mb-2">Oferty Pracy</h1>
+      <div class="col-12"></div>
       <div class="center-middle" id="regions-chart">
         <div id="chartBig" [chartData]="chartData" [chartOptions]="optionsBig" chartType="GeoChart" appGoogleChart></div>
-        <div id="chartMedium" [chartData]="chartData" [chartOptions]="optionsMedium" chartType="GeoChart"
-             appGoogleChart></div>
         <div id="chartSmall" [chartData]="chartData" [chartOptions]="optionsSmall" chartType="GeoChart"
              appGoogleChart></div>
         <div id="chartXSSmall" [chartData]="chartData" [chartOptions]="optionsXSSmall" chartType="GeoChart"
@@ -21,22 +14,22 @@
       </div>
     </div>
 
-    <div class="center-middle md-form mt-5 mb-5 pb-5" style="width: 70%">
+    <div class="center-middle md-form mt-5 pb-5 w-50">
       <i class="fa fa-search prefix"></i>
       <input mdbActive type="text" id="form1" class="form-control" [disabled]="!jobOffers.length">
       <label for="form1" class="">Szukaj ofert</label>
     </div>
 
-    <div class="text-center mt-10 mb-20" *ngIf="!jobOffers.length">
+    <div class="text-center mt-10 mb-20 pb-20" *ngIf="!jobOffers.length">
       <h1>Brak ofert na tę chwilę</h1>
     </div>
-    <div *ngIf="jobOffers.length">
+    <div *ngIf="jobOffers.length" class="mb-20 pb-15 w-75 center-middle">
       <div class="center-middle z-depth-1 hoverable" *ngFor="let offer of jobOffers">
         <div class="card mb-4">
           <div class="card-body">
-            <h4 class="card-title">{{offer.title}}</h4>
+            <h4 class="card-title">{{offer.polish.polishTitle}}</h4>
             <div class="card-text">
-              {{ turnCate(offer.polish, 450) }}
+              {{ turnCate(offer.polish.polishText, 300) }}
             </div>
             <button type="button" class="btn btn-outline-elegant btn-sm waves-light" data-toggle="modal"
                     data-target="#basicExample" (click)="demoBasic.show(); setModalData(offer)" mdbRippleRadius>
@@ -63,7 +56,7 @@
         <h6 class="text-right">{{modalData.date | amDateFormat:'YYYY-MM-DD HH:mm'}}</h6>
       </div>
       <div class="modal-body">
-        {{modalData.polish}}
+        {{modalData.text}}
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-brown btn-sm waves-light" data-dismiss="modal"

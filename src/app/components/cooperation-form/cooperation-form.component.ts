@@ -115,17 +115,7 @@ export class CooperationFormComponent implements OnInit {
      ${required - actual} characters `;
   }
 
-  clearInputs() {
-    const inputs = document.getElementsByTagName('input');
-    const clearBoxes = input => {
-      input.focus();
-      input.blur();
-    };
-
-    forEach(inputs, clearBoxes);
-  }
-
-  submitForm() {
+  submitForm(f: NgForm) {
     const { value, valid } = this.cooperationForm;
 
     if (valid) {
@@ -138,8 +128,7 @@ export class CooperationFormComponent implements OnInit {
         .then(() => {
           this.isSending = false;
           this.fileToUpload = [];
-          this.cooperationForm.reset();
-          this.clearInputs();
+          f.resetForm();
           this.swalObj.composeDialog('', 'Wiadomość została wysłana', 'success', this.dialogSwal);
         })
         .catch((err) => {

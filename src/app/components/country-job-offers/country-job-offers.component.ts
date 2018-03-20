@@ -19,13 +19,12 @@ export class CountryJobOffersComponent implements OnInit {
   public chartData: Array<Array<string>>;
   public optionsXSSmall = CountryJobOffersComponent.setOptions(200);
   public optionsSmall = CountryJobOffersComponent.setOptions(325);
-  public optionsMedium = CountryJobOffersComponent.setOptions(380);
   public optionsBig = CountryJobOffersComponent.setOptions();
   public isLoading = true;
   public jobOffers: IJobOffer[] = [];
-  public modalData: IJobOffer;
+  public modalData: any;
 
-  static setOptions(height = 480) {
+  static setOptions(height = 380) {
     return {
       region: 'PL',
       displayMode: 'regions',
@@ -62,14 +61,24 @@ export class CountryJobOffersComponent implements OnInit {
     this.router.navigate(['formularz'], navigationExtras);
   }
 
-  fetchJobOffers() {
-    this.firesotreDAO.getJobOffers().subscribe((jobs) => {
+  fetchJobOffers(): void {
+    this.firesotreDAO.getJobOffers(true).subscribe((jobs) => {
       this.jobOffers = jobs;
     });
   }
 
-  setModalData(data: IJobOffer): void {
-    this.modalData = data;
+  setModalData(offer: any): void {
+    const data = offer.polish;
+    const date = offer.date;
+
+    this.modalData = {
+      title: data.polishTitle,
+      region: data.polishRegion,
+      country: data.polishCountry,
+      city: data.polishCity,
+      date,
+      text: data.polishText,
+    };
   }
 
   setRegionCounters(): void {
