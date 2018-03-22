@@ -147,38 +147,43 @@ body.modal-open {
   }
 }
 
-//input.ng-invalid.ng-dirty.ng-touched, input.ng-invalid.ng-dirty.ng-touched:focus,
-//input.ng-invalid.ng-dirty.ng-untouched, input.ng-invalid.ng-dirty.ng-untouched:focus {
-//  border-bottom: 1px solid red;
-//  box-shadow: 0 1px 0 0 red;
+.flag {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background: url(./assets/flags.png) no-repeat;
+}
+
+.flag.flag-gb {
+  background-position: -24px 0;
+}
+
+.flag.flag-pl {
+  background-position: 0 -24px;
+}
+
+.flag.flag-de {
+  background-position: 0 0;
+}
+
+//.flag {
+//  display: inline-block;
+//  width: 16px;
+//  height: 16px;
+//  background: url(./assets/flags2.png) no-repeat;
 //}
 //
-//input.ng-valid.ng-dirty.ng-touched, input.ng-valid.ng-dirty.ng-untouched {
-//  border-bottom: 1px solid #01d36b;
-//  box-shadow: 0 1px 0 0 #01d36b;
+//
+//.flag.flag-gb {
+//  background-position: -16px 0;
 //}
 //
-//textarea.ng-invalid.ng-dirty.ng-touched, textarea.ng-invalid.ng-dirty.ng-touched:focus,
-//textarea.ng-invalid.ng-dirty.ng-untouched, textarea.ng-invalid.ng-dirty.ng-untouched:focus {
-//  border-bottom: 1px solid red;
-//  box-shadow: 0 1px 0 0 red;
+//.flag.flag-pl {
+//  background-position: 0 -16px;
 //}
 //
-//textarea.ng-valid.ng-dirty.ng-touched, textarea.ng-valid.ng-dirty.ng-untouched {
-//  border-bottom: 1px solid #01d36b;
-//  box-shadow: 0 1px 0 0 #01d36b;
-//}
-//
-//.error-message-input {
-//  position: absolute;
-//  color: red;
-//  top: 55px;
-//}
-//
-//.error-message-textarea {
-//  position: absolute;
-//  color: red;
-//  top: 100px;
+//.flag.flag-de {
+//  background-position: 0 0;
 //}
 
 .files-uploaded {

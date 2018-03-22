@@ -72,7 +72,7 @@ import { MaterialModule } from './material.module';
       apiKey: environment.googleApiKey
     }),
     AgmSnazzyInfoWindowModule,
-    AngularFireModule.initializeApp(environment.firebase, 'Medumagency'),
+    AngularFireModule.initializeApp(environment.firebase, 'Medumcompany'),
     AngularFireModule,
     AngularFireAuthModule,
     AngularFirestoreModule,

@@ -10,6 +10,8 @@ import { AuthService } from '../../services/auth.service';
 })
 export class NavbarHeadingComponent implements OnInit {
 
+  public selectedLang = 0;
+
   constructor(private el: ElementRef,
               private renderer: Renderer2,
               private router: Router,
@@ -28,6 +30,14 @@ export class NavbarHeadingComponent implements OnInit {
         this.el.nativeElement.querySelector('.navbar-toggler').click();
       }
     }
+  }
+
+  selectLang(index) {
+    this.selectedLang = index;
+  }
+
+  isSelected(index) {
+    return this.selectedLang === index;
   }
 
   login(f: NgForm, form: any) {

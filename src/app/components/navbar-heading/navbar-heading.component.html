@@ -2,26 +2,26 @@
   <mdb-navbar SideClass="navbar fixed-top navbar-expand-lg navbar-dark">
     <logo>
       <a class="logo navbar-brand" routerLink="">
-        <img src="../../../assets/medumagency-logo.png" alt="Medumagency" height="50">
+        <img src="../../../assets/medumagency-logo.png" alt="Medumcompany" height="50">
       </a>
     </logo>
     <links>
       <div class="form-inline ml-auto">
         <div>
           <ul class="navbar-nav nav-flex-icons">
-            <li class="nav-item waves-light ml-auto" mdbRippleRadius>
-              <a class="nav-link mr-2">
-                <img src="../../../assets/flag-poland.png" alt="Polski">
+            <li class="nav-item waves-light ml-auto" (click)="selectLang(0)">
+              <a class="nav-link">
+                <img src="../../../assets/blank.gif" class="flag flag-pl" alt="Polski" [ngClass]="{'flag-border': isSelected(0)}">
               </a>
             </li>
-            <li class="nav-item waves-light" mdbRippleRadius>
-              <a class="nav-link mr-2">
-                <img src="../../../assets/flag-usa.png" alt="Angielski">
+            <li class="nav-item waves-light" (click)="selectLang(1)">
+              <a class="nav-link">
+                <img src="../../../assets/blank.gif" class="flag flag-gb" alt="Angielski" [ngClass]="{'flag-border': isSelected(1)}">
               </a>
             </li>
-            <li class="nav-item waves-light" mdbRippleRadius>
+            <li class="nav-item waves-light" (click)="selectLang(2)">
               <a class="nav-link mr-2">
-                <img src="../../../assets/flag-germany.png" alt="Niemiecki">
+                <img src="../../../assets/blank.gif" class="flag flag-de" alt="Niemiecki" [ngClass]="{'flag-border': isSelected(2)}">
               </a>
             </li>
             <li class="nav-item waves-light" mdbRippleRadius>
