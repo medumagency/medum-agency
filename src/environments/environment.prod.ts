@@ -9,5 +9,11 @@ export const environment = {
     storageBucket: 'medumcompany-9c02c.appspot.com',
     messagingSenderId: '62557819996'
   },
-  sendEmail: 'https://us-central1-medumcompany-9c02c.cloudfunctions.net/sendEmaill'
+  sendEmail: 'https://us-central1-medumcompany-9c02c.cloudfunctions.net/sendEmaill',
+  algolia: {
+    apiKey: '5616637fd7e23889b5849bd7c66a6a57',
+    appId: '6AD0897I3Y',
+    indexName: 'jobOffers',
+    urlSync: true
+  }
 };

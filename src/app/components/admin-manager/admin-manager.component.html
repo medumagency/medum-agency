@@ -1,6 +1,7 @@
 <div class="container">
   <div class="row mt-15" style="margin-bottom: 85%">
-    <mat-tab-group [dynamicHeight]="true" class="demo-tab-group" style="min-width: 100%" [(selectedIndex)]="selectedTab" (selectedIndexChange)="resetForms($event, f)">
+    <mat-tab-group [dynamicHeight]="true" class="demo-tab-group" style="min-width: 100%" [(selectedIndex)]="selectedTab"
+                   (selectedIndexChange)="resetForms($event, f)">
       <mat-tab label="Lista ofert">
         <div>
           <app-spinner *ngIf="isLoading"></app-spinner>
@@ -9,7 +10,8 @@
           </h1>
           <div class="col-12 pt-2 pb-5">
             <mat-accordion *ngIf="jobOffers.length && !isLoading">
-              <mat-expansion-panel [expanded]="step === idx" (opened)="setStep(idx)" *ngFor="let offer of jobOffers; index as idx">
+              <mat-expansion-panel [expanded]="step === idx" (opened)="setStep(idx)"
+                                   *ngFor="let offer of jobOffers; index as idx">
                 <mat-expansion-panel-header class="header-color">
                   <mat-panel-title>
                     {{offer[type].title}}
@@ -27,13 +29,16 @@
                   </div>
                   <div class="d-flex justify-content-end">
                     <div class="p-2 bleach-image" appHoverImage [ngClass]="{'bleach-image': type !== 'polish'}">
-                      <img src="../../../assets/blank.gif" class="flag flag-pl" alt="Polski" (click)="setType('polish')">
+                      <img src="../../../assets/blank.gif" class="flag flag-pl" alt="Polski"
+                           (click)="setType('polish')">
                     </div>
                     <div class="p-2 bleach-image" appHoverImage [ngClass]="{'bleach-image': type !== 'english'}">
-                      <img src="../../../assets/blank.gif" class="flag flag-gb" alt="Angielski" (click)="setType('english')">
+                      <img src="../../../assets/blank.gif" class="flag flag-gb" alt="Angielski"
+                           (click)="setType('english')">
                     </div>
                     <div class="p-2 bleach-image" appHoverImage [ngClass]="{'bleach-image': type !== 'german'}">
-                      <img src="../../../assets/blank.gif" class="flag flag-de" alt="Niemiecki" (click)="setType('german')">
+                      <img src="../../../assets/blank.gif" class="flag flag-de" alt="Niemiecki"
+                           (click)="setType('german')">
                     </div>
                     <div class="p-2 icon-24" appHoverImage color="#ff8800" mdbTooltip="Edytuj" placement="top"
                          (click)="setData(offer); selectedTab = 1"><i class="fa fa-edit"></i></div>
@@ -45,8 +50,12 @@
                 <p class="mt-2">{{offer[type].text}}</p>
 
                 <mat-action-row class="mt-5">
-                  <button class="btn btn-sm" [ngClass]="{'btn-elegant': step !== 0}" (click)="prevStep()" [disabled]="step === 0">Poprzednia</button>
-                  <button class="btn btn-sm" [ngClass]="{'btn-primary': step !== jobOffers.length - 1}" (click)="nextStep()" [disabled]="step === jobOffers.length - 1">Następna</button>
+                  <button class="btn btn-sm" [ngClass]="{'btn-elegant': step !== 0}" (click)="prevStep()"
+                          [disabled]="step === 0">Poprzednia
+                  </button>
+                  <button class="btn btn-sm" [ngClass]="{'btn-primary': step !== jobOffers.length - 1}"
+                          (click)="nextStep()" [disabled]="step === jobOffers.length - 1">Następna
+                  </button>
                 </mat-action-row>
               </mat-expansion-panel>
             </mat-accordion>
@@ -165,7 +174,8 @@
                       <div class="col-md-4">
                         <mat-form-field class="w-100">
                           <input matInput placeholder="Kraj" [formControl]="englishCountry">
-                          <mat-error *ngIf="englishCountry.hasError('minlength') && !englishCountry.hasError('required')">
+                          <mat-error
+                            *ngIf="englishCountry.hasError('minlength') && !englishCountry.hasError('required')">
                             {{errorMsg(englishCountry)}}
                           </mat-error>
                           <mat-error *ngIf="englishCountry.hasError('required')">

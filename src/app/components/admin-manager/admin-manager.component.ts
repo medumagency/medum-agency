@@ -246,6 +246,8 @@ export class AdminManagerComponent implements OnInit, OnDestroy {
 
   unsubscribeAll() {
     this.$jobOffersSub.unsubscribe();
-    this.$counterSub.unsubscribe();
+    if (this.$counterSub) {
+      this.$counterSub.unsubscribe();
+    }
   }
 }

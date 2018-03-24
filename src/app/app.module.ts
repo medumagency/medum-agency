@@ -44,7 +44,8 @@ import { MaterialModule } from './material.module';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LanguageService } from './services/language.service';
-
+import { NgAisModule } from 'angular-instantsearch';
+import { SearchJobsComponent } from './components/search-jobs/search-jobs.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -67,7 +68,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     GoogleChartDirective,
     SpinnerComponent,
     AdminManagerComponent,
-    HoverImageDirective
+    HoverImageDirective,
+    SearchJobsComponent
   ],
   imports: [
     BrowserModule,
@@ -96,7 +98,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         useFactory: (HttpLoaderFactory),
         deps: [HttpClient]
       }
-    })
+    }),
+    NgAisModule.forRoot()
   ],
   schemas: [NO_ERRORS_SCHEMA],
   providers: [FirestoreDaoService, AuthService, AdminGuardGuard, SwalObjService, CompanyEmailService, LanguageService],

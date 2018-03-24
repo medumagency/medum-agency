@@ -1,0 +1,65 @@
+<div class="mt-5 mb-15">
+  <ng-ais-instantsearch [config]="config">
+    <div class="center-middle w-50 mb-5">
+      <ng-ais-search-box placeholder="{{'COUNTRYJOBOFFERS.search' | translate}}"></ng-ais-search-box>
+      <div class="d-flex justify-content-between mt-1">
+        <ng-ais-hits-per-page [autoHideContainer]="true" [items]="perPage"></ng-ais-hits-per-page>
+        <p class="text-right">
+          <img src="https://www.algolia.com/static_assets/images/pricing/pricing_new/algolia-powered-by-14773f38.svg" width="130" height="18" alt="Algolia powered by">
+        </p>
+      </div>
+    </div>
+    <ng-ais-refinement-list attribute="polish.country === 'Polska'"></ng-ais-refinement-list>
+
+    <ng-ais-hits>
+      <ng-template let-hits="hits">
+        <div class="text-center mt-10 " *ngIf="!hits.length">
+          <h1>Brak ofert na tę chwilę</h1>
+        </div>
+        <div *ngIf="hits.length" class="mb-4 w-75 center-middle">
+          <div class="center-middle z-depth-1 hoverable" *ngFor="let offer of hits">
+            <div class="card mb-4">
+              <div class="card-body">
+                <h4 class="card-title">{{offer[type].title}}</h4>
+                <div class="card-text">
+                  {{ turnCate(offer[type].text, 300) }}
+                </div>
+                <button type="button" class="btn btn-outline-elegant btn-sm waves-light" data-toggle="modal"
+                        data-target="#basicExample" (click)="demoBasic.show(); setModalData(offer)" mdbRippleRadius translate>
+                  COUNTRYJOBOFFERS.seeOfferBtn
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ng-ais-pagination [autoHideContainer]="true" [showLast]="true"></ng-ais-pagination>
+      </ng-template>
+    </ng-ais-hits>
+  </ng-ais-instantsearch>
+</div>
+
+<div mdbModal #demoBasic="mdb-modal" class="modal fade mt-10" id="basicExample" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content" *ngIf="modalData">
+      <div class="modal-header">
+        <h4 class="modal-title w-100" id="myModalLabel">{{modalData.title}}</h4>
+        <div class="text-uppercase" style="position: absolute; top: 45px">
+          <span class="badge badge-default">{{modalData.country}}</span>
+          <span class="badge badge-info">{{modalData.region}}</span>
+          <span class="badge badge-primary">{{modalData.city}}</span>
+        </div>
+        <h6 class="text-right">{{modalData.date | amDateFormat:'YYYY-MM-DD HH:mm'}}</h6>
+      </div>
+      <div class="modal-body">
+        {{modalData.text}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-brown btn-sm waves-light" data-dismiss="modal"
+                (click)="demoBasic.hide()" mdbRippleRadius translate>COUNTRYJOBOFFERS.closeBtn
+        </button>
+        <button type="button" class="btn btn-elegant btn-sm waves-light" mdbRippleRadius (click)="navigateToForm()" translate>COUNTRYJOBOFFERS.applyBtn</button>
+      </div>
+    </div>
+  </div>
+</div>

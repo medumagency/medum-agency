@@ -1,15 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NavigationExtras, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { FirestoreDaoService } from '../../services/dao/firestore-dao.service';
-
-import { IJobOffer } from '../../interfaces/jobOffer.interface';
-
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/map';
-import { forEach, defer } from 'lodash';
 import { LanguageService } from '../../services/language.service';
 import { Subscription } from 'rxjs/Subscription';
+import { forEach } from 'lodash';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/take';
+
 
 @Component({
   selector: 'app-country-job-offers',
@@ -23,12 +20,9 @@ export class CountryJobOffersComponent implements OnInit, OnDestroy {
   public optionsSmall = CountryJobOffersComponent.setOptions(325);
   public optionsBig = CountryJobOffersComponent.setOptions();
   public isLoading = true;
-  public jobOffers: IJobOffer[] = [];
-  public modalData: any;
   public type = 'polish';
 
   private $typeSub: Subscription;
-  private $jobOffersSub: Subscription;
   private $countersSub: Subscription;
 
   static setOptions(height = 380) {
@@ -51,26 +45,11 @@ export class CountryJobOffersComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.setRegionCounters();
-    this.fetchJobOffers();
     this.fetchCurrentLanguage();
   }
 
   ngOnDestroy() {
     this.unsubscribeAll();
-  }
-
-  turnCate(str, length) {
-    return str && str.length > length ? `${str.slice(0, length)}...` : str;
-  }
-
-  navigateToForm() {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        'firstname': 'Nic',
-        'lastname': 'Raboy'
-      }
-    };
-    this.router.navigate(['formularz'], navigationExtras);
   }
 
   fetchCurrentLanguage() {
@@ -79,26 +58,6 @@ export class CountryJobOffersComponent implements OnInit, OnDestroy {
       this.type = lang;
       this.setRegionCounters();
     });
-  }
-
-  fetchJobOffers(): void {
-    this.$jobOffersSub = this.firesotreDAO.getJobOffers(true).subscribe((jobs) => {
-      this.jobOffers = jobs;
-    });
-  }
-
-  setModalData(offer: any): void {
-    const data = offer[this.type];
-    const date = offer.date;
-
-    this.modalData = {
-      title: data.title,
-      region: data.region,
-      country: data.country,
-      city: data.city,
-      date,
-      text: data.text,
-    };
   }
 
   setRegionCounters(): void {
@@ -121,7 +80,6 @@ export class CountryJobOffersComponent implements OnInit, OnDestroy {
 
   unsubscribeAll() {
     this.$typeSub.unsubscribe();
-    this.$jobOffersSub.unsubscribe();
     this.$countersSub.unsubscribe();
   }
 }
