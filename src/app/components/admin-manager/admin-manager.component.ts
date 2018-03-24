@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { IJobOffer } from '../../interfaces/jobOffer.interface';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { FirestoreDaoService } from '../../services/dao/firestore-dao.service';
@@ -7,19 +7,22 @@ import 'rxjs/add/operator/map';
 import { isNaN, pick } from 'lodash';
 import { SwalComponent } from '@toverux/ngx-sweetalert2';
 import { SwalObjService } from '../../services/swal-obj.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-admin-manager',
   templateUrl: './admin-manager.component.html',
   styleUrls: ['./admin-manager.component.scss']
 })
-export class AdminManagerComponent implements OnInit {
+export class AdminManagerComponent implements OnInit, OnDestroy {
   @ViewChild('dialog') private dialogSwal: SwalComponent;
 
   public jobOffers: IJobOffer[] = [];
   public isLoading = true;
+  public isSave = false;
   public step = 0;
   public selectedTab = 0;
+  public type = 'polish';
 
   public offerForm: FormGroup;
   public polishTitle: FormControl;
@@ -40,6 +43,9 @@ export class AdminManagerComponent implements OnInit {
   public date: FormControl;
 
   private offerId: string;
+  private isEdited = false;
+  private $jobOffersSub: Subscription;
+  private $counterSub: Subscription;
 
   constructor(private firestoreDAO: FirestoreDaoService, private swalO: SwalObjService) {
   }
@@ -48,9 +54,21 @@ export class AdminManagerComponent implements OnInit {
     this.createForm();
     this.fetchJobOffers();
   }
+
+  ngOnDestroy() {
+    this.unsubscribeAll();
+  }
+
   resetForms(index, f) {
     if (index === 0) {
       this.clearOffers(f);
+    }
+    if (index === 0 && this.isEdited) {
+      this.isLoading = true;
+      this.$jobOffersSub.unsubscribe();
+      this.jobOffers = [];
+      this.fetchJobOffers();
+      this.isEdited = false;
     }
   }
 
@@ -78,25 +96,25 @@ export class AdminManagerComponent implements OnInit {
 
     this.offerForm = new FormGroup({
       polish: new FormGroup({
-        polishTitle: this.polishTitle,
-        polishCity: this.polishCity,
-        polishRegion: this.polishRegion,
-        polishCountry: this.polishCountry,
-        polishText: this.polishText,
+        title: this.polishTitle,
+        city: this.polishCity,
+        region: this.polishRegion,
+        country: this.polishCountry,
+        text: this.polishText,
       }),
       english: new FormGroup({
-        englishTitle: this.englishTitle,
-        englishCity: this.englishCity,
-        englishRegion: this.englishRegion,
-        englishCountry: this.englishCountry,
-        englishText: this.englishText
+        title: this.englishTitle,
+        city: this.englishCity,
+        region: this.englishRegion,
+        country: this.englishCountry,
+        text: this.englishText
       }),
       german: new FormGroup({
-        germanTitle: this.germanTitle,
-        germanCity: this.germanCity,
-        germanRegion: this.germanRegion,
-        germanCountry: this.germanCountry,
-        germanText: this.germanText
+        title: this.germanTitle,
+        city: this.germanCity,
+        region: this.germanRegion,
+        country: this.germanCountry,
+        text: this.germanText
       }),
       date: this.date
     });
@@ -107,6 +125,10 @@ export class AdminManagerComponent implements OnInit {
     const actual = property.errors.minlength.actualLength;
     return `Password must be ${required} characters long, we need another
      ${required - actual} characters `;
+  }
+
+  setType(type: 'polish' | 'english' | 'german') {
+    this.type = type;
   }
 
   setStep(index: number) {
@@ -128,44 +150,54 @@ export class AdminManagerComponent implements OnInit {
     const title = this.offerForm.value.polish.polishTitle;
 
     if (valid) {
+      this.isSave = true;
+
       if (this.offerId) {
         this.firestoreDAO.updateJobOffer(this.offerId, value).then(() => {
-          this.offerId = null;
           f.resetForm();
+          this.offerId = null;
+          this.isSave = false;
+          this.isEdited = true;
           this.swalO.composeDialog(title, 'Oferta została zaktualizowana pomyślnie', 'success', this.dialogSwal);
         }).catch((error) => {
           this.swalO.composeDialog('Błąd', 'Nie można utworzyć oferty', 'error', this.dialogSwal);
           console.error(error);
+          this.isSave = false;
         });
       } else {
-        this.firestoreDAO.createJobOffer(value).then(() => {
-          return this.updateCounter(value, true).then(() => {
-            this.offerId = null;
+        this.updateCounter(value, true)
+          .then(() => this.firestoreDAO.createJobOffer(value))
+          .then(() => {
             f.resetForm();
+            this.offerId = null;
+            this.isSave = false;
+            this.isEdited = true;
             this.swalO.composeDialog(title, 'Utworzono nową ofertę', 'success', this.dialogSwal);
+          })
+          .catch((error) => {
+            this.swalO.composeDialog('Błąd', 'Nie można utworzyć oferty', 'error', this.dialogSwal);
+            console.log(error);
+            this.isSave = false;
           });
-        }).catch((error) => {
-          this.swalO.composeDialog('Błąd', 'Nie można utworzyć oferty', 'error', this.dialogSwal);
-          console.log(error);
-        });
       }
     }
   }
 
   deleteJobOffer(data: IJobOffer): void {
     const text = 'Czy na pewno chcesz usunąć tę ofertę?';
-    const title = data.polish.polishTitle.length ? data.polish.polishTitle.toUpperCase() : 'Brak nazwy';
+    const title = data.polish.title.length ? data.polish.title.toUpperCase() : 'Brak nazwy';
 
     this.swalO.composeDialog(title, text, 'warning', this.dialogSwal, true).then((result) => {
       if (result.value) {
-        this.firestoreDAO.deleteJobOffer(data.id).then(() => {
-          return this.updateCounter(data, false);
-        }).then(() => {
-          this.swalO.composeDialog(title, 'Usnięto pomyślnie', 'success', this.dialogSwal);
-        }).catch((error) => {
-          this.swalO.composeDialog(title, 'Nie można usunąc!!!', 'error', this.dialogSwal);
-          console.error(error);
-        });
+        this.updateCounter(data, false)
+          .then(() => this.firestoreDAO.deleteJobOffer(data.id))
+          .then(() => {
+            this.swalO.composeDialog(title, 'Usnięto pomyślnie', 'success', this.dialogSwal);
+          })
+          .catch((error) => {
+            this.swalO.composeDialog(title, 'Nie można usunąc!!!', 'error', this.dialogSwal);
+            console.error(error);
+          });
       }
     });
   }
@@ -181,18 +213,18 @@ export class AdminManagerComponent implements OnInit {
   }
 
   fetchJobOffers(): void {
-    this.firestoreDAO.getJobOffers().subscribe((result) => {
+    this.$jobOffersSub = this.firestoreDAO.getJobOffers().subscribe((result) => {
       this.jobOffers = result;
       this.isLoading = false;
     });
   }
 
   updateCounter(data: any, add: boolean): Promise<void> {
-    if (data.polish.polishCountry.toLowerCase() === 'polska') {
+    if (data.polish.country.toLowerCase() === 'polska') {
       return new Promise((resolve, reject) => {
-        this.firestoreDAO.getCounters().subscribe(({ payload }) => {
+        this.$counterSub = this.firestoreDAO.getCounters().subscribe(({ payload }) => {
           console.log(payload.data());
-          const region = data.polish.polishRegion;
+          const region = data.polish.region;
           const dataToSave = pick(payload.data(), [region, 'total']);
           if (add) {
             dataToSave[region] += 1;
@@ -210,5 +242,10 @@ export class AdminManagerComponent implements OnInit {
     } else {
       return Promise.resolve();
     }
+  }
+
+  unsubscribeAll() {
+    this.$jobOffersSub.unsubscribe();
+    this.$counterSub.unsubscribe();
   }
 }

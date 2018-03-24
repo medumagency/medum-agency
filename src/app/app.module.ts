@@ -32,15 +32,23 @@ import { GoogleChartDirective } from './directives/google-chart.directive';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { AdminManagerComponent } from './components/admin-manager/admin-manager.component';
 import { HoverImageDirective } from './directives/hover-image.directive';
-import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './services/auth.service';
 import { AdminGuardGuard } from './guards/admin-guard.guard';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { NgPipesModule } from 'ng-pipes';
 import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 import { SwalObjService } from './services/swal-obj.service';
 import { CompanyEmailService } from './services/company-email.service';
 import { MaterialModule } from './material.module';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { LanguageService } from './services/language.service';
+
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -81,10 +89,17 @@ import { MaterialModule } from './material.module';
     HttpClientModule,
     NgPipesModule,
     SweetAlert2Module.forRoot(),
-    MaterialModule
+    MaterialModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (HttpLoaderFactory),
+        deps: [HttpClient]
+      }
+    })
   ],
   schemas: [NO_ERRORS_SCHEMA],
-  providers: [FirestoreDaoService, AuthService, AdminGuardGuard, SwalObjService, CompanyEmailService],
+  providers: [FirestoreDaoService, AuthService, AdminGuardGuard, SwalObjService, CompanyEmailService, LanguageService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

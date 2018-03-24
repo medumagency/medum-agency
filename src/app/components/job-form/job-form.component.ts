@@ -134,14 +134,11 @@ export class JobFormComponent implements OnInit {
   }
 
   submitForm(f: NgForm) {
-    console.log(this.jobForm);
     const { value, valid } = this.jobForm;
 
     if (valid) {
       this.isSending = true;
       const data = Object.assign(value, { type: 'JOB', attachments: this.fileToUpload });
-
-      console.log(this.fileToUpload);
 
       this.companyEmail.sendEmail(data)
         .then(() => {

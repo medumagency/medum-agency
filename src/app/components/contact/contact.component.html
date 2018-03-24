@@ -1,7 +1,7 @@
 <div class="container" style="overflow: hidden">
   <app-spinner [isWhole]="true" *ngIf="isSending"></app-spinner>
   <div class="mt-5 pt-5 mb-3">
-    <h1 class="pt-3 text-center">Skontaktuj się z nami!</h1>
+    <h1 class="pt-3 text-center" translate>CONTACTPAGE.heading</h1>
   </div>
   <section>
     <div class="container">
@@ -10,7 +10,7 @@
           <form class="card" [formGroup]="contactForm" (ngSubmit)="submitForm(f)" #f="ngForm" novalidate>
             <div class="card-body">
               <mat-form-field class="w-100">
-                <input matInput placeholder="Imię" [formControl]="firstName">
+                <input matInput placeholder="{{'FORM.NAMES.firstName' | translate}}" [formControl]="firstName">
                 <mat-error *ngIf="firstName.hasError('minlength') && !firstName.hasError('required')">
                   {{errorMsg(firstName)}}
                 </mat-error>
@@ -20,11 +20,11 @@
               </mat-form-field>
 
               <mat-form-field class="w-100">
-                <input matInput placeholder="Nazwisko" [formControl]="lastName">
+                <input matInput placeholder="{{'FORM.NAMES.lastName' | translate}}" [formControl]="lastName">
               </mat-form-field>
 
               <mat-form-field class="w-100">
-                <input matInput placeholder="Email" [formControl]="email">
+                <input matInput placeholder="{{'FORM.NAMES.email' | translate}}" [formControl]="email">
                 <mat-error *ngIf="email.hasError('email') && !email.hasError('required')">
                   Nieprawidłowy e-mail
                 </mat-error>
@@ -34,7 +34,7 @@
               </mat-form-field>
 
               <mat-form-field class="w-100">
-                <input matInput placeholder="Temat" [formControl]="subject">
+                <input matInput placeholder="{{'FORM.NAMES.subject' | translate}}" [formControl]="subject">
                 <mat-error *ngIf="subject.hasError('minlength') && !subject.hasError('required')">
                   {{errorMsg(subject)}}
                 </mat-error>
@@ -44,7 +44,7 @@
               </mat-form-field>
 
               <mat-form-field class="w-100">
-                <input matInput placeholder="Wiadomość" [formControl]="message">
+                <input matInput placeholder="{{'FORM.NAMES.message' | translate}}" [formControl]="message">
                 <mat-error *ngIf="message.hasError('minlength') && !message.hasError('required')">
                   {{errorMsg(message)}}
                 </mat-error>
@@ -54,7 +54,7 @@
               </mat-form-field>
 
               <div class="text-center">
-                <button class="btn btn-elegant waves-light" mdbRippleRadius [disabled]="contactForm.invalid">Wyślij</button>
+                <button class="btn btn-elegant waves-light" mdbRippleRadius [disabled]="contactForm.invalid" translate>FORM.NAMES.sendButton</button>
               </div>
             </div>
           </form>
@@ -62,7 +62,7 @@
         <div class="col-lg-7 col-sm-12">
           <agm-map class="z-depth-1-half map-container" style="height: 420px; width: auto" [zoom]="16"
                    [latitude]="map.lat"
-                   [longitude]="map.lng">
+                   [longitude]="map.lng" >
             <agm-marker [latitude]="map.lat" [longitude]="map.lng">
               <agm-snazzy-info-window [maxWidth]="165" [maxHeight]="120" [closeWhenOthersOpen]="true">
                 <ng-template>

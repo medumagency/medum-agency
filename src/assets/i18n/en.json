@@ -1,0 +1,56 @@
+{
+  "NAVBAR": {
+    "about": "ABOUT",
+    "jobOffers": "JOB OFFERS",
+    "jobForm": "FORM",
+    "cooperationForm": "COOPERATION",
+    "contact": "CONTACT",
+    "insideCountry": "POLAND",
+    "outsideCountry": "ABROAD",
+    "loginHeader": "Login",
+    "loginPassword": "Password",
+    "loginBtn": "Apply"
+  },
+  "FORM": {
+    "NAMES": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "subject": "Subject",
+      "message": "Message",
+      "address": "Address",
+      "phone": "Phone",
+      "position": "Apply for position",
+      "attachments": "Add attachments",
+      "attachmentsCaution": "Allowed files",
+      "companyName": "Company Name",
+      "sendButton": "Send"
+    },
+    "ERRORS": {
+
+    }
+  },
+  "JOBFORMPAGE": {
+    "heading": "Send your application"
+  },
+  "COOPERATIONFORMPAGE": {
+    "heading": "Establish cooperation with us"
+  },
+  "CONTACTPAGE": {
+    "heading": "Contact us!"
+  },
+  "COUNTRYJOBOFFERS": {
+    "heading": "Job Offers in Poland",
+    "search": "Look for offers",
+    "seeOfferBtn": "See offer",
+    "closeBtn": "Close",
+    "applyBtn": "Apply"
+  },
+  "OTHERJOBOFFERS": {
+    "heading": "Job Offers",
+    "search": "Look for offers",
+    "seeOfferBtn": "See offer",
+    "closeBtn": "Close",
+    "applyBtn": "Apply"
+  }
+}

@@ -3,7 +3,7 @@
 
   <div *ngIf="!isLoading">
     <div class="row mt-10 pt-3">
-      <h1 class="center-middle mb-2">Oferty Pracy</h1>
+      <h1 class="center-middle mb-2" translate>COUNTRYJOBOFFERS.heading</h1>
       <div class="col-12"></div>
       <div class="center-middle" id="regions-chart">
         <div id="chartBig" [chartData]="chartData" [chartOptions]="optionsBig" chartType="GeoChart" appGoogleChart></div>
@@ -17,7 +17,7 @@
     <div class="center-middle md-form mt-5 pb-5 w-50">
       <i class="fa fa-search prefix"></i>
       <input mdbActive type="text" id="form1" class="form-control" [disabled]="!jobOffers.length">
-      <label for="form1" class="">Szukaj ofert</label>
+      <label for="form1" translate>COUNTRYJOBOFFERS.search</label>
     </div>
 
     <div class="text-center mt-10 mb-20 pb-20" *ngIf="!jobOffers.length">
@@ -27,13 +27,13 @@
       <div class="center-middle z-depth-1 hoverable" *ngFor="let offer of jobOffers">
         <div class="card mb-4">
           <div class="card-body">
-            <h4 class="card-title">{{offer.polish.polishTitle}}</h4>
+            <h4 class="card-title">{{offer[type].title}}</h4>
             <div class="card-text">
-              {{ turnCate(offer.polish.polishText, 300) }}
+              {{ turnCate(offer[type].text, 300) }}
             </div>
             <button type="button" class="btn btn-outline-elegant btn-sm waves-light" data-toggle="modal"
-                    data-target="#basicExample" (click)="demoBasic.show(); setModalData(offer)" mdbRippleRadius>
-              Zobacz ofertę
+                    data-target="#basicExample" (click)="demoBasic.show(); setModalData(offer)" mdbRippleRadius translate>
+              COUNTRYJOBOFFERS.seeOfferBtn
             </button>
           </div>
         </div>
@@ -60,9 +60,9 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-brown btn-sm waves-light" data-dismiss="modal"
-                (click)="demoBasic.hide()" mdbRippleRadius>Zamknij
+                (click)="demoBasic.hide()" mdbRippleRadius translate>COUNTRYJOBOFFERS.closeBtn
         </button>
-        <button type="button" class="btn btn-elegant btn-sm waves-light" mdbRippleRadius (click)="navigateToForm()">Aplikuj</button>
+        <button type="button" class="btn btn-elegant btn-sm waves-light" mdbRippleRadius (click)="navigateToForm()" translate>COUNTRYJOBOFFERS.applyBtn</button>
       </div>
     </div>
   </div>

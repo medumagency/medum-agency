@@ -1,0 +1,56 @@
+{
+  "NAVBAR": {
+    "about": "ÜBER UNS",
+    "jobOffers": "ANGEBOTE",
+    "jobForm": "FORM",
+    "cooperationForm": "KOOPERATION",
+    "contact": "KONTAKT",
+    "insideCountry": "POLEN",
+    "outsideCountry": "AUSLAND",
+    "loginHeader": "Login",
+    "loginPassword": "Password",
+    "loginBtn": "Apply"
+  },
+  "FORM": {
+    "NAMES": {
+      "firstName": "Vorname",
+      "lastName": "Familienname",
+      "email": "Email",
+      "subject": "Gegenstand",
+      "message": "Botschaft",
+      "address": "Adresse",
+      "phone": "Telefon",
+      "position": "Ich bewerbe mich um eine Position",
+      "attachments": "Anhänge hinzufügen",
+      "attachmentsCaution": "Erlaubte Dateien",
+      "companyName": "Name der Firma",
+      "sendButton": "Senden"
+    },
+    "ERRORS": {
+
+    }
+  },
+  "JOBFORMPAGE": {
+    "heading": "Senden Sie Ihre Bewerbung"
+  },
+  "COOPERATIONFORMPAGE": {
+    "heading": "Stellen Sie die Zusammenarbeit mit uns her"
+  },
+  "CONTACTPAGE": {
+    "heading": "Kontaktiere uns!"
+  },
+  "COUNTRYJOBOFFERS": {
+    "heading": "Stellenangebote in Polen",
+    "search": "Nach Angeboten suchen",
+    "seeOfferBtn": "Siehe Angebot",
+    "closeBtn": "Schließen",
+    "applyBtn": "Sich bewerben"
+  },
+  "OTHERJOBOFFERS": {
+    "heading": "Jobangebote",
+    "search": "Nach Angeboten suchen",
+    "seeOfferBtn": "Siehe Angebot",
+    "closeBtn": "Schließen",
+    "applyBtn": "Sich bewerben"
+  }
+}

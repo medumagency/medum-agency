@@ -2,24 +2,24 @@ export interface IJobOffer {
   id?: string;
   date?: number;
   polish: {
-    polishTitle: string;
-    polishText: string;
-    polishCountry: string;
-    polishRegion: string;
-    polishCity: string;
+    title: string;
+    text: string;
+    country: string;
+    region: string;
+    city: string;
   };
   english: {
-    englishTitle: string;
-    englishText: string;
-    englishCountry: string;
-    englishRegion: string;
-    englishCity: string;
+    title: string;
+    text: string;
+    country: string;
+    region: string;
+    city: string;
   };
   german: {
-    germanTitle: string;
-    germanText: string;
-    germanCountry: string;
-    germanRegion: string;
-    germanCity: string;
+    title: string;
+    text: string;
+    country: string;
+    region: string;
+    city: string;
   };
 }

@@ -1,0 +1,56 @@
+{
+  "NAVBAR": {
+    "about": "O NAS",
+    "jobOffers": "OFERTY PRACY",
+    "jobForm": "FORMULARZ",
+    "cooperationForm": "WSPÓŁPRACA",
+    "contact": "KONTAKT",
+    "insideCountry": "W KRAJU",
+    "outsideCountry": "ZA GRANICĄ",
+    "loginHeader": "Zaloguj się",
+    "loginPassword": "Hasło",
+    "loginBtn": "Zaloguj"
+  },
+  "FORM": {
+    "NAMES": {
+      "firstName": "Imię",
+      "lastName": "Nazwisko",
+      "email": "Email",
+      "subject": "Temat",
+      "message": "Wiadomość",
+      "address": "Adres",
+      "phone": "Telefon",
+      "position": "Aplikuję na stanowisko",
+      "attachments": "Dodaj załączniki",
+      "attachmentsCaution": "Dozwolone pliki",
+      "companyName": "Nazwa firmy",
+      "sendButton": "Wyślij"
+    },
+    "ERRORS": {
+
+    }
+  },
+  "JOBFORMPAGE": {
+    "heading": "Wyślij swoje zgłoszenie"
+  },
+  "COOPERATIONFORMPAGE": {
+    "heading": "Nawiąż z nami współpracę"
+  },
+  "CONTACTPAGE": {
+    "heading": "Skontaktuj się z nami!"
+  },
+  "COUNTRYJOBOFFERS": {
+    "heading": "Oferty Pracy w Kraju",
+    "search": "Szukaj ofert",
+    "seeOfferBtn": "Zobacz ofertę",
+    "closeBtn": "Zamknij",
+    "applyBtn": "Aplikuj"
+  },
+  "OTHERJOBOFFERS": {
+    "heading": "Oferty Pracy",
+    "search": "Szukaj ofert",
+    "seeOfferBtn": "Zobacz ofertę",
+    "closeBtn": "Zamknij",
+    "applyBtn": "Aplikuj"
+  }
+}

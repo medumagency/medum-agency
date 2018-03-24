@@ -9,17 +9,17 @@
       <div class="form-inline ml-auto">
         <div>
           <ul class="navbar-nav nav-flex-icons">
-            <li class="nav-item waves-light ml-auto" (click)="selectLang(0)">
+            <li class="nav-item waves-light ml-auto" (click)="selectLang(0); translate.switchLanguage('pl')">
               <a class="nav-link">
                 <img src="../../../assets/blank.gif" class="flag flag-pl" alt="Polski" [ngClass]="{'flag-border': isSelected(0)}">
               </a>
             </li>
-            <li class="nav-item waves-light" (click)="selectLang(1)">
+            <li class="nav-item waves-light" (click)="selectLang(1); translate.switchLanguage('en')">
               <a class="nav-link">
                 <img src="../../../assets/blank.gif" class="flag flag-gb" alt="Angielski" [ngClass]="{'flag-border': isSelected(1)}">
               </a>
             </li>
-            <li class="nav-item waves-light" (click)="selectLang(2)">
+            <li class="nav-item waves-light" (click)="selectLang(2); translate.switchLanguage('de')">
               <a class="nav-link mr-2">
                 <img src="../../../assets/blank.gif" class="flag flag-de" alt="Niemiecki" [ngClass]="{'flag-border': isSelected(2)}">
               </a>
@@ -32,27 +32,26 @@
           </ul>
           <ul class="navbar-nav">
             <li class="nav-item waves-light" mdbRippleRadius (mouseenter)="dropdown.hide()">
-              <a class="nav-link" routerLink="o-nas">O NAS</a>
+              <a class="nav-link" routerLink="o-nas" translate>NAVBAR.about</a>
             </li>
             <li class="nav-item dropdown" dropdown #dropdown="bs-dropdown">
               <a dropdownToggle class="nav-link dropdown-toggle waves-light" mdbRippleRadius
-                 (mouseenter)="dropdown.show()">
-                OFERTY PRACY<span class="caret"></span></a>
-              <div class="dropdown-menu dropdown color-primary" (click)="dropdown.toggle()"
+                 (mouseenter)="dropdown.show()" translate>NAVBAR.jobOffers<span class="caret"></span>
+              </a>
+              <div class="dropdown-menu dropdown" (click)="dropdown.toggle()"
                    (mouseleave)="dropdown.hide()">
-                <div class="helper-overlay"></div>
-                <a class="dropdown-item waves-light" routerLink="w-kraju">W KRAJU</a>
-                <a class="dropdown-item waves-light" routerLink="za-granica">ZA GRANICĄ</a>
+                <a class="dropdown-item waves-light" routerLink="w-kraju" translate>NAVBAR.insideCountry</a>
+                <a class="dropdown-item waves-light" routerLink="za-granica" translate>NAVBAR.outsideCountry</a>
               </div>
             </li>
             <li class="nav-item waves-light" mdbRippleRadius (mouseenter)="dropdown.hide()">
-              <a class="nav-link" routerLink="formularz">FORMULARZ</a>
+              <a class="nav-link" routerLink="formularz" translate>NAVBAR.jobForm</a>
             </li>
             <li class="nav-item waves-light" mdbRippleRadius (mouseenter)="dropdown.hide()">
-              <a class="nav-link" routerLink="wspolpraca">WSPÓŁPRACA</a>
+              <a class="nav-link" routerLink="wspolpraca" translate>NAVBAR.cooperationForm</a>
             </li>
             <li class="nav-item waves-light" mdbRippleRadius (mouseenter)="dropdown.hide()">
-              <a class="nav-link" routerLink="kontakt">KONTAKT</a>
+              <a class="nav-link" routerLink="kontakt" translate>NAVBAR.contact</a>
             </li>
           </ul>
         </div>
@@ -99,7 +98,7 @@
 <ng-template #guest>
   <form #f="ngForm" (ngSubmit)="login(f, form)">
     <div class="modal-header btn-elegant darken-3 white-text">
-      <h4 class="title"><i class="fa fa-user"></i>Zaloguj się</h4>
+      <h4 class="title" translate><i class="fa fa-user"></i>NAVBAR.loginHeader</h4>
       <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close"
               (click)="form.hide()">
         <span aria-hidden="true">×</span>
@@ -114,11 +113,11 @@
       <div class="md-form form-sm">
         <i class="fa fa-lock prefix"></i>
         <input mdbActive type="password" id="form31" class="form-control" name="password" ngModel>
-        <label for="form31">Hasło</label>
+        <label for="form31" translate>NAVBAR.loginPassword</label>
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn global-color waves-light" mdbRippleRadius>Zaloguj<i class="fa fa-sign-in ml-1"></i></button>
+      <button class="btn global-color waves-light" mdbRippleRadius translate>NAVBAR.loginBtn<i class="fa fa-sign-in ml-1"></i></button>
     </div>
   </form>
 </ng-template>

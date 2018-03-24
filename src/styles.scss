@@ -1,10 +1,3 @@
-//html, body {
-//  margin: 0;
-//  //width: 100%;
-//  //height: 100%;
-//  padding: 0;
-//  font-family: 'Bellefair', sans-serif;
-//}
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 body, html {
@@ -185,6 +178,10 @@ body.modal-open {
 //.flag.flag-de {
 //  background-position: 0 0;
 //}
+
+.icon-24 {
+  font-size: 24px;
+}
 
 .files-uploaded {
   margin: 10px 10px 0;

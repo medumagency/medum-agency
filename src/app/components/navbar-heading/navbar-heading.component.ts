@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { LanguageService } from '../../services/language.service';
 
 @Component({
   selector: 'app-navbar-heading',
@@ -15,11 +16,13 @@ export class NavbarHeadingComponent implements OnInit {
   constructor(private el: ElementRef,
               private renderer: Renderer2,
               private router: Router,
-              public authService: AuthService) {
+              public authService: AuthService,
+              public translate: LanguageService) {
   }
 
   ngOnInit() {
     document.addEventListener('click', this.offClickHandler);
+    this.markLanguage();
   }
 
   offClickHandler = (event: any) => {
@@ -29,6 +32,16 @@ export class NavbarHeadingComponent implements OnInit {
       if (dropdown.classList.contains('show')) {
         this.el.nativeElement.querySelector('.navbar-toggler').click();
       }
+    }
+  }
+
+  markLanguage() {
+    const languages = ['pl', 'en', 'de'];
+    const currentLanguage: number = languages.indexOf(this.translate.getLanguage());
+    if (currentLanguage >= 0) {
+      this.selectLang(currentLanguage);
+    } else {
+      this.selectLang(0);
     }
   }
 
@@ -42,11 +55,11 @@ export class NavbarHeadingComponent implements OnInit {
 
   login(f: NgForm, form: any) {
     this.authService.login(f.value.email, f.value.password).then((isLogged) => {
-        if (isLogged) {
-          form.hide();
-          f.resetForm();
-          this.router.navigate(['admin']);
-        }
+      if (isLogged) {
+        form.hide();
+        f.resetForm();
+        this.router.navigate(['admin']);
+      }
     });
   }
 

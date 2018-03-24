@@ -51,6 +51,7 @@ const routes: Routes = [
     component: AdminManagerComponent,
     canActivate: [AdminGuardGuard]
   },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

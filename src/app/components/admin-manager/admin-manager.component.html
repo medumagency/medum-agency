@@ -12,7 +12,7 @@
               <mat-expansion-panel [expanded]="step === idx" (opened)="setStep(idx)" *ngFor="let offer of jobOffers; index as idx">
                 <mat-expansion-panel-header class="header-color">
                   <mat-panel-title>
-                    {{offer.polish.polishTitle}}
+                    {{offer[type].title}}
                   </mat-panel-title>
                   <mat-panel-description>
                     {{offer.date | amDateFormat:'DD-MM-YYYY HH:mm'}}
@@ -21,19 +21,28 @@
 
                 <div class="d-flex justify-content-between text-uppercase">
                   <div>
-                    <span class="badge badge-default">{{offer.polish.polishCountry}}</span>
-                    <span class="badge badge-info">{{offer.polish.polishRegion}}</span>
-                    <span class="badge badge-primary">{{offer.polish.polishCity}}</span>
+                    <span class="badge badge-default">{{offer[type].country}}</span>
+                    <span class="badge badge-info">{{offer[type].region}}</span>
+                    <span class="badge badge-primary">{{offer[type].city}}</span>
                   </div>
                   <div class="d-flex justify-content-end">
-                    <div class="p-2" appHoverImage color="#ff8800" mdbTooltip="Edytuj" placement="top"
+                    <div class="p-2 bleach-image" appHoverImage [ngClass]="{'bleach-image': type !== 'polish'}">
+                      <img src="../../../assets/blank.gif" class="flag flag-pl" alt="Polski" (click)="setType('polish')">
+                    </div>
+                    <div class="p-2 bleach-image" appHoverImage [ngClass]="{'bleach-image': type !== 'english'}">
+                      <img src="../../../assets/blank.gif" class="flag flag-gb" alt="Angielski" (click)="setType('english')">
+                    </div>
+                    <div class="p-2 bleach-image" appHoverImage [ngClass]="{'bleach-image': type !== 'german'}">
+                      <img src="../../../assets/blank.gif" class="flag flag-de" alt="Niemiecki" (click)="setType('german')">
+                    </div>
+                    <div class="p-2 icon-24" appHoverImage color="#ff8800" mdbTooltip="Edytuj" placement="top"
                          (click)="setData(offer); selectedTab = 1"><i class="fa fa-edit"></i></div>
-                    <div class="p-2" appHoverImage color="red" mdbTooltip="Usuń" placement="top"
+                    <div class="p-2 icon-24" appHoverImage color="red" mdbTooltip="Usuń" placement="top"
                          (click)="deleteJobOffer(offer)"><i
                       class="fa fa-trash"></i></div>
                   </div>
                 </div>
-                <p>{{offer.polish.polishText}}</p>
+                <p class="mt-2">{{offer[type].text}}</p>
 
                 <mat-action-row class="mt-5">
                   <button class="btn btn-sm" [ngClass]="{'btn-elegant': step !== 0}" (click)="prevStep()" [disabled]="step === 0">Poprzednia</button>
@@ -45,6 +54,7 @@
         </div>
       </mat-tab>
       <mat-tab label="Oferta">
+        <app-spinner *ngIf="isSave" [isWhole]="true"></app-spinner>
         <div>
           <div class="container">
             <form (submit)="saveOffer(f)" [formGroup]="offerForm" novalidate #f="ngForm">

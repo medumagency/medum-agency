@@ -8,13 +8,15 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/map';
 import { forEach, defer } from 'lodash';
+import { LanguageService } from '../../services/language.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-country-job-offers',
   templateUrl: './country-job-offers.component.html',
   styleUrls: ['./country-job-offers.component.scss']
 })
-export class CountryJobOffersComponent implements OnInit {
+export class CountryJobOffersComponent implements OnInit, OnDestroy {
 
   public chartData: Array<Array<string>>;
   public optionsXSSmall = CountryJobOffersComponent.setOptions(200);
@@ -23,6 +25,11 @@ export class CountryJobOffersComponent implements OnInit {
   public isLoading = true;
   public jobOffers: IJobOffer[] = [];
   public modalData: any;
+  public type = 'polish';
+
+  private $typeSub: Subscription;
+  private $jobOffersSub: Subscription;
+  private $countersSub: Subscription;
 
   static setOptions(height = 380) {
     return {
@@ -39,16 +46,21 @@ export class CountryJobOffersComponent implements OnInit {
     };
   }
 
-  constructor(private router: Router, private firesotreDAO: FirestoreDaoService) {
+  constructor(private router: Router, private firesotreDAO: FirestoreDaoService, private lang: LanguageService) {
   }
 
   ngOnInit() {
     this.setRegionCounters();
     this.fetchJobOffers();
+    this.fetchCurrentLanguage();
+  }
+
+  ngOnDestroy() {
+    this.unsubscribeAll();
   }
 
   turnCate(str, length) {
-    return str.length > length ? `${str.slice(0, length)}...` : str;
+    return str && str.length > length ? `${str.slice(0, length)}...` : str;
   }
 
   navigateToForm() {
@@ -61,35 +73,56 @@ export class CountryJobOffersComponent implements OnInit {
     this.router.navigate(['formularz'], navigationExtras);
   }
 
+  fetchCurrentLanguage() {
+    this.$typeSub = this.lang.getRawLanguage().subscribe((lang) => {
+      this.isLoading = true;
+      this.type = lang;
+      this.setRegionCounters();
+    });
+  }
+
   fetchJobOffers(): void {
-    this.firesotreDAO.getJobOffers(true).subscribe((jobs) => {
+    this.$jobOffersSub = this.firesotreDAO.getJobOffers(true).subscribe((jobs) => {
       this.jobOffers = jobs;
     });
   }
 
   setModalData(offer: any): void {
-    const data = offer.polish;
+    const data = offer[this.type];
     const date = offer.date;
 
     this.modalData = {
-      title: data.polishTitle,
-      region: data.polishRegion,
-      country: data.polishCountry,
-      city: data.polishCity,
+      title: data.title,
+      region: data.region,
+      country: data.country,
+      city: data.city,
       date,
-      text: data.polishText,
+      text: data.text,
     };
   }
 
   setRegionCounters(): void {
-    const temp = [['Województwo', 'Ofert Pracy']];
-    this.firesotreDAO.getCounters().subscribe(({payload}) => {
+    const temp = [];
+    if (this.type === 'polish') {
+      temp.push(['Województwo', 'Ofert Pracy']);
+    } else if (this.type === 'english') {
+      temp.push(['Region', 'Job Offers']);
+    } else if (this.type === 'german') {
+      temp.push(['Region', 'Jobangebote']);
+    }
+    this.$countersSub = this.firesotreDAO.getCounters().subscribe(({ payload }) => {
       forEach(payload.data(), (val, key) => {
         temp.push([key, val]);
       });
       this.chartData = temp;
       this.isLoading = false;
     });
+  }
+
+  unsubscribeAll() {
+    this.$typeSub.unsubscribe();
+    this.$jobOffersSub.unsubscribe();
+    this.$countersSub.unsubscribe();
   }
 }
 

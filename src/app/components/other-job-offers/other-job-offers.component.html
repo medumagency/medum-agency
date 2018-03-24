@@ -1,3 +1,61 @@
-<p>
-  other-job-offers works!
-</p>
+<div class="container">
+  <app-spinner *ngIf="isLoading" class="mb-20"></app-spinner>
+
+  <div *ngIf="!isLoading" class="away-bottom">
+    <div class="row mt-10 pt-3">
+      <h1 class="center-middle mb-2" translate>OTHERJOBOFFERS.heading</h1>
+    </div>
+
+    <div class="center-middle md-form mt-5 pb-5 w-50">
+      <i class="fa fa-search prefix"></i>
+      <input mdbActive type="text" id="form1" class="form-control" [disabled]="!jobOffers.length">
+      <label for="form1" translate>OTHERJOBOFFERS.search</label>
+    </div>
+
+    <div class="text-center mt-10 mb-20 pb-20" *ngIf="!jobOffers.length">
+      <h1>Brak ofert na tę chwilę</h1>
+    </div>
+    <div *ngIf="jobOffers.length" class="mb-20 pb-15 w-75 center-middle">
+      <div class="center-middle z-depth-1 hoverable" *ngFor="let offer of jobOffers">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h4 class="card-title">{{offer[type].title}}</h4>
+            <div class="card-text">
+              {{ turnCate(offer[type].text, 300) }}
+            </div>
+            <button type="button" class="btn btn-outline-elegant btn-sm waves-light" data-toggle="modal"
+                    data-target="#basicExample" (click)="demoBasic.show(); setModalData(offer)" mdbRippleRadius translate>
+              OTHERJOBOFFERS.seeOfferBtn
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div mdbModal #demoBasic="mdb-modal" class="modal fade" id="basicExample" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content" *ngIf="modalData">
+      <div class="modal-header">
+        <h4 class="modal-title w-100" id="myModalLabel">{{modalData.title}}</h4>
+        <div class="text-uppercase" style="position: absolute; top: 45px">
+          <span class="badge badge-default">{{modalData.country}}</span>
+          <span class="badge badge-info">{{modalData.region}}</span>
+          <span class="badge badge-primary">{{modalData.city}}</span>
+        </div>
+        <h6 class="text-right">{{modalData.date | amDateFormat:'YYYY-MM-DD HH:mm'}}</h6>
+      </div>
+      <div class="modal-body">
+        {{modalData.text}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-brown btn-sm waves-light" data-dismiss="modal"
+                (click)="demoBasic.hide()" mdbRippleRadius translate>OTHERJOBOFFERS.closeBtn
+        </button>
+        <button type="button" class="btn btn-elegant btn-sm waves-light" mdbRippleRadius (click)="navigateToForm()" translate>OTHERJOBOFFERS.applyBtn</button>
+      </div>
+    </div>
+  </div>
+</div>

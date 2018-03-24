@@ -1,7 +1,7 @@
 <div class="container">
   <app-spinner [isWhole]="true" *ngIf="isSending"></app-spinner>
   <div class="mt-10 pt-5 align-middle">
-    <h2 class="d-flex justify-content-center">Wyślij swoje zgłoszenie</h2>
+    <h2 class="d-flex justify-content-center" translate>JOBFORMPAGE.heading</h2>
   </div>
   <div class="row mt-5 mb-20 pb-1">
     <div class="col-lg-3 hidden-sm"></div>
@@ -9,7 +9,7 @@
       <form class="card" [formGroup]="jobForm" (ngSubmit)="submitForm(f)" #f="ngForm" novalidate>
         <div class="card-body">
           <mat-form-field class="w-100">
-            <input matInput placeholder="Imię" [formControl]="firstName">
+            <input matInput placeholder="{{'FORM.NAMES.firstName' | translate}}" [formControl]="firstName">
             <mat-error *ngIf="firstName.hasError('minlength') && !firstName.hasError('required')">
               {{errorMsg(firstName)}}
             </mat-error>
@@ -19,7 +19,7 @@
           </mat-form-field>
 
           <mat-form-field class="w-100">
-            <input matInput placeholder="Nazwisko" [formControl]="lastName">
+            <input matInput placeholder="{{'FORM.NAMES.lastName' | translate}}" [formControl]="lastName">
             <mat-error *ngIf="lastName.hasError('minlength') && !lastName.hasError('required')">
               {{errorMsg(lastName)}}
             </mat-error>
@@ -29,7 +29,7 @@
           </mat-form-field>
 
           <mat-form-field class="w-100">
-            <input matInput placeholder="Adres" [formControl]="address">
+            <input matInput placeholder="{{'FORM.NAMES.address' | translate}}" [formControl]="address">
             <mat-error *ngIf="address.hasError('minlength') && !address.hasError('required')">
               {{errorMsg(address)}}
             </mat-error>
@@ -39,7 +39,7 @@
           </mat-form-field>
 
           <mat-form-field class="w-100">
-            <input matInput placeholder="Telefon" [formControl]="phone">
+            <input matInput placeholder="{{'FORM.NAMES.phone' | translate}}" [formControl]="phone">
             <mat-error *ngIf="phone.hasError('minlength') && !phone.hasError('required')">
               {{errorMsg(phone)}}
             </mat-error>
@@ -49,7 +49,7 @@
           </mat-form-field>
 
           <mat-form-field class="w-100">
-            <input matInput placeholder="Email" [formControl]="email">
+            <input matInput placeholder="{{'FORM.NAMES.email' | translate}}" [formControl]="email">
             <mat-error *ngIf="email.hasError('email') && !email.hasError('required')">
               Nieprawidłowy email
             </mat-error>
@@ -59,7 +59,7 @@
           </mat-form-field>
 
           <mat-form-field class="w-100">
-            <input matInput placeholder="Aplikuję na stanowisko" [formControl]="position">
+            <input matInput placeholder="{{'FORM.NAMES.position' | translate}}" [formControl]="position">
             <mat-error *ngIf="position.hasError('minlength') && !position.hasError('required')">
               {{errorMsg(position)}}
             </mat-error>
@@ -69,17 +69,19 @@
           </mat-form-field>
 
           <mat-form-field class="w-100">
-            <textarea matInput placeholder="Dodatkowe informacje" [formControl]="message"></textarea>
+            <textarea matInput placeholder="{{'FORM.NAMES.message' | translate}}" [formControl]="message"></textarea>
           </mat-form-field>
 
           <div class="mt-3">
-            <label for="file" class="btn btn-sm btn-outline-elegant d-inline">
-              Dodaj załączniki
+            <label for="file" class="btn btn-sm btn-outline-elegant d-inline" translate>
+              FORM.NAMES.attachments
             </label>
             <div class="d-inline">
               <span class="red-text"> *</span>
               <p class="d-inline" style="font-size: 13px">
-                <span class="mr-2">Dozwolone pliki: .jpg, .png, .xls, .pdf, .doc</span>
+                <span class="mr-2">
+                  <span translate>FORM.NAMES.attachmentsCaution</span>: .jpg, .png, .xls, .pdf, .doc
+                </span>
               </p>
             </div>
             <input type="file"
@@ -96,7 +98,7 @@
           </div>
 
           <div class="text-center">
-            <button class="btn btn-elegant waves-light" mdbRippleRadius [disabled]="!jobForm.valid">Wyślij</button>
+            <button class="btn btn-elegant waves-light" mdbRippleRadius [disabled]="!jobForm.valid" translate>FORM.NAMES.sendButton</button>
           </div>
         </div>
       </form>
