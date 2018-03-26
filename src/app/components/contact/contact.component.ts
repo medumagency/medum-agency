@@ -16,12 +16,6 @@ export class ContactComponent implements OnInit {
 
   public map: any = { lat: 50.011750, lng: 20.987523 };
   public contactForm: FormGroup;
-  public firstName: FormControl;
-  public lastName: FormControl;
-  public subject: FormControl;
-  public message: FormControl;
-  public email: FormControl;
-
   public isSending = false;
 
   constructor(private firestoreDAO: FirestoreDaoService,
@@ -33,31 +27,26 @@ export class ContactComponent implements OnInit {
     this.createForm();
   }
 
-  createControls() {
-    this.firstName = new FormControl('', [Validators.required, Validators.minLength(3)]);
-    this.lastName = new FormControl('');
-    this.subject = new FormControl('', [Validators.required, Validators.minLength(5)]);
-    this.message = new FormControl('', [Validators.required, Validators.minLength(5)]);
-    this.email = new FormControl('', [Validators.required, Validators.email]);
-  }
-
   createForm() {
-    this.createControls();
-
     this.contactForm = new FormGroup({
-      firstName: this.firstName,
-      lastName: this.lastName,
-      subject: this.subject,
-      message: this.message,
-      email: this.email
+      firstName: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      lastName: new FormControl(''),
+      subject: new FormControl('', [Validators.required, Validators.minLength(5)]),
+      message: new FormControl('', [Validators.required, Validators.minLength(5)]),
+      email: new FormControl('', [Validators.required, Validators.email])
     });
   }
 
-  errorMsg(property) {
-    const required = property.errors.minlength.requiredLength;
-    const actual = property.errors.minlength.actualLength;
-    return `Password must be ${required} characters long, we need another
-     ${required - actual} characters `;
+  getControl(name: string): any {
+    return this.contactForm.controls[name];
+  }
+
+  minError(name: string): any {
+    const error = this.getControl(name).getError('minlength');
+    return {
+      required: error.requiredLength,
+      actual: error.requiredLength - error.actualLength
+    };
   }
 
   submitForm(f: NgForm) {

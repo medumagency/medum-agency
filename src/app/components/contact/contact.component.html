@@ -10,46 +10,46 @@
           <form class="card" [formGroup]="contactForm" (ngSubmit)="submitForm(f)" #f="ngForm" novalidate>
             <div class="card-body">
               <mat-form-field class="w-100">
-                <input matInput placeholder="{{'FORM.NAMES.firstName' | translate}}" [formControl]="firstName">
-                <mat-error *ngIf="firstName.hasError('minlength') && !firstName.hasError('required')">
-                  {{errorMsg(firstName)}}
+                <input matInput placeholder="{{'FORM.NAMES.firstName' | translate}}" [formControl]="getControl('firstName')">
+                <mat-error *ngIf="getControl('firstName').hasError('minlength') && !getControl('firstName').hasError('required')">
+                  {{'FORM.ERRORS.minLengthField' | translate:minError('firstName')}}
                 </mat-error>
-                <mat-error *ngIf="firstName.hasError('required')">
-                  To pole jest <strong>wymagane</strong>
-                </mat-error>
-              </mat-form-field>
-
-              <mat-form-field class="w-100">
-                <input matInput placeholder="{{'FORM.NAMES.lastName' | translate}}" [formControl]="lastName">
-              </mat-form-field>
-
-              <mat-form-field class="w-100">
-                <input matInput placeholder="{{'FORM.NAMES.email' | translate}}" [formControl]="email">
-                <mat-error *ngIf="email.hasError('email') && !email.hasError('required')">
-                  Nieprawidłowy e-mail
-                </mat-error>
-                <mat-error *ngIf="email.hasError('required')">
-                  To pole jest <strong>wymagane</strong>
+                <mat-error *ngIf="getControl('firstName').hasError('required')">
+                  {{'FORM.ERRORS.requiredField' | translate}}
                 </mat-error>
               </mat-form-field>
 
               <mat-form-field class="w-100">
-                <input matInput placeholder="{{'FORM.NAMES.subject' | translate}}" [formControl]="subject">
-                <mat-error *ngIf="subject.hasError('minlength') && !subject.hasError('required')">
-                  {{errorMsg(subject)}}
+                <input matInput placeholder="{{'FORM.NAMES.lastName' | translate}}" [formControl]="getControl('lastName')">
+              </mat-form-field>
+
+              <mat-form-field class="w-100">
+                <input matInput placeholder="{{'FORM.NAMES.email' | translate}}" [formControl]="getControl('email')">
+                <mat-error *ngIf="getControl('email').hasError('email') && !getControl('email').hasError('required')">
+                  {{'FORM.ERRORS.emailField' | translate}}
                 </mat-error>
-                <mat-error *ngIf="subject.hasError('required')">
-                  To pole jest <strong>wymagane</strong>
+                <mat-error *ngIf="getControl('email').hasError('required')">
+                  {{'FORM.ERRORS.requiredField' | translate}}
                 </mat-error>
               </mat-form-field>
 
               <mat-form-field class="w-100">
-                <input matInput placeholder="{{'FORM.NAMES.message' | translate}}" [formControl]="message">
-                <mat-error *ngIf="message.hasError('minlength') && !message.hasError('required')">
-                  {{errorMsg(message)}}
+                <input matInput placeholder="{{'FORM.NAMES.subject' | translate}}" [formControl]="getControl('subject')">
+                <mat-error *ngIf="getControl('subject').hasError('minlength') && !getControl('subject').hasError('required')">
+                  {{'FORM.ERRORS.minLengthField' | translate:minError('subject')}}
                 </mat-error>
-                <mat-error *ngIf="message.hasError('required')">
-                  To pole jest <strong>wymagane</strong>
+                <mat-error *ngIf="getControl('subject').hasError('required')">
+                  {{'FORM.ERRORS.requiredField' | translate}}
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="w-100">
+                <input matInput placeholder="{{'FORM.NAMES.message' | translate}}" [formControl]="getControl('message')">
+                <mat-error *ngIf="getControl('message').hasError('minlength') && !getControl('message').hasError('required')">
+                  {{'FORM.ERRORS.minLengthField' | translate:minError('message')}}
+                </mat-error>
+                <mat-error *ngIf="getControl('message').hasError('required')">
+                  {{'FORM.ERRORS.requiredField' | translate}}
                 </mat-error>
               </mat-form-field>
 

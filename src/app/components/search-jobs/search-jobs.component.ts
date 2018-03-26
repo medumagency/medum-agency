@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Subscription } from 'rxjs/Subscription';
 import { LanguageService } from '../../services/language.service';
@@ -9,12 +9,15 @@ import { NavigationExtras, Router } from '@angular/router';
   templateUrl: './search-jobs.component.html',
   styleUrls: ['./search-jobs.component.scss']
 })
-export class SearchJobsComponent implements OnInit, OnDestroy {
+export class SearchJobsComponent implements OnInit, OnDestroy, OnChanges {
+
+  @Input() regionSet: string;
 
   public config: any;
   public type = 'polish';
   public perPage = [];
   public modalData: any;
+  public isChanged = false;
 
   private $typeSub: Subscription;
 
@@ -22,12 +25,38 @@ export class SearchJobsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.config = environment.algolia;
+    this.config = Object.assign(environment.algolia, this.setFilters());
     this.fetchCurrentLanguage();
+  }
+
+  ngOnChanges(changes) {
+    const { regionSet } = changes;
+
+    if (this.config) {
+      this.isChanged = true;
+      this.config.searchParameters.query = regionSet.currentValue;
+      setTimeout(() => {
+        this.isChanged = false;
+      }, 1);
+    }
   }
 
   ngOnDestroy() {
     this.unsubscribeAll();
+  }
+
+  setFilters() {
+    const isInCountry = location.pathname.includes('w-kraju');
+    const countryFacet = { 'polish.country': ['Polska'] };
+
+    return {
+      searchParameters: {
+        facets: ['polish.country'],
+        facetsRefinements: isInCountry ? countryFacet : {} ,
+        query: '',
+        facetsExcludes: !isInCountry ? countryFacet : {}
+      }
+    };
   }
 
   turnCate(str, length) {
@@ -37,8 +66,7 @@ export class SearchJobsComponent implements OnInit, OnDestroy {
   navigateToForm() {
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        'firstname': 'Nic',
-        'lastname': 'Raboy'
+        position: this.modalData.title
       }
     };
     this.router.navigate(['formularz'], navigationExtras);

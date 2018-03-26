@@ -19,14 +19,6 @@ export class JobFormComponent implements OnInit {
   @ViewChild('dialog') private dialogSwal: SwalComponent;
 
   public jobForm: FormGroup;
-  public firstName: FormControl;
-  public lastName: FormControl;
-  public address: FormControl;
-  public phone: FormControl;
-  public email: FormControl;
-  public position: FormControl;
-  public message: FormControl;
-
   public fileToUpload: Array<any> = [];
   public sizeSum = null;
   public isSending = false;
@@ -40,31 +32,23 @@ export class JobFormComponent implements OnInit {
   ngOnInit() {
     this.createForm();
     this.route.queryParams.subscribe(params => {
-      console.log(params);
+      const { position } = params;
+      if (position) {
+        this.jobForm.patchValue({ position });
+      }
     });
   }
 
-  createControls() {
-    this.firstName = new FormControl('', [Validators.required, Validators.minLength(3)]);
-    this.lastName = new FormControl('', [Validators.required, Validators.minLength(3)]);
-    this.address = new FormControl('', [Validators.required, Validators.minLength(5)]);
-    this.phone = new FormControl('', [Validators.required, Validators.minLength(9)]);
-    this.email = new FormControl('', [Validators.required, Validators.email]);
-    this.position = new FormControl('', [Validators.required, Validators.minLength(3)]);
-    this.message = new FormControl('');
-  }
-
   createForm() {
-    this.createControls();
-
     this.jobForm = new FormGroup({
-      firstName: this.firstName,
-      lastName: this.lastName,
-      address: this.address,
-      phone: this.phone,
-      email: this.email,
-      position: this.position,
-      message: this.message
+      firstName: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      lastName: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      address: new FormControl('', [Validators.required, Validators.minLength(5)]),
+      phone: new FormControl('', [Validators.required, Validators.minLength(9)]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      position: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      message: new FormControl(''),
+      documentPolicy: new FormControl(false, Validators.requiredTrue)
     });
   }
 
@@ -126,11 +110,16 @@ export class JobFormComponent implements OnInit {
     return Observable.merge(observables).mergeMap(flat => flat);
   }
 
-  errorMsg(property) {
-    const required = property.errors.minlength.requiredLength;
-    const actual = property.errors.minlength.actualLength;
-    return `Password must be ${required} characters long, we need another
-     ${required - actual} characters `;
+  getControl(name: string): any {
+    return this.jobForm.controls[name];
+  }
+
+  minError(name: string): any {
+    const error = this.getControl(name).getError('minlength');
+    return {
+      required: error.requiredLength,
+      actual: error.requiredLength - error.actualLength
+    };
   }
 
   submitForm(f: NgForm) {

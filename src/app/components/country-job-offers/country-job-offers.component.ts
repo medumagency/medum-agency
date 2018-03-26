@@ -21,6 +21,7 @@ export class CountryJobOffersComponent implements OnInit, OnDestroy {
   public optionsBig = CountryJobOffersComponent.setOptions();
   public isLoading = true;
   public type = 'polish';
+  public searchRegion = '';
 
   private $typeSub: Subscription;
   private $countersSub: Subscription;
@@ -50,6 +51,10 @@ export class CountryJobOffersComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.unsubscribeAll();
+  }
+
+  setRegionSearch(region) {
+    this.searchRegion = region;
   }
 
   fetchCurrentLanguage() {

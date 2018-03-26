@@ -8,3 +8,20 @@
 .hide-elem {
   display: none;
 }
+
+.badges-container {
+  position: absolute;
+  top: 45px;
+}
+
+@media screen and (max-width: 769px) {
+  .medium-card {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 530px) {
+  .medium-card {
+    width: 100%;
+  }
+}

@@ -13,7 +13,7 @@ export class CompanyEmailService {
   constructor(private httpClient: HttpClient) {
   }
 
-  convertEmailData(data: IEmail): any {
+  static convertEmailData(data: IEmail): any {
     const fullName = `${data.firstName} ${data.lastName || ''}`;
     let html: string;
 
@@ -40,22 +40,20 @@ export class CompanyEmailService {
             <dvi>${data.message}</dvi>`;
     }
 
-    const result = {
+    return {
       type: data.type,
       subject: data.subject,
       html,
-      attachments: data.attachments || []
+      attachments: data.attachments || [],
+      approval: data.documentPolicy
     };
 
-    return result;
   }
 
 
   sendEmail(data) {
-    const params = this.convertEmailData(data);
-    const headers = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    };
+    const params = CompanyEmailService.convertEmailData(data);
+
     return this.httpClient.post(emailUrl, params).toPromise();
   }
 }

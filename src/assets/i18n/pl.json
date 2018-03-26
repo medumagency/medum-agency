@@ -24,10 +24,13 @@
       "attachments": "Dodaj załączniki",
       "attachmentsCaution": "Dozwolone pliki",
       "companyName": "Nazwa firmy",
-      "sendButton": "Wyślij"
+      "sendButton": "Wyślij",
+      "documentPolicy": "Wyrażam zgodę na przetwarzanie moich danych osobowych zawartych w mojej ofercie pracy dla potrzeb niezbędnych do przeprowadzenia rekrutacji (ustawa z 29 sierpnia 1997 r.o ochronie danych osobowych, tekst jednolity: Dz.U. z 2002 r. nr 101, poz. 926, ze zm.)."
     },
     "ERRORS": {
-
+      "requiredField": "To pole jest wymagane",
+      "minLengthField": "Pole musi mieć conajmniej {{required}} znaków, brakuje jeszcze {{actual}}",
+      "emailField": "Nieprawidłowy E-mail"
     }
   },
   "JOBFORMPAGE": {

@@ -16,11 +16,6 @@ export class CooperationFormComponent implements OnInit {
   @ViewChild('dialog') private dialogSwal: SwalComponent;
 
   public cooperationForm: FormGroup;
-  public companyName: FormControl;
-  public phone: FormControl;
-  public address: FormControl;
-  public email: FormControl;
-
   public fileToUpload: Array<any> = [];
   public isSending = false;
 
@@ -33,21 +28,13 @@ export class CooperationFormComponent implements OnInit {
     this.createForm();
   }
 
-  createControls() {
-    this.companyName = new FormControl('', [Validators.required, Validators.minLength(3)]);
-    this.phone = new FormControl('', [Validators.required, Validators.minLength(9)]);
-    this.address = new FormControl('', [Validators.required, Validators.minLength(5)]);
-    this.email = new FormControl('', [Validators.required, Validators.email]);
-  }
-
   createForm() {
-    this.createControls();
-
     this.cooperationForm = new FormGroup({
-      companyName: this.companyName,
-      phone: this.phone,
-      address: this.address,
-      email: this.email
+      companyName: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      phone: new FormControl('', [Validators.required, Validators.minLength(9)]),
+      address: new FormControl('', [Validators.required, Validators.minLength(5)]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      documentPolicy: new FormControl(false, Validators.requiredTrue)
     });
   }
 
@@ -108,11 +95,16 @@ export class CooperationFormComponent implements OnInit {
     return Observable.merge(observables).mergeMap(flat => flat);
   }
 
-  errorMsg(property) {
-    const required = property.errors.minlength.requiredLength;
-    const actual = property.errors.minlength.actualLength;
-    return `Password must be ${required} characters long, we need another
-     ${required - actual} characters `;
+  getControl(name: string): any {
+    return this.cooperationForm.controls[name];
+  }
+
+  minError(name: string): any {
+    const error = this.getControl(name).getError('minlength');
+    return {
+      required: error.requiredLength,
+      actual: error.requiredLength - error.actualLength
+    };
   }
 
   submitForm(f: NgForm) {

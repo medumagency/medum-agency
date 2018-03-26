@@ -10,4 +10,5 @@ export interface IEmail {
   position?: string;
   attachments?: any;
   companyName?: string;
+  documentPolicy?: boolean;
 }

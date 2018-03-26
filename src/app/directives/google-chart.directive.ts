@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnChanges, OnInit } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { environment } from '../../environments/environment';
 
 declare const google: any;
@@ -11,6 +11,8 @@ export class GoogleChartDirective implements OnInit, OnChanges {
   @Input('chartType') public chartType: string;
   @Input('chartOptions') public chartOptions: Object;
   @Input('chartData') public chartData: Object;
+
+  @Output() regionClicked: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(public element: ElementRef) {
     this._element = this.element.nativeElement;
@@ -49,16 +51,28 @@ export class GoogleChartDirective implements OnInit, OnChanges {
   }
 
   drawGraph(chartOptions, chartType, chartData, ele) {
-    google.charts.setOnLoadCallback(drawChart);
 
-    function drawChart() {
+    const drawChart = () => {
       const wrapper = new google.visualization.ChartWrapper({
         chartType: chartType,
         dataTable: chartData,
         options: chartOptions || {},
         containerId: ele.id
       });
+
+      const selectHandler = () => {
+        const selection = wrapper.getChart().getSelection()[0];
+        if (selection) {
+          const region = wrapper.getDataTable().getValue(selection.row, 0);
+          console.log(region);
+          this.regionClicked.emit(region);
+        }
+      };
+
       wrapper.draw();
-    }
+      google.visualization.events.addListener(wrapper, 'select', selectHandler);
+    };
+
+    google.charts.setOnLoadCallback(drawChart);
   }
 }
