@@ -2,6 +2,7 @@
 // The build system defaults to the dev environment which uses `environment.ts`, but if you do
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
+/* tslint:disable:max-line-length */
 
 export const environment = {
   production: true,
@@ -20,5 +21,7 @@ export const environment = {
     appId: '6AD0897I3Y',
     indexName: 'jobOffers',
     urlSync: true
-  }
+  },
+  countryNames: 'https://gist.githubusercontent.com/stychu/f79a4240d36d29ff486eff854166f866/raw/7a6d616894908ca1fb9ce2d8bc32983a4cb600da/countries.json',
+  polandCountry: 'https://gist.githubusercontent.com/stychu/4838cf6e3e094234a279d445714d141d/raw/aa5f941b0d6aae1358f9d64a23a1c862d907383f/polandRegionsCities.json'
 };

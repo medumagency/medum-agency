@@ -67,18 +67,18 @@
         <div>
           <div class="container">
             <form (submit)="saveOffer(f)" [formGroup]="offerForm" novalidate #f="ngForm">
-              <mat-tab-group [dynamicHeight]="true">
+              <mat-tab-group [dynamicHeight]="true" [(selectedIndex)]="selectedTabCountry">
                 <mat-tab label="Polski">
                   <div formGroupName="polish">
                     <div class="row mt-5">
                       <div class="col-md-6">
                         <mat-form-field class="w-100">
-                          <input matInput placeholder="Tytuł" [formControl]="polishTitle">
-                          <mat-error *ngIf="polishTitle.hasError('minlength') && !polishTitle.hasError('required')">
-                            {{errorMsg(polishTitle)}}
+                          <input matInput required placeholder="Tytuł" [formControl]="getControl('polish', 'title')">
+                          <mat-error *ngIf="getControl('polish', 'title').hasError('minlength') && !getControl('polish', 'title').hasError('required')">
+                            {{'FORM.ERRORS.minLengthField' | translate:minError('polish', 'title')}}
                           </mat-error>
-                          <mat-error *ngIf="polishTitle.hasError('required')">
-                            Tytuł jest <strong>wymagany</strong>
+                          <mat-error *ngIf="getControl('polish', 'title').hasError('required')">
+                            {{'FORM.ERRORS.requiredField' | translate}}
                           </mat-error>
                         </mat-form-field>
                       </div>
@@ -88,12 +88,12 @@
                     <div class="row mt-5">
                       <div class="col-md-12">
                         <mat-form-field class="w-100">
-                          <textarea matInput placeholder="Opis" [formControl]="polishText"></textarea>
-                          <mat-error *ngIf="polishText.hasError('minlength') && !polishText.hasError('required')">
-                            {{errorMsg(polishText)}}
+                          <textarea matInput placeholder="Opis" required [formControl]="getControl('polish', 'text')"></textarea>
+                          <mat-error *ngIf="getControl('polish', 'text').hasError('minlength') && !getControl('polish', 'text').hasError('required')">
+                            {{'FORM.ERRORS.minLengthField' | translate:minError('polish', 'text')}}
                           </mat-error>
-                          <mat-error *ngIf="polishText.hasError('required')">
-                            Opis jest <strong>wymagany</strong>
+                          <mat-error *ngIf="getControl('polish', 'text').hasError('required')">
+                            {{'FORM.ERRORS.requiredField' | translate}}
                           </mat-error>
                         </mat-form-field>
                       </div>
@@ -102,36 +102,62 @@
                     <div class="row mt-5">
                       <div class="col-md-4">
                         <mat-form-field class="w-100">
-                          <input matInput placeholder="Kraj" [formControl]="polishCountry">
-                          <mat-error *ngIf="polishCountry.hasError('minlength') && !polishCountry.hasError('required')">
-                            {{errorMsg(polishCountry)}}
+                          <mat-select placeholder="Kraj" required [formControl]="getControl('polish', 'country')" (change)="setCountryRegions()">
+                            <mat-option>--</mat-option>
+                            <mat-option *ngFor="let country of _countries" [value]="country.namePl">
+                              {{country.namePl}}
+                            </mat-option>
+                          </mat-select>
+                          <mat-error *ngIf="getControl('polish', 'country').hasError('minlength') && !getControl('polish', 'country').hasError('required')">
+                          {{'FORM.ERRORS.minLengthField' | translate:minError('polish', 'country')}}
                           </mat-error>
-                          <mat-error *ngIf="polishCountry.hasError('required')">
-                            Kraj jest <strong>wymagany</strong>
-                          </mat-error>
+                          <mat-error *ngIf="getControl('polish', 'country').hasError('required')">{{'FORM.ERRORS.requiredField' | translate}}</mat-error>
                         </mat-form-field>
                       </div>
 
                       <div class="col-md-4">
                         <mat-form-field class="w-100">
-                          <input matInput placeholder="Region" [formControl]="polishRegion">
-                          <mat-error *ngIf="polishRegion.hasError('minlength') && !polishRegion.hasError('required')">
-                            {{errorMsg(polishRegion)}}
+                          <mat-select placeholder="Region" required [formControl]="getControl('polish', 'region')"
+                                      (change)="setRegionCities()">
+                            <mat-option>--</mat-option>
+                            <mat-option *ngFor="let region of _regions" [value]="region.name">
+                              {{region.name}}
+                            </mat-option>
+                          </mat-select>
+                          <mat-error
+                            *ngIf="getControl('polish', 'region').hasError('minlength') && !getControl('polish', 'region').hasError('required')">
+                            {{'FORM.ERRORS.minLengthField' | translate:minError('polish', 'region')}}
                           </mat-error>
-                          <mat-error *ngIf="polishRegion.hasError('required')">
-                            Region jest <strong>wymagany</strong>
+                          <mat-error *ngIf="getControl('polish', 'region').hasError('required')">
+                            {{'FORM.ERRORS.requiredField' | translate}}
                           </mat-error>
                         </mat-form-field>
                       </div>
 
                       <div class="col-md-4">
-                        <mat-form-field class="w-100">
-                          <input matInput placeholder="Miasto" [formControl]="polishCity">
-                          <mat-error *ngIf="polishCity.hasError('minlength') && !polishCity.hasError('required')">
-                            {{errorMsg(polishCity)}}
+                        <mat-form-field class="w-100" *ngIf="getControl('polish', 'country').value !== 'Polska'">
+                          <input matInput placeholder="Miasto" required [formControl]="getControl('polish', 'city')" (change)="setCities()">
+                          <mat-error *ngIf="getControl('polish', 'city').hasError('minlength') && !getControl('polish', 'city').hasError('required')">
+                            {{'FORM.ERRORS.minLengthField' | translate:minError('polish', 'city')}}
                           </mat-error>
-                          <mat-error *ngIf="polishCity.hasError('required')">
-                            Miasto jest <strong>wymagany</strong>
+                          <mat-error *ngIf="getControl('polish', 'city').hasError('required')">
+                            {{'FORM.ERRORS.requiredField' | translate}}
+                          </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field class="w-100" *ngIf="getControl('polish', 'country').value === 'Polska'">
+                          <mat-select placeholder="Region" required [formControl]="getControl('polish', 'city')" (change)="setCities()">
+                            <mat-option>--</mat-option>
+                            <mat-option *ngFor="let city of _cities" [value]="city">
+                              {{city}}
+                            </mat-option>
+                          </mat-select>
+                          <mat-error
+                            *ngIf="getControl('polish', 'city').hasError('minlength') && !getControl('polish', 'city').hasError('required')">
+                            {{'FORM.ERRORS.minLengthField' | translate:minError('polish', 'city')}}
+                          </mat-error>
+                          <mat-error *ngIf="getControl('polish', 'city').hasError('required')">
+                            {{'FORM.ERRORS.requiredField' | translate}}
                           </mat-error>
                         </mat-form-field>
                       </div>
@@ -144,12 +170,12 @@
                     <div class="row mt-5">
                       <div class="col-md-6">
                         <mat-form-field class="w-100">
-                          <input matInput placeholder="Tytuł" [formControl]="englishTitle">
-                          <mat-error *ngIf="englishTitle.hasError('minlength') && !englishTitle.hasError('required')">
-                            {{errorMsg(englishTitle)}}
+                          <input matInput placeholder="Tytuł" required [formControl]="getControl('english', 'title')">
+                          <mat-error *ngIf="getControl('english', 'title').hasError('minlength') && !getControl('english', 'title').hasError('required')">
+                            {{'FORM.ERRORS.minLengthField' | translate:minError('english', 'title')}}
                           </mat-error>
-                          <mat-error *ngIf="englishTitle.hasError('required')">
-                            Tytuł jest <strong>wymagany</strong>
+                          <mat-error *ngIf="getControl('english', 'title').hasError('required')">
+                            {{'FORM.ERRORS.requiredField' | translate}}
                           </mat-error>
                         </mat-form-field>
                       </div>
@@ -159,12 +185,12 @@
                     <div class="row mt-5">
                       <div class="col-md-12">
                         <mat-form-field class="w-100">
-                          <textarea matInput placeholder="Opis" [formControl]="englishText"></textarea>
-                          <mat-error *ngIf="englishText.hasError('minlength') && !englishText.hasError('required')">
-                            {{errorMsg(englishText)}}
+                          <textarea matInput placeholder="Opis" required [formControl]="getControl('english', 'text')"></textarea>
+                          <mat-error *ngIf="getControl('english', 'text').hasError('minlength') && !getControl('english', 'text').hasError('required')">
+                            {{'FORM.ERRORS.minLengthField' | translate:minError('english', 'text')}}
                           </mat-error>
-                          <mat-error *ngIf="englishText.hasError('required')">
-                            Opis jest <strong>wymagany</strong>
+                          <mat-error *ngIf="getControl('english', 'text').hasError('required')">
+                            {{'FORM.ERRORS.requiredField' | translate}}
                           </mat-error>
                         </mat-form-field>
                       </div>
@@ -173,37 +199,36 @@
                     <div class="row mt-5">
                       <div class="col-md-4">
                         <mat-form-field class="w-100">
-                          <input matInput placeholder="Kraj" [formControl]="englishCountry">
-                          <mat-error
-                            *ngIf="englishCountry.hasError('minlength') && !englishCountry.hasError('required')">
-                            {{errorMsg(englishCountry)}}
+                          <input matInput placeholder="Miasto" required [formControl]="getControl('german', 'city')">
+                          <mat-error *ngIf="getControl('german', 'city').hasError('minlength') && !getControl('german', 'city').hasError('required')">
+                            {{'FORM.ERRORS.minLengthField' | translate:minError('german', 'city')}}
                           </mat-error>
-                          <mat-error *ngIf="englishCountry.hasError('required')">
-                            Kraj jest <strong>wymagany</strong>
-                          </mat-error>
-                        </mat-form-field>
-                      </div>
-
-                      <div class="col-md-4">
-                        <mat-form-field class="w-100">
-                          <input matInput placeholder="Region" [formControl]="englishRegion">
-                          <mat-error *ngIf="englishRegion.hasError('minlength') && !englishRegion.hasError('required')">
-                            {{errorMsg(englishRegion)}}
-                          </mat-error>
-                          <mat-error *ngIf="englishRegion.hasError('required')">
-                            Region jest <strong>wymagany</strong>
+                          <mat-error *ngIf="getControl('german', 'city').hasError('required')">
+                            {{'FORM.ERRORS.requiredField' | translate}}
                           </mat-error>
                         </mat-form-field>
                       </div>
 
                       <div class="col-md-4">
                         <mat-form-field class="w-100">
-                          <input matInput placeholder="Miasto" [formControl]="englishCity">
-                          <mat-error *ngIf="englishCity.hasError('minlength') && !englishCity.hasError('required')">
-                            {{errorMsg(englishCity)}}
+                          <input matInput placeholder="Region" required [formControl]="getControl('english', 'region')">
+                          <mat-error *ngIf="getControl('english', 'region').hasError('minlength') && !getControl('english', 'region').hasError('required')">
+                            {{'FORM.ERRORS.minLengthField' | translate:minError('english', 'region')}}
                           </mat-error>
-                          <mat-error *ngIf="englishCity.hasError('required')">
-                            Miasto jest <strong>wymagany</strong>
+                          <mat-error *ngIf="getControl('english', 'region').hasError('required')">
+                            {{'FORM.ERRORS.requiredField' | translate}}
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+
+                      <div class="col-md-4">
+                        <mat-form-field class="w-100">
+                          <input matInput placeholder="Miasto" required [formControl]="getControl('english', 'city')">
+                          <mat-error *ngIf="getControl('english', 'city').hasError('minlength') && !getControl('english', 'city').hasError('required')">
+                            {{'FORM.ERRORS.minLengthField' | translate:minError('english', 'city')}}
+                          </mat-error>
+                          <mat-error *ngIf="getControl('english', 'city').hasError('required')">
+                            {{'FORM.ERRORS.requiredField' | translate}}
                           </mat-error>
                         </mat-form-field>
                       </div>
@@ -216,12 +241,12 @@
                     <div class="row mt-5">
                       <div class="col-md-6">
                         <mat-form-field class="w-100">
-                          <input matInput placeholder="Tytuł" [formControl]="germanTitle">
-                          <mat-error *ngIf="germanTitle.hasError('minlength') && !germanTitle.hasError('required')">
-                            {{errorMsg(germanTitle)}}
+                          <input matInput placeholder="Tytuł" required [formControl]="getControl('german', 'title')">
+                          <mat-error *ngIf="getControl('german', 'title').hasError('minlength') && !getControl('german', 'title').hasError('required')">
+                            {{'FORM.ERRORS.minLengthField' | translate:minError('german', 'title')}}
                           </mat-error>
-                          <mat-error *ngIf="germanTitle.hasError('required')">
-                            Tytuł jest <strong>wymagany</strong>
+                          <mat-error *ngIf="getControl('german', 'title').hasError('required')">
+                            {{'FORM.ERRORS.requiredField' | translate}}
                           </mat-error>
                         </mat-form-field>
                       </div>
@@ -231,12 +256,12 @@
                     <div class="row mt-5">
                       <div class="col-md-12">
                         <mat-form-field class="w-100">
-                          <textarea matInput placeholder="Opis" [formControl]="germanText"></textarea>
-                          <mat-error *ngIf="germanText.hasError('minlength') && !germanText.hasError('required')">
-                            {{errorMsg(germanText)}}
+                          <textarea matInput placeholder="Opis" required [formControl]="getControl('german', 'text')"></textarea>
+                          <mat-error *ngIf="getControl('german', 'text').hasError('minlength') && !getControl('german', 'text').hasError('required')">
+                            {{'FORM.ERRORS.minLengthField' | translate:minError('german', 'text')}}
                           </mat-error>
-                          <mat-error *ngIf="germanText.hasError('required')">
-                            Opis jest <strong>wymagany</strong>
+                          <mat-error *ngIf="getControl('german', 'text').hasError('required')">
+                            {{'FORM.ERRORS.requiredField' | translate}}
                           </mat-error>
                         </mat-form-field>
                       </div>
@@ -245,36 +270,36 @@
                     <div class="row mt-5">
                       <div class="col-md-4">
                         <mat-form-field class="w-100">
-                          <input matInput placeholder="Kraj" [formControl]="germanCountry">
-                          <mat-error *ngIf="germanCountry.hasError('minlength') && !germanCountry.hasError('required')">
-                            {{errorMsg(germanCountry)}}
+                          <input matInput placeholder="Kraj" required [formControl]="getControl('german', 'country')">
+                          <mat-error *ngIf="getControl('german', 'country').hasError('minlength') && !getControl('german', 'country').hasError('required')">
+                            {{'FORM.ERRORS.minLengthField' | translate:minError('german', 'country')}}
                           </mat-error>
-                          <mat-error *ngIf="germanCountry.hasError('required')">
-                            Kraj jest <strong>wymagany</strong>
-                          </mat-error>
-                        </mat-form-field>
-                      </div>
-
-                      <div class="col-md-4">
-                        <mat-form-field class="w-100">
-                          <input matInput placeholder="Region" [formControl]="germanRegion">
-                          <mat-error *ngIf="germanRegion.hasError('minlength') && !germanRegion.hasError('required')">
-                            {{errorMsg(germanRegion)}}
-                          </mat-error>
-                          <mat-error *ngIf="germanRegion.hasError('required')">
-                            Region jest <strong>wymagany</strong>
+                          <mat-error *ngIf="getControl('german', 'country').hasError('required')">
+                            {{'FORM.ERRORS.requiredField' | translate}}
                           </mat-error>
                         </mat-form-field>
                       </div>
 
                       <div class="col-md-4">
                         <mat-form-field class="w-100">
-                          <input matInput placeholder="Miasto" [formControl]="germanCity">
-                          <mat-error *ngIf="germanCity.hasError('minlength') && !germanCity.hasError('required')">
-                            {{errorMsg(germanCity)}}
+                          <input matInput placeholder="Region" required [formControl]="getControl('german', 'region')">
+                          <mat-error *ngIf="getControl('german', 'region').hasError('minlength') && !getControl('german', 'region').hasError('required')">
+                            {{'FORM.ERRORS.minLengthField' | translate:minError('german', 'region')}}
                           </mat-error>
-                          <mat-error *ngIf="germanCity.hasError('required')">
-                            Miasto jest <strong>wymagany</strong>
+                          <mat-error *ngIf="getControl('german', 'region').hasError('required')">
+                            {{'FORM.ERRORS.requiredField' | translate}}
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+
+                      <div class="col-md-4">
+                        <mat-form-field class="w-100">
+                          <input matInput placeholder="Miasto" required [formControl]="getControl('german', 'city')">
+                          <mat-error *ngIf="getControl('german', 'city').hasError('minlength') && !getControl('german', 'city').hasError('required')">
+                            {{'FORM.ERRORS.minLengthField' | translate:minError('german', 'city')}}
+                          </mat-error>
+                          <mat-error *ngIf="getControl('german', 'city').hasError('required')">
+                            {{'FORM.ERRORS.requiredField' | translate}}
                           </mat-error>
                         </mat-form-field>
                       </div>

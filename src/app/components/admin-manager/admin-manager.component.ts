@@ -4,10 +4,14 @@ import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { FirestoreDaoService } from '../../services/dao/firestore-dao.service';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/map';
-import { isNaN, pick } from 'lodash';
+import { isNaN, pick, cloneDeep } from 'lodash';
 import { SwalComponent } from '@toverux/ngx-sweetalert2';
 import { SwalObjService } from '../../services/swal-obj.service';
 import { Subscription } from 'rxjs/Subscription';
+import { environment } from '../../../environments/environment';
+
+const countriesLink = environment.countryNames;
+const polandLink = environment.polandCountry;
 
 @Component({
   selector: 'app-admin-manager',
@@ -22,27 +26,16 @@ export class AdminManagerComponent implements OnInit, OnDestroy {
   public isSave = false;
   public step = 0;
   public selectedTab = 0;
+  public selectedTabCountry = 0;
   public type = 'polish';
-
   public offerForm: FormGroup;
-  public polishTitle: FormControl;
-  public polishCity: FormControl;
-  public polishRegion: FormControl;
-  public polishCountry: FormControl;
-  public polishText: FormControl;
-  public englishTitle: FormControl;
-  public englishCity: FormControl;
-  public englishRegion: FormControl;
-  public englishCountry: FormControl;
-  public englishText: FormControl;
-  public germanTitle: FormControl;
-  public germanCity: FormControl;
-  public germanRegion: FormControl;
-  public germanCountry: FormControl;
-  public germanText: FormControl;
-  public date: FormControl;
+  public _countries: any;
+  public _regions: any;
+  public _poland: any;
+  public _cities: any;
 
   private offerId: string;
+  private editClone: IJobOffer = null;
   private isEdited = false;
   private $jobOffersSub: Subscription;
   private $counterSub: Subscription;
@@ -51,6 +44,7 @@ export class AdminManagerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.fetchNames();
     this.createForm();
     this.fetchJobOffers();
   }
@@ -72,59 +66,45 @@ export class AdminManagerComponent implements OnInit, OnDestroy {
     }
   }
 
-  createControls() {
-    this.polishTitle = new FormControl('', [Validators.required, Validators.minLength(3)]);
-    this.polishCity = new FormControl('', [Validators.required, Validators.minLength(3)]);
-    this.polishRegion = new FormControl('', [Validators.required, Validators.minLength(3)]);
-    this.polishCountry = new FormControl('', [Validators.required, Validators.minLength(3)]);
-    this.polishText = new FormControl('', [Validators.required, Validators.minLength(3)]);
-    this.englishTitle = new FormControl('', [Validators.required, Validators.minLength(3)]);
-    this.englishCity = new FormControl('', [Validators.required, Validators.minLength(3)]);
-    this.englishRegion = new FormControl('', [Validators.required, Validators.minLength(3)]);
-    this.englishCountry = new FormControl('', [Validators.required, Validators.minLength(3)]);
-    this.englishText = new FormControl('', [Validators.required, Validators.minLength(3)]);
-    this.germanTitle = new FormControl('', [Validators.required, Validators.minLength(3)]);
-    this.germanCity = new FormControl('', [Validators.required, Validators.minLength(3)]);
-    this.germanRegion = new FormControl('', [Validators.required, Validators.minLength(3)]);
-    this.germanCountry = new FormControl('', [Validators.required, Validators.minLength(3)]);
-    this.germanText = new FormControl('', [Validators.required, Validators.minLength(3)]);
-    this.date = new FormControl(0);
-  }
-
   createForm() {
-    this.createControls();
+    const requiredFields = [Validators.required, Validators.minLength(3)];
 
     this.offerForm = new FormGroup({
       polish: new FormGroup({
-        title: this.polishTitle,
-        city: this.polishCity,
-        region: this.polishRegion,
-        country: this.polishCountry,
-        text: this.polishText,
+        title: new FormControl('', requiredFields),
+        city: new FormControl('', requiredFields),
+        region: new FormControl('', requiredFields),
+        country: new FormControl('', requiredFields),
+        text: new FormControl('', requiredFields),
       }),
       english: new FormGroup({
-        title: this.englishTitle,
-        city: this.englishCity,
-        region: this.englishRegion,
-        country: this.englishCountry,
-        text: this.englishText
+        title: new FormControl('', requiredFields),
+        city: new FormControl({value: '', disabled: true}, requiredFields),
+        region: new FormControl({value: '', disabled: true}, requiredFields),
+        country: new FormControl({value: '', disabled: true}, requiredFields),
+        text: new FormControl('', requiredFields)
       }),
       german: new FormGroup({
-        title: this.germanTitle,
-        city: this.germanCity,
-        region: this.germanRegion,
-        country: this.germanCountry,
-        text: this.germanText
+        title: new FormControl('', requiredFields),
+        city: new FormControl({value: '', disabled: true}, requiredFields),
+        region: new FormControl({value: '', disabled: true}, requiredFields),
+        country: new FormControl({value: '', disabled: true}, requiredFields),
+        text: new FormControl('', requiredFields)
       }),
-      date: this.date
+      date: new FormControl(0)
     });
   }
 
-  errorMsg(property) {
-    const required = property.errors.minlength.requiredLength;
-    const actual = property.errors.minlength.actualLength;
-    return `Password must be ${required} characters long, we need another
-     ${required - actual} characters `;
+  getControl(name: string, prop: string): any {
+    return this.offerForm.controls[name]['controls'][prop];
+  }
+
+  minError(name: string, prop: string): any {
+    const error = this.getControl(name, prop).getError('minlength');
+    return {
+      required: error.requiredLength,
+      actual: error.requiredLength - error.actualLength
+    };
   }
 
   setType(type: 'polish' | 'english' | 'german') {
@@ -153,25 +133,26 @@ export class AdminManagerComponent implements OnInit, OnDestroy {
       this.isSave = true;
 
       if (this.offerId) {
-        this.firestoreDAO.updateJobOffer(this.offerId, value).then(() => {
-          f.resetForm();
-          this.offerId = null;
-          this.isSave = false;
-          this.isEdited = true;
-          this.swalO.composeDialog(title, 'Oferta została zaktualizowana pomyślnie', 'success', this.dialogSwal);
-        }).catch((error) => {
-          this.swalO.composeDialog('Błąd', 'Nie można utworzyć oferty', 'error', this.dialogSwal);
-          console.error(error);
-          this.isSave = false;
-        });
+        this.checkPolandEdit(value, this.editClone)
+          .then(() => this.firestoreDAO.updateJobOffer(this.offerId, value))
+          .then(() => {
+            this.isSave = false;
+            this.isEdited = true;
+            this.clearOffers(f);
+            this.swalO.composeDialog(title, 'Oferta została zaktualizowana pomyślnie', 'success', this.dialogSwal);
+          })
+          .catch((error) => {
+            this.swalO.composeDialog('Błąd', 'Nie można utworzyć oferty', 'error', this.dialogSwal);
+            console.error(error);
+            this.isSave = false;
+          });
       } else {
         this.updateCounter(value, true)
           .then(() => this.firestoreDAO.createJobOffer(value))
           .then(() => {
-            f.resetForm();
-            this.offerId = null;
             this.isSave = false;
             this.isEdited = true;
+            this.clearOffers(f);
             this.swalO.composeDialog(title, 'Utworzono nową ofertę', 'success', this.dialogSwal);
           })
           .catch((error) => {
@@ -202,14 +183,53 @@ export class AdminManagerComponent implements OnInit, OnDestroy {
     });
   }
 
+  setCountryRegions(name: string = 'polish') {
+    const selectedCountry = this.getControl(name, 'country').value;
+    const foundRegions = this._countries.find((country) => country.namePl === selectedCountry || country.nameEn === selectedCountry);
+    this.offerForm.patchValue({
+      english: { country: foundRegions.nameEn },
+      german: { country: foundRegions.nameEn }
+    });
+    this._regions = foundRegions.regions;
+  }
+
+  setRegionCities(name: string = 'polish') {
+    const selectedRegion = this.getControl(name, 'region').value;
+
+    this.offerForm.patchValue({
+      english: { region: selectedRegion },
+      german: { region: selectedRegion }
+    });
+
+    if (this.getControl('polish', 'country').value !== 'Polska') {
+      this._cities = [];
+    } else {
+      this._cities = this._poland.find((region) => region.region === selectedRegion).cities;
+    }
+  }
+
+  setCities() {
+    const selectedCity = this.getControl('polish', 'city').value;
+    this.offerForm.patchValue({
+      english: { city: selectedCity },
+      german: { city: selectedCity }
+    });
+  }
+
   setData(data?: IJobOffer): void {
+    this.editClone = cloneDeep(data);
     this.offerId = data.id;
     this.offerForm.patchValue(data);
+    this.setCountryRegions();
+    this.setRegionCities();
   }
 
   clearOffers(f: NgForm) {
     f.resetForm();
     this.offerId = null;
+    this.editClone = null;
+    this._cities = null;
+    this.selectedTabCountry = 0;
   }
 
   fetchJobOffers(): void {
@@ -219,13 +239,18 @@ export class AdminManagerComponent implements OnInit, OnDestroy {
     });
   }
 
+  async fetchNames() {
+    this._countries = await (await fetch(countriesLink)).json();
+    this._poland = await (await fetch(polandLink)).json();
+  }
+
   updateCounter(data: any, add: boolean): Promise<void> {
-    if (data.polish.country.toLowerCase() === 'polska') {
+    if (data.polish.country === 'Polska') {
       return new Promise((resolve, reject) => {
         this.$counterSub = this.firestoreDAO.getCounters().subscribe(({ payload }) => {
-          console.log(payload.data());
           const region = data.polish.region;
           const dataToSave = pick(payload.data(), [region, 'total']);
+
           if (add) {
             dataToSave[region] += 1;
             dataToSave['total'] += 1;
@@ -233,12 +258,39 @@ export class AdminManagerComponent implements OnInit, OnDestroy {
             dataToSave[region] -= 1;
             dataToSave['total'] -= 1;
           }
+          if (dataToSave[region] < 0) {
+            dataToSave[region] = 0;
+          }
+          if (dataToSave['total'] < 0) {
+            dataToSave['total'] = 0;
+          }
           if (isNaN(dataToSave[region]) || isNaN(dataToSave['total'])) {
             return reject({ wrongRegion: 'Zła nazwa województwa' });
           }
           this.firestoreDAO.updateCounter(dataToSave).then(resolve).catch(reject);
         });
       });
+    }
+    return Promise.resolve();
+  }
+
+  checkPolandEdit(originalData: IJobOffer, copyData: IJobOffer): Promise<void> {
+    const originalCountry = originalData.polish.country;
+    const originalRegion = originalData.polish.region;
+    const copyCountry = copyData.polish.country;
+    const copyRegion = copyData.polish.region;
+    if (originalCountry !== 'Polska' && copyCountry !== 'Polska') {
+      return Promise.resolve();
+    }
+
+    if (originalCountry === copyCountry && originalRegion === copyRegion) {
+      return Promise.resolve();
+    } else if (originalCountry === 'Polska' && copyCountry !== 'Polska') {
+      return this.updateCounter(originalData, true);
+    } else if (originalCountry !== 'Polska' && copyCountry === 'Polska') {
+      return this.updateCounter(copyData, false);
+    } else if (originalCountry === 'Polska' && copyCountry === 'Polska' && originalRegion !== copyRegion) {
+      return this.updateCounter(copyData, false).then(() => this.updateCounter(originalData, true));
     } else {
       return Promise.resolve();
     }
