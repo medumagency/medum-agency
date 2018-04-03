@@ -59,9 +59,9 @@ export class AdminManagerComponent implements OnInit, OnDestroy {
     }
     if (index === 0 && this.isEdited) {
       this.isLoading = true;
-      this.$jobOffersSub.unsubscribe();
-      this.jobOffers = [];
-      this.fetchJobOffers();
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 10);
       this.isEdited = false;
     }
   }
@@ -124,10 +124,11 @@ export class AdminManagerComponent implements OnInit, OnDestroy {
   }
 
   saveOffer(f: NgForm): void {
-    console.log(this.offerForm);
     this.offerForm.patchValue({ date: Date.now() });
-    const { value, valid } = this.offerForm;
+
+    const { valid } = this.offerForm;
     const title = this.offerForm.value.polish.polishTitle;
+    const value = this.offerForm.getRawValue();
 
     if (valid) {
       this.isSave = true;
@@ -170,12 +171,16 @@ export class AdminManagerComponent implements OnInit, OnDestroy {
 
     this.swalO.composeDialog(title, text, 'warning', this.dialogSwal, true).then((result) => {
       if (result.value) {
+        this.isLoading = true;
+
         this.updateCounter(data, false)
           .then(() => this.firestoreDAO.deleteJobOffer(data.id))
           .then(() => {
+            this.isLoading = false;
             this.swalO.composeDialog(title, 'Usnięto pomyślnie', 'success', this.dialogSwal);
           })
           .catch((error) => {
+            this.isLoading = false;
             this.swalO.composeDialog(title, 'Nie można usunąc!!!', 'error', this.dialogSwal);
             console.error(error);
           });
@@ -217,11 +222,13 @@ export class AdminManagerComponent implements OnInit, OnDestroy {
   }
 
   setData(data?: IJobOffer): void {
+    console.log(data);
     this.editClone = cloneDeep(data);
     this.offerId = data.id;
     this.offerForm.patchValue(data);
     this.setCountryRegions();
     this.setRegionCities();
+    this.setCities();
   }
 
   clearOffers(f: NgForm) {

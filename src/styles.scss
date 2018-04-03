@@ -187,3 +187,10 @@ body.modal-open {
   margin: 10px 10px 0;
 }
 .mat-checkbox-layout { white-space: normal !important; }
+
+@media screen and (min-width: 991px){
+  .dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: -5px; // remove the gap so it doesn't close
+  }
+}

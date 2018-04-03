@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="row mt-15" style="margin-bottom: 85%">
+  <div class="row mt-15" style="min-height: 970px">
     <mat-tab-group [dynamicHeight]="true" class="demo-tab-group" style="min-width: 100%" [(selectedIndex)]="selectedTab"
                    (selectedIndexChange)="resetForms($event, f)">
       <mat-tab label="Lista ofert">
@@ -199,11 +199,11 @@
                     <div class="row mt-5">
                       <div class="col-md-4">
                         <mat-form-field class="w-100">
-                          <input matInput placeholder="Miasto" required [formControl]="getControl('german', 'city')">
-                          <mat-error *ngIf="getControl('german', 'city').hasError('minlength') && !getControl('german', 'city').hasError('required')">
-                            {{'FORM.ERRORS.minLengthField' | translate:minError('german', 'city')}}
+                          <input matInput placeholder="Kraj" required [formControl]="getControl('english', 'country')">
+                          <mat-error *ngIf="getControl('english', 'country').hasError('minlength') && !getControl('english', 'country').hasError('required')">
+                            {{'FORM.ERRORS.minLengthField' | translate:minError('english', 'country')}}
                           </mat-error>
-                          <mat-error *ngIf="getControl('german', 'city').hasError('required')">
+                          <mat-error *ngIf="getControl('english', 'country').hasError('required')">
                             {{'FORM.ERRORS.requiredField' | translate}}
                           </mat-error>
                         </mat-form-field>
