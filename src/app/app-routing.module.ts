@@ -10,6 +10,14 @@ import { CountryJobOffersComponent } from './components/country-job-offers/count
 import { OtherJobOffersComponent } from './components/other-job-offers/other-job-offers.component';
 import { AdminManagerComponent } from './components/admin-manager/admin-manager.component';
 import { AdminGuardGuard } from './guards/admin-guard.guard';
+import { LocalizeParser, LocalizeRouterModule, LocalizeRouterSettings, ManualParserLoader } from 'localize-router';
+import { TranslateService } from '@ngx-translate/core';
+import {Location} from '@angular/common';
+
+
+export function ManualLoaderFactory(translate: TranslateService, location: Location, settings: LocalizeRouterSettings) {
+  return new ManualParserLoader(translate, location, settings, ['pl', 'en', 'de']);
+}
 
 const routes: Routes = [
   {
@@ -55,8 +63,18 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [
+    LocalizeRouterModule.forRoot(routes, {
+      alwaysSetPrefix: false,
+      parser: {
+        provide: LocalizeParser,
+        useFactory: ManualLoaderFactory,
+        deps: [TranslateService, Location, LocalizeRouterSettings]
+      }
+    }),
+    RouterModule.forRoot(routes)
+  ],
+  exports: [RouterModule, LocalizeRouterModule]
 })
 export class AppRoutingModule {
 }

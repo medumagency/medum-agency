@@ -9,7 +9,6 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { environment } from '../environments/environment';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MomentModule } from 'angular2-moment';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -41,7 +40,7 @@ import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 import { SwalObjService } from './services/swal-obj.service';
 import { CompanyEmailService } from './services/company-email.service';
 import { MaterialModule } from './material.module';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateModule, TranslateLoader, TranslatePipe } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LanguageService } from './services/language.service';
 import { NgAisModule } from 'angular-instantsearch';

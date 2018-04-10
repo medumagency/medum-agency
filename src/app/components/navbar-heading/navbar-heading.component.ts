@@ -58,7 +58,7 @@ export class NavbarHeadingComponent implements OnInit {
       if (isLogged) {
         form.hide();
         f.resetForm();
-        this.router.navigate(['admin']);
+        this.router.navigate([this.translate.getTranslatedRoute('/admin')]);
       }
     });
   }

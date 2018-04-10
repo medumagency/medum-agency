@@ -55,5 +55,13 @@
     "seeOfferBtn": "Zobacz ofertę",
     "closeBtn": "Zamknij",
     "applyBtn": "Aplikuj"
-  }
+  },
+  "ROUTES.": "",
+  "ROUTES.o-nas": "o-nas",
+  "ROUTES.kontakt": "kontakt",
+  "ROUTES.formularz": "formularz",
+  "ROUTES.wspolpraca": "wspolpraca",
+  "ROUTES.w-kraju": "w-kraju",
+  "ROUTES.za-granica": "za-granica",
+  "ROUTES.admin": "admin"
 }

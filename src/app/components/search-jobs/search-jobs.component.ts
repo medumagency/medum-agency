@@ -69,7 +69,7 @@ export class SearchJobsComponent implements OnInit, OnDestroy, OnChanges {
         position: this.modalData.title
       }
     };
-    this.router.navigate(['formularz'], navigationExtras);
+    this.router.navigate([this.lang.getTranslatedRoute('/formularz')], navigationExtras);
   }
 
   fetchCurrentLanguage() {

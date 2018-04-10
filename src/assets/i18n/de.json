@@ -55,5 +55,13 @@
     "seeOfferBtn": "Siehe Angebot",
     "closeBtn": "Schließen",
     "applyBtn": "Sich bewerben"
-  }
+  },
+  "ROUTES.": "",
+  "ROUTES.o-nas": "uber-uns",
+  "ROUTES.kontakt": "kontakt",
+  "ROUTES.formularz": "jobformular",
+  "ROUTES.wspolpraca": "zusammenarbeit",
+  "ROUTES.w-kraju": "in-polen",
+  "ROUTES.za-granica": "im-ausland",
+  "ROUTES.admin": "admin"
 }
