@@ -46,7 +46,8 @@ export class SearchJobsComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   setFilters() {
-    const isInCountry = location.pathname.includes('w-kraju');
+    const isPolandView = (urlPhrase) => location.pathname.includes(urlPhrase);
+    const isInCountry = isPolandView('w-kraju') || isPolandView('in-poland') || isPolandView('in-polen');
     const countryFacet = { 'polish.country': ['Polska'] };
 
     return {

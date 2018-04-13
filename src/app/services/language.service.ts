@@ -34,7 +34,7 @@ export class LanguageService {
   }
 
   getLanguage() {
-    return this.mapLanguage(localStorage.getItem('lang'));
+    return this.mapLanguage(this.getLangFromStorage());
   }
 
   getRawLanguage(): Observable<string> {
