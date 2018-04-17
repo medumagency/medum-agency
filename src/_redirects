@@ -1,1 +1,10 @@
+# redirect netlify sitename to your sitename for SEO purposes,
+# to avoid duplicate content.  Do this for http and https
+# https://medumcompany.netlify.com/* https://medumcompany.netlify.com/:splat 301!
+# http://medumcompany.netlify.com/* http://medumcompany.netlify.com/:splat 301!
+
+# also redirect http to https for your custom domain.
+# Note that netlify automatically redirects to your custom domain from the bare domain (or vice versa), so you only need one rule here.
+# http://www.example.com/* https://www.example.com/:splat 301!
+
 /* /index.html 200
