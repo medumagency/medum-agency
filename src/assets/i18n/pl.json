@@ -25,7 +25,7 @@
       "attachmentsCaution": "Dozwolone pliki",
       "companyName": "Nazwa firmy",
       "sendButton": "Wyślij",
-      "documentPolicy": "Wyrażam zgodę na przetwarzanie moich danych osobowych zawartych w mojej ofercie pracy dla potrzeb niezbędnych do przeprowadzenia rekrutacji (ustawa z 29 sierpnia 1997 r.o ochronie danych osobowych, tekst jednolity: Dz.U. z 2002 r. nr 101, poz. 926, ze zm.)."
+      "documentPolicy": "Wyrażam zgodę na przetwarzanie moich danych osobowych zawartych w mojej ofercie pracy, potrzebnych w procesie rekrutacji (zgodnie z ustawą z dn. 29.08.1997 r. o Ochronie Danych Osobowych Dz. Ust. Nr 133 poz. 883)."
     },
     "ERRORS": {
       "requiredField": "To pole jest wymagane",
@@ -55,6 +55,9 @@
     "seeOfferBtn": "Zobacz ofertę",
     "closeBtn": "Zamknij",
     "applyBtn": "Aplikuj"
+  },
+  "ABOUT": {
+    "company": "Firma spawalniczo-budowlana oraz agencja pośrednictwa pracy MEDUM poszukuje kontrahentów zainteresowanych współpracą w zakresie leasingu wykwalifikowanego personelu. Jesteśmy firmą z siedzibą w Polsce, z doświadczeniem na rynku skandynawskim. Stawiamy na wykwalifikowanych pracowników oraz stałą współpracę. Świadczymy usługi między innymi w branży spawalniczej i budowlanej w ramach której  zajmujemy się pozyskiwaniem personelu spawalniczego oraz budowlanego. W naszej bazie pracowniczej posiadamy certyfikowanych spawaczy, inspektorów spawalniczych i badań nieniszczących (NDT), a także dyplomowanych inżynierów spawalników. Inżynierów budowlanych, budowlańców."
   },
   "ROUTES.": "",
   "ROUTES.o-nas": "o-nas",

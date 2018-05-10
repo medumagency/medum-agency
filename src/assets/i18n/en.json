@@ -25,7 +25,7 @@
       "attachmentsCaution": "Allowed files",
       "companyName": "Company Name",
       "sendButton": "Send",
-      "documentPolicy": "Wyrażam zgodę na przetwarzanie moich danych osobowych zawartych w mojej ofercie pracy dla potrzeb niezbędnych do przeprowadzenia rekrutacji (ustawa z 29 sierpnia 1997 r.o ochronie danych osobowych, tekst jednolity: Dz.U. z 2002 r. nr 101, poz. 926, ze zm.)."
+      "documentPolicy": "I hereby agree for processing my personal data, included in my job offer, for the purpose of recruitment (as defined in the Act of August 29, 1997 on the Protection of Personal Data (Journal of Laws No. 133, item 883)."
     },
     "ERRORS": {
       "requiredField": "This field is required",
@@ -55,6 +55,9 @@
     "seeOfferBtn": "See offer",
     "closeBtn": "Close",
     "applyBtn": "Apply"
+  },
+  "ABOUT": {
+    "company": "Welding & Employment Agency MEDUM are currently on the lookout for companies and recruitment agencies potentially interested in cooperating with us by providing qualified and skilled personnel for the Scandinavian market. As company have experience also in the Norwegian market. We focus on skilled employees and lasting cooperation. We serve welding industry in that we find, interview, site-test, recruit and hire out welding personnel, such as certified welders, welding inspectors and non-destructive testing operators (NDT), as well as qualified welding engineers"
   },
   "ROUTES.": "",
   "ROUTES.o-nas": "about",

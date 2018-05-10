@@ -25,7 +25,7 @@
       "attachmentsCaution": "Erlaubte Dateien",
       "companyName": "Name der Firma",
       "sendButton": "Senden",
-      "documentPolicy": "Wyrażam zgodę na przetwarzanie moich danych osobowych zawartych w mojej ofercie pracy dla potrzeb niezbędnych do przeprowadzenia rekrutacji (ustawa z 29 sierpnia 1997 r.o ochronie danych osobowych, tekst jednolity: Dz.U. z 2002 r. nr 101, poz. 926, ze zm.)."
+      "documentPolicy": "I hereby agree for processing my personal data, included in my job offer, for the purpose of recruitment (as defined in the Act of August 29, 1997 on the Protection of Personal Data (Journal of Laws No. 133, item 883)."
     },
     "ERRORS": {
       "requiredField": "Dieses Feld wird benötigt",
@@ -55,6 +55,9 @@
     "seeOfferBtn": "Siehe Angebot",
     "closeBtn": "Schließen",
     "applyBtn": "Sich bewerben"
+  },
+  "ABOUT": {
+    "company": "Schweißunternehmen und MEDUM Vermittlungsagentur sucht Unternehmen und Stellenvermittler, die an einer Zusammenarbeit im Bereich des Personalleasings für den Europäischen Union Markt interessiert sind. Wir sind eine polnische Firma mit der Erfahrung auch auf dem skandinavisch Markt. Wir konzentrieren uns auf qualifizierte Mitarbeiter und dauerhafte Zusammenarbeit. Wir erbringen Dienstleistungen unter anderem in der Schweißindustrie, in der wir uns mit der Beschaffung von Schweißpersolen beschäftigen, d.h. zertifizierte Schweißer, Schweißinspektoren und zerstörungsfreie Prüfung (NDT), sowie qualifizierte Schweißingenieure."
   },
   "ROUTES.": "",
   "ROUTES.o-nas": "uber-uns",

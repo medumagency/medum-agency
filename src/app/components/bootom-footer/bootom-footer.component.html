@@ -1,6 +1,6 @@
 <footer class="page-footer center-on-small-only">
   <!--Social buttons-->
-  <div class="text-center mb-3">
+  <div class="text-center mb-3 invisible">
     <a class="btn-small waves-light" appCustomCircle><i class="fa fa-facebook"> </i></a>
     <a class="btn-small waves-light" appCustomCircle defaultColor="#55acee"><i class="fa fa-twitter"> </i></a>
     <a class="btn-small waves-light" appCustomCircle defaultColor="#dd4b39"><i class="fa fa-google-plus"> </i></a>
@@ -10,7 +10,7 @@
   <!--Copyright-->
   <div class="footer-copyright">
     <div class="container-fluid">
-      © 2018 Copyright: <a href="#"> Medumcompany </a>
+      © 2018 Copyright: <a [routerLink]="['/'] | localize"> Medumcompany </a>
     </div>
   </div>
   <!--/.Copyright-->
