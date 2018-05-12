@@ -5,3 +5,20 @@
   -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
   filter: grayscale(100%);
 }
+
+.medum-logo-wraper {
+  filter: brightness(0) invert(1);
+}
+
+.medum-logo-img {
+  margin: 0 auto
+}
+
+@media(max-width:568px){
+  .medum-logo-wraper {
+    padding-top: 3.5rem;
+  }
+  h4{
+    font-size: 1.35rem;
+  }
+}
