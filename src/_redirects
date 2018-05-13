@@ -7,4 +7,13 @@
 # Note that netlify automatically redirects to your custom domain from the bare domain (or vice versa), so you only need one rule here.
 # http://www.example.com/* https://www.example.com/:splat 301!
 
+
+
+
 /* /index.html 200
+
+# Redirect default Netlify subdomain to primary domain
+# https://medumcompany.netlify.com/* https://www.medumcompany.com/:splat 301!
+
+https://medumcompany.netlify.com/*  https://medumcompany.com/:splat  301!
+http://medumcompany.netlify.com/*   https://medumcompany.com/:splat  301!
