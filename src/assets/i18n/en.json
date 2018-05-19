@@ -34,10 +34,11 @@
     }
   },
   "JOBFORMPAGE": {
-    "heading": "Send your application"
+    "heading": "Apply"
   },
   "COOPERATIONFORMPAGE": {
-    "heading": "Establish cooperation with us"
+    "heading": "Establish cooperation with us",
+    "text": "We are looking for partners, with the exception of construction and long-lasting relations, and open to holiday offers. It is also interesting for the organization on the basis of subcontracting."
   },
   "CONTACTPAGE": {
     "heading": "Contact us!"
@@ -57,7 +58,8 @@
     "applyBtn": "Apply"
   },
   "ABOUT": {
-    "company": "Welding & Employment Agency MEDUM are currently on the lookout for companies and recruitment agencies potentially interested in cooperating with us by providing qualified and skilled personnel for the Scandinavian market. As company have experience also in the Norwegian market. We focus on skilled employees and lasting cooperation. We serve welding industry in that we find, interview, site-test, recruit and hire out welding personnel, such as certified welders, welding inspectors and non-destructive testing operators (NDT), as well as qualified welding engineers"
+    "company": "Employment and Employment Agency MEDUM for a young and ambitious company with several years of experience in the Scandinavian labor market. The headquarters of our company is located in Poland. We mainly deal with welding, construction and recruitment services. It implements installers, steel construction fitters, industrial insulators, steelwork sanders and general construction personnel.",
+    "subCompany": "We focus on the quality and reliability of our employees and services. We know that our strength lies in people, that's why we provide them with the best working conditions."
   },
   "ROUTES.": "",
   "ROUTES.o-nas": "about",

@@ -1,4 +1,22 @@
-.gray-image {
+.view {
+  background: url("../../../assets/hands.webp") no-repeat center center;
+  background-size: cover;
+  //min-height: 100vh !important;
   -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
   filter: grayscale(100%);
+}
+
+.big-font {
+  font-size: 3.5rem;
+}
+
+.center-text {
+  text-align: center;
+}
+
+
+@media(max-width:568px){
+  .view{
+    margin-top: 6rem!important;
+  }
 }

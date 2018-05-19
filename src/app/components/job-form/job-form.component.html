@@ -1,112 +1,125 @@
-<div class="container">
-  <app-spinner [isWhole]="true" *ngIf="isSending"></app-spinner>
-  <div class="mt-10 pt-5 align-middle">
-    <h2 class="d-flex justify-content-center" translate>JOBFORMPAGE.heading</h2>
-  </div>
-  <div class="row mt-5 mb-20 pb-1">
-    <div class="col-lg-3 hidden-sm"></div>
-    <div class="col-sm-12 col-lg-6">
-      <form class="card" [formGroup]="jobForm" (ngSubmit)="submitForm(f)" #f="ngForm" novalidate>
-        <div class="card-body">
-          <mat-form-field class="w-100">
-            <input matInput placeholder="{{'FORM.NAMES.firstName' | translate}}" [formControl]="getControl('firstName')">
-            <mat-error *ngIf="getControl('firstName').hasError('minlength') && !getControl('firstName').hasError('required')">
-              {{'FORM.ERRORS.minLengthField' | translate:minError('firstName')}}
-            </mat-error>
-            <mat-error *ngIf="getControl('firstName').hasError('required')">
-              {{'FORM.ERRORS.requiredField' | translate}}
-            </mat-error>
-          </mat-form-field>
+<div class="cover-light">
+  <div class="container">
+    <app-spinner [isWhole]="true" *ngIf="isSending"></app-spinner>
+    <div class="mt-10 pt-5 align-middle">
+      <h2 class="d-flex justify-content-center" translate>JOBFORMPAGE.heading</h2>
+    </div>
+    <div class="row mt-5 mb-20 pb-1">
+      <div class="col-lg-3 hidden-sm"></div>
+      <div class="col-sm-12 col-lg-6">
+        <form class="card" [formGroup]="jobForm" (ngSubmit)="submitForm(f)" #f="ngForm" novalidate>
+          <div class="card-body">
+            <mat-form-field class="w-100">
+              <input matInput placeholder="{{'FORM.NAMES.firstName' | translate}}"
+                     [formControl]="getControl('firstName')">
+              <mat-error
+                *ngIf="getControl('firstName').hasError('minlength') && !getControl('firstName').hasError('required')">
+                {{'FORM.ERRORS.minLengthField' | translate:minError('firstName')}}
+              </mat-error>
+              <mat-error *ngIf="getControl('firstName').hasError('required')">
+                {{'FORM.ERRORS.requiredField' | translate}}
+              </mat-error>
+            </mat-form-field>
 
-          <mat-form-field class="w-100">
-            <input matInput placeholder="{{'FORM.NAMES.lastName' | translate}}" [formControl]="getControl('lastName')">
-            <mat-error *ngIf="getControl('lastName').hasError('minlength') && !getControl('lastName').hasError('required')">
-              {{'FORM.ERRORS.minLengthField' | translate:minError('lastName')}}
-            </mat-error>
-            <mat-error *ngIf="getControl('lastName').hasError('required')">
-              {{'FORM.ERRORS.requiredField' | translate}}
-            </mat-error>
-          </mat-form-field>
+            <mat-form-field class="w-100">
+              <input matInput placeholder="{{'FORM.NAMES.lastName' | translate}}"
+                     [formControl]="getControl('lastName')">
+              <mat-error
+                *ngIf="getControl('lastName').hasError('minlength') && !getControl('lastName').hasError('required')">
+                {{'FORM.ERRORS.minLengthField' | translate:minError('lastName')}}
+              </mat-error>
+              <mat-error *ngIf="getControl('lastName').hasError('required')">
+                {{'FORM.ERRORS.requiredField' | translate}}
+              </mat-error>
+            </mat-form-field>
 
-          <mat-form-field class="w-100">
-            <input matInput placeholder="{{'FORM.NAMES.address' | translate}}" [formControl]="getControl('address')">
-            <mat-error *ngIf="getControl('address').hasError('minlength') && !getControl('address').hasError('required')">
-              {{'FORM.ERRORS.minLengthField' | translate:minError('address')}}
-            </mat-error>
-            <mat-error *ngIf="getControl('address').hasError('required')">
-              {{'FORM.ERRORS.requiredField' | translate}}
-            </mat-error>
-          </mat-form-field>
+            <mat-form-field class="w-100">
+              <input matInput placeholder="{{'FORM.NAMES.address' | translate}}" [formControl]="getControl('address')">
+              <mat-error
+                *ngIf="getControl('address').hasError('minlength') && !getControl('address').hasError('required')">
+                {{'FORM.ERRORS.minLengthField' | translate:minError('address')}}
+              </mat-error>
+              <mat-error *ngIf="getControl('address').hasError('required')">
+                {{'FORM.ERRORS.requiredField' | translate}}
+              </mat-error>
+            </mat-form-field>
 
-          <mat-form-field class="w-100">
-            <input matInput placeholder="{{'FORM.NAMES.phone' | translate}}" [formControl]="getControl('phone')">
-            <mat-error *ngIf="getControl('phone').hasError('minlength') && !getControl('phone').hasError('required')">
-              {{'FORM.ERRORS.minLengthField' | translate:minError('phone')}}
-            </mat-error>
-            <mat-error *ngIf="getControl('phone').hasError('required')">
-              {{'FORM.ERRORS.requiredField' | translate}}
-            </mat-error>
-          </mat-form-field>
+            <mat-form-field class="w-100">
+              <input matInput placeholder="{{'FORM.NAMES.phone' | translate}}" [formControl]="getControl('phone')">
+              <mat-error *ngIf="getControl('phone').hasError('minlength') && !getControl('phone').hasError('required')">
+                {{'FORM.ERRORS.minLengthField' | translate:minError('phone')}}
+              </mat-error>
+              <mat-error *ngIf="getControl('phone').hasError('required')">
+                {{'FORM.ERRORS.requiredField' | translate}}
+              </mat-error>
+            </mat-form-field>
 
-          <mat-form-field class="w-100">
-            <input matInput placeholder="{{'FORM.NAMES.email' | translate}}" [formControl]="getControl('email')">
-            <mat-error *ngIf="getControl('email').hasError('email') && !getControl('email').hasError('required')">
-              {{'FORM.ERRORS.emailField' | translate}}
-            </mat-error>
-            <mat-error *ngIf="getControl('email').hasError('required')">
-              {{'FORM.ERRORS.requiredField' | translate}}
-            </mat-error>
-          </mat-form-field>
+            <mat-form-field class="w-100">
+              <input matInput placeholder="{{'FORM.NAMES.email' | translate}}" [formControl]="getControl('email')">
+              <mat-error *ngIf="getControl('email').hasError('email') && !getControl('email').hasError('required')">
+                {{'FORM.ERRORS.emailField' | translate}}
+              </mat-error>
+              <mat-error *ngIf="getControl('email').hasError('required')">
+                {{'FORM.ERRORS.requiredField' | translate}}
+              </mat-error>
+            </mat-form-field>
 
-          <mat-form-field class="w-100">
-            <input matInput placeholder="{{'FORM.NAMES.position' | translate}}" [formControl]="getControl('position')">
-            <mat-error *ngIf="getControl('position').hasError('minlength') && !getControl('position').hasError('required')">
-              {{'FORM.ERRORS.minLengthField' | translate:minError('position')}}
-            </mat-error>
-            <mat-error *ngIf="getControl('position').hasError('required')">
-              {{'FORM.ERRORS.requiredField' | translate}}
-            </mat-error>
-          </mat-form-field>
+            <mat-form-field class="w-100">
+              <input matInput placeholder="{{'FORM.NAMES.position' | translate}}"
+                     [formControl]="getControl('position')">
+              <mat-error
+                *ngIf="getControl('position').hasError('minlength') && !getControl('position').hasError('required')">
+                {{'FORM.ERRORS.minLengthField' | translate:minError('position')}}
+              </mat-error>
+              <mat-error *ngIf="getControl('position').hasError('required')">
+                {{'FORM.ERRORS.requiredField' | translate}}
+              </mat-error>
+            </mat-form-field>
 
-          <mat-form-field class="w-100">
-            <textarea matInput placeholder="{{'FORM.NAMES.message' | translate}}" [formControl]="getControl('message')"></textarea>
-          </mat-form-field>
+            <mat-form-field class="w-100">
+              <textarea matInput placeholder="{{'FORM.NAMES.message' | translate}}"
+                        [formControl]="getControl('message')"></textarea>
+            </mat-form-field>
 
-          <div class="mt-3">
-            <label for="file" class="btn btn-sm btn-outline-elegant d-inline" translate>
-              FORM.NAMES.attachments
-            </label>
-            <div class="d-inline">
-              <span class="red-text"> *</span>
-              <p class="d-inline" style="font-size: 13px">
+            <div class="mt-3">
+              <label for="file" class="btn btn-sm btn-outline-elegant d-inline" translate>
+                FORM.NAMES.attachments
+              </label>
+              <div class="d-inline">
+                <span class="red-text"> *</span>
+                <p class="d-inline" style="font-size: 13px">
                 <span class="mr-2">
                   <span translate>FORM.NAMES.attachmentsCaution</span>: .jpg, .png, .xls, .pdf, .doc
                 </span>
+                </p>
+              </div>
+              <input type="file"
+                     id="file"
+                     multiple
+                     style="display: none"
+                     (change)="handleFileInput($event.target.files)"
+                     accept=".jpg, .png, .xls, .doc, .pdf, .jpeg,image/jpg,image/png, application/pdf,application/msword,image/jpeg, application/vnd.ms-excel">
+            </div>
+
+            <div class="files-uploaded">
+              <p *ngFor="let file of fileToUpload">{{file.filename}}
+                <strong class="ml-2">({{file.fileSize | byteFmt: 2}})</strong>
               </p>
             </div>
-            <input type="file"
-                   id="file"
-                   multiple
-                   style="display: none"
-                   (change)="handleFileInput($event.target.files)"
-                   accept=".jpg, .png, .xls, .doc, .pdf, .jpeg,image/jpg,image/png, application/pdf,application/msword,image/jpeg, application/vnd.ms-excel">
-          </div>
+            <hr>
+            <div class="mt-2">
+              <mat-checkbox [formControl]="getControl('documentPolicy')"><span
+                translate>FORM.NAMES.documentPolicy</span></mat-checkbox>
+            </div>
 
-          <div class="files-uploaded">
-            <p *ngFor="let file of fileToUpload">{{file.filename}}
-              <strong class="ml-2">({{file.fileSize | byteFmt: 2}})</strong>
-            </p>
+            <div class="text-center">
+              <button class="btn btn-elegant waves-light" mdbRippleRadius [disabled]="!jobForm.valid" translate>
+                FORM.NAMES.sendButton
+              </button>
+            </div>
           </div>
-          <hr>
-          <div class="mt-2">
-            <mat-checkbox [formControl]="getControl('documentPolicy')"><span translate>FORM.NAMES.documentPolicy</span></mat-checkbox>
-          </div>
-
-          <div class="text-center">
-            <button class="btn btn-elegant waves-light" mdbRippleRadius [disabled]="!jobForm.valid" translate>FORM.NAMES.sendButton</button>
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
 </div>

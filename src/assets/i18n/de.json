@@ -34,10 +34,11 @@
     }
   },
   "JOBFORMPAGE": {
-    "heading": "Senden Sie Ihre Bewerbung"
+    "heading": "Sich bewerben"
   },
   "COOPERATIONFORMPAGE": {
-    "heading": "Stellen Sie die Zusammenarbeit mit uns her"
+    "heading": "Stellen Sie die Zusammenarbeit mit uns her",
+    "text": "Wir suchen Partner, mit Ausnahme von Bau und langfristigen Beziehungen, und offen für Ferienangebote. Es ist auch interessant für die Organisation auf der Grundlage von Unterauftragsvergabe."
   },
   "CONTACTPAGE": {
     "heading": "Kontaktiere uns!"
@@ -57,7 +58,8 @@
     "applyBtn": "Sich bewerben"
   },
   "ABOUT": {
-    "company": "Schweißunternehmen und MEDUM Vermittlungsagentur sucht Unternehmen und Stellenvermittler, die an einer Zusammenarbeit im Bereich des Personalleasings für den Europäischen Union Markt interessiert sind. Wir sind eine polnische Firma mit der Erfahrung auch auf dem skandinavisch Markt. Wir konzentrieren uns auf qualifizierte Mitarbeiter und dauerhafte Zusammenarbeit. Wir erbringen Dienstleistungen unter anderem in der Schweißindustrie, in der wir uns mit der Beschaffung von Schweißpersolen beschäftigen, d.h. zertifizierte Schweißer, Schweißinspektoren und zerstörungsfreie Prüfung (NDT), sowie qualifizierte Schweißingenieure."
+    "company": "Agentur für Arbeit und Beschäftigung MEDUM für ein junges und ehrgeiziges Unternehmen mit mehrjähriger Erfahrung auf dem skandinavischen Arbeitsmarkt. Der Hauptsitz unseres Unternehmens befindet sich in Polen. Wir beschäftigen uns hauptsächlich mit Schweißen, Bau und Rekrutierung. Sie führt Installateure, Stahlbau-Monteure, Industrie-Isolatoren, Stahlwerksschleifer und allgemeines Baupersonal ein.",
+    "subCompany": "Wir konzentrieren uns auf die Qualität und Zuverlässigkeit unserer Mitarbeiter und Dienstleistungen. Wir wissen, dass unsere Stärke in den Menschen liegt, deshalb bieten wir ihnen die besten Arbeitsbedingungen."
   },
   "ROUTES.": "",
   "ROUTES.o-nas": "uber-uns",

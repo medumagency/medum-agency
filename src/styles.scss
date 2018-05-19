@@ -11,7 +11,7 @@ body, html {
 }
 
 .global-color {
-  background-color: #2e2e2e;
+  background-color: #565656;
 }
 
 .mt-10 {
@@ -75,7 +75,7 @@ body, html {
 }
 
 .navbar {
-  background-color: #2e2e2e;
+  background-color: #565656;
 
   .navbar-toggler i {
     display: none;
@@ -193,4 +193,16 @@ body.modal-open {
     display: block;
     margin-top: -5px; // remove the gap so it doesn't close
   }
+}
+
+.medum-logo-wraper {
+  filter: brightness(0) invert(1);
+}
+
+.logo-text {
+  font-size: 0.85rem;
+  color: white !important;
+  position: absolute;
+  left: 8px;
+  bottom: -7px;
 }

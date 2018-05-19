@@ -34,10 +34,11 @@
     }
   },
   "JOBFORMPAGE": {
-    "heading": "Wyślij swoje zgłoszenie"
+    "heading": "Aplikuj"
   },
   "COOPERATIONFORMPAGE": {
-    "heading": "Nawiąż z nami współpracę"
+    "heading": "Nawiąż z nami współpracę",
+    "text": "Szukamy partnerów, z którymi zbudujemy solidne oraz długotrwałe relacje, dlatego jesteśmy otwarci na wszelkie oferty. Iteresuje nas także współpraca na zasadzie podwykonawstwa."
   },
   "CONTACTPAGE": {
     "heading": "Skontaktuj się z nami!"
@@ -57,7 +58,8 @@
     "applyBtn": "Aplikuj"
   },
   "ABOUT": {
-    "company": "Firma spawalniczo-budowlana oraz agencja pośrednictwa pracy MEDUM poszukuje kontrahentów zainteresowanych współpracą w zakresie leasingu wykwalifikowanego personelu. Jesteśmy firmą z siedzibą w Polsce, z doświadczeniem na rynku skandynawskim. Stawiamy na wykwalifikowanych pracowników oraz stałą współpracę. Świadczymy usługi między innymi w branży spawalniczej i budowlanej w ramach której  zajmujemy się pozyskiwaniem personelu spawalniczego oraz budowlanego. W naszej bazie pracowniczej posiadamy certyfikowanych spawaczy, inspektorów spawalniczych i badań nieniszczących (NDT), a także dyplomowanych inżynierów spawalników. Inżynierów budowlanych, budowlańców."
+    "company": "Welding & Employment Agency MEDUM to młoda i ambitna firma z kilkuletnim doświadczeniem na skandynawskim rynku pracy. Siedziba naszej firmy znajduje się w Polsce. Zajmujemy się przede wszystkim usługami spawalniczymi, budowlanymi oraz rekrutacją najwyższej klasy pracowników. W naszej bazie posiadamy między innymi certyfikowanych spawaczy, monterów konstrukcji stalowych, izolatorów przemysłowych, malarzy-piaskarzy konstrukcji stalowych oraz personel ogólnobudowlany.",
+    "subCompany": "Stawiamy na jakość i wiarygodność naszych pracowników oraz usług. Wiemy, że nasza siła tkwi w ludziach, dlatego zapewniamy im najlepsze warunki pracy."
   },
   "ROUTES.": "",
   "ROUTES.o-nas": "o-nas",

@@ -14,7 +14,7 @@ import { CompanyEmailService } from '../../services/company-email.service';
 export class ContactComponent implements OnInit {
   @ViewChild('dialog') private dialogSwal: SwalComponent;
 
-  public map: any = { lat: 50.011750, lng: 20.987523 };
+  public map: any = { lat: 50.000683, lng: 20.969324 };
   public contactForm: FormGroup;
   public isSending = false;
 
