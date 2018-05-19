@@ -35,7 +35,7 @@ export class CountryJobOffersComponent implements OnInit, OnDestroy {
       height,
       datalessRegionColor: 'transparent',
       colorAxis: {
-        colors: ['#bbdc51', '#24c250', '#cc464f']
+        colors: ['#ffffff', '#70b5dc', '#2d66dc' ]
       },
       // tooltip: {textStyle: {color: '#FF0000'}, showColorCode: true},
     };

@@ -1,65 +1,22 @@
 <div class="container" style="overflow: hidden">
   <app-spinner [isWhole]="true" *ngIf="isSending"></app-spinner>
-  <div class="mt-5 pt-5 mb-3">
+  <div class="mt-10 pt-3 mb-5">
     <h1 class="pt-3 text-center" translate>CONTACTPAGE.heading</h1>
   </div>
   <section>
     <div class="container">
       <div class="row mb-20">
         <div class="col-lg-5 col-sm-12 mb-5">
-          <form class="card" [formGroup]="contactForm" (ngSubmit)="submitForm(f)" #f="ngForm" novalidate>
-            <div class="card-body">
-              <mat-form-field class="w-100">
-                <input matInput placeholder="{{'FORM.NAMES.firstName' | translate}}" [formControl]="getControl('firstName')">
-                <mat-error *ngIf="getControl('firstName').hasError('minlength') && !getControl('firstName').hasError('required')">
-                  {{'FORM.ERRORS.minLengthField' | translate:minError('firstName')}}
-                </mat-error>
-                <mat-error *ngIf="getControl('firstName').hasError('required')">
-                  {{'FORM.ERRORS.requiredField' | translate}}
-                </mat-error>
-              </mat-form-field>
-
-              <mat-form-field class="w-100">
-                <input matInput placeholder="{{'FORM.NAMES.lastName' | translate}}" [formControl]="getControl('lastName')">
-              </mat-form-field>
-
-              <mat-form-field class="w-100">
-                <input matInput placeholder="{{'FORM.NAMES.email' | translate}}" [formControl]="getControl('email')">
-                <mat-error *ngIf="getControl('email').hasError('email') && !getControl('email').hasError('required')">
-                  {{'FORM.ERRORS.emailField' | translate}}
-                </mat-error>
-                <mat-error *ngIf="getControl('email').hasError('required')">
-                  {{'FORM.ERRORS.requiredField' | translate}}
-                </mat-error>
-              </mat-form-field>
-
-              <mat-form-field class="w-100">
-                <input matInput placeholder="{{'FORM.NAMES.subject' | translate}}" [formControl]="getControl('subject')">
-                <mat-error *ngIf="getControl('subject').hasError('minlength') && !getControl('subject').hasError('required')">
-                  {{'FORM.ERRORS.minLengthField' | translate:minError('subject')}}
-                </mat-error>
-                <mat-error *ngIf="getControl('subject').hasError('required')">
-                  {{'FORM.ERRORS.requiredField' | translate}}
-                </mat-error>
-              </mat-form-field>
-
-              <mat-form-field class="w-100">
-                <input matInput placeholder="{{'FORM.NAMES.message' | translate}}" [formControl]="getControl('message')">
-                <mat-error *ngIf="getControl('message').hasError('minlength') && !getControl('message').hasError('required')">
-                  {{'FORM.ERRORS.minLengthField' | translate:minError('message')}}
-                </mat-error>
-                <mat-error *ngIf="getControl('message').hasError('required')">
-                  {{'FORM.ERRORS.requiredField' | translate}}
-                </mat-error>
-              </mat-form-field>
-
-              <div class="text-center">
-                <button class="btn btn-elegant waves-light" mdbRippleRadius [disabled]="contactForm.invalid" translate>FORM.NAMES.sendButton</button>
-              </div>
-            </div>
-          </form>
+          <div>
+            <h2>Wielding & Employment Agency MEDUM</h2>
+            <div class="info-row">ul. Przemysłowa 27</div>
+            <div class="info-row">33-100 Tarnów</div>
+            <div class="info-row">Pon - Pt, 9:00-15:00</div>
+            <div class="info-row">tel. +48 533 084 558</div>
+            <div class="info-row">email: medumcompany@gmail.com</div>
+          </div>
         </div>
-        <div class="col-lg-7 col-sm-12">
+        <div class="col-lg-7 col-sm-12 mb-15">
           <agm-map class="z-depth-1-half map-container" style="height: 420px; width: auto" [zoom]="16"
                    [latitude]="map.lat"
                    [longitude]="map.lng" >
@@ -71,28 +28,6 @@
               </agm-snazzy-info-window>
             </agm-marker>
           </agm-map>
-          <br>
-          <div class="row text-center mb-4 pb-1">
-            <div class="col-md-4">
-              <a class="btn-small waves-light" appCustomCircle defaultColor="lightblue">
-                <i class="fa fa-map-marker"></i>
-              </a>
-              <p>Przemysłowa 27<br>30-100 Tarnów</p>
-            </div>
-            <div class="col-md-4">
-              <a class="btn-small waves-light" appCustomCircle defaultColor="lightblue">
-                <i class="fa fa-phone"></i>
-              </a>
-              <p class="mb-0">+ 48 533 084 558</p>
-              <p>Pon - Pt, 9:00-15:00</p>
-            </div>
-            <div class="col-md-4">
-              <a class="btn-small waves-light" appCustomCircle defaultColor="lightblue">
-                <i class="fa fa-envelope"></i>
-              </a>
-              <p>medumcompany@gmail.com</p>
-            </div>
-          </div>
         </div>
       </div>
     </div>

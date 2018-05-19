@@ -194,3 +194,15 @@ body.modal-open {
     margin-top: -5px; // remove the gap so it doesn't close
   }
 }
+
+.medum-logo-wraper {
+  filter: brightness(0) invert(1);
+}
+
+.logo-text {
+  font-size: 0.85rem;
+  color: white !important;
+  position: absolute;
+  left: 8px;
+  bottom: -7px;
+}
